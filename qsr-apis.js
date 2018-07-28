@@ -201,7 +201,7 @@ var gettingAddressIdService = (authToken, customerId, callback) => {
     else if(response.statusCode == 200){
       console.log('API hit:', response.statusCode)
       callback(undefined, {
-        addressId: response.data[0].address_id;
+        addressId: response.data[0].address_id
         });
       }
   });
@@ -261,7 +261,7 @@ var settingShippingService = (authToken, basketId, callback) => {
       else if(response.statusCode == 200){
         console.log("API hit:", response.statusCode);
         callback(undefined, {
-          total: response.order_total;
+          total: response.order_total
           });
         }
     });
