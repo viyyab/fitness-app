@@ -4,7 +4,7 @@ const apiai = require('apiai');
 const config = require('./config');
 const express = require('express');
 const bodyParser = require('body-parser');
-const ApiAiApp = require('actions-on-google').ApiAiApp;
+const { DialogflowApp } = require('actions-on-google');
 const qsr = require('./qsr-apis');
 const app = express();
 
@@ -45,7 +45,7 @@ app.post('/webhook/', (req, res) => {
  	var messageData= '' ;
 	var displayText = '';
 	var text = '';
-	const Aiapp = new ApiAiApp({request: req, response: res});
+	const assistant = new DialogflowApp({request: req, response: res});
 
     switch (actionName) {
 
@@ -54,10 +54,10 @@ app.post('/webhook/', (req, res) => {
 
 		 					if(isDefined(actionName)){
 								const permissions = [
-																					Aiapp.SupportedPermissions.NAME,
-																					Aiapp.SupportedPermissions.DEVICE_PRECISE_LOCATION
+																					assistant.SupportedPermissions.NAME,
+																					assistant.SupportedPermissions.DEVICE_PRECISE_LOCATION
 																		];
-											Aiapp.askForPermissions('To locate you', permissions);
+											assistant.askForPermissions('To locate you', permissions);
 		 							}
 		 				}
 		 					break;
@@ -65,10 +65,10 @@ app.post('/webhook/', (req, res) => {
 			case 'check_permission': {
 				 						 console.log('In request_permission');
 				 						 if(isDefined(actionName)){
-											 if (Aiapp.isPermissionGranted()) {
+											 if (assistant.isPermissionGranted()) {
 												 			// permissions granted.
-															let displayName = Aiapp.getUserName().displayName;
-															let latitude = Aiapp.getDeviceLocation().coordinates.latitude;
+															let displayName = assistant.getUserName().displayName;
+															let latitude = assistant.getDeviceLocation().coordinates.latitude;
 															text= `Hi ${displayName} ! Your latitude is ${latitude} `;
 															}else{
 															// permissions are not granted. ask them one by one manually
