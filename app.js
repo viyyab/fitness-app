@@ -7,9 +7,7 @@ const bodyParser = require('body-parser');
 const request = require('request');
 const qsr = require('./qsr-apis');
 const app = express();
-const functions = require('firebase-functions');
-const DialogflowApp = require('actions-on-google').DialogflowApp;
-
+const user_location = require('./user-location');
 
 if (!config.API_AI_CLIENT_ACCESS_TOKEN) {
 	throw new Error('missing API_AI_CLIENT_ACCESS_TOKEN');
@@ -62,33 +60,13 @@ app.post('/webhook/', function (req, res) {
 
 				 case 'request_permission': {
 		 					console.log('In request_permission');
-							
+
 		 					if(isDefined(actionName)){
 
-								const requestPermission = (permit) => {
-      					permit.askForPermission('To locate you', permit.SupportedPermissions.DEVICE_PRECISE_LOCATION);
-    						};
-								const userInfo = (app) => {
-        							if (permit.isPermissionGranted()) {
-            					const address = permit.getDeviceLocation().coordinates;
-            					if (address) {
-													console.log(address);
-                					text= (`You are at ${address}`);
-            					}
-            					else {
-                					text= ('Sorry, I could not figure out where you are.');
-            						}
-        							}
-											messageData = {
-													speech: text,
-													displayText: text
-											}
-    							};
-
-		 							console.log(messageData);
+									user_location.userLocation(req, res);
+									console.log(messageData);
 		 							//res.sendStatus(200);
-		 							res.send(messageData);
-		 						});
+		 							});
 		 					}
 		 				}
 		 					break;
