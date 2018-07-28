@@ -81,7 +81,8 @@ app.post('/webhook/', (req, res) => {
 																}
 													res.send(messageData);
 				 					 }
-				 					break;
+								 }
+				 				break;
 
 		 case 'pincode.request': {
 					console.log('In action pincode');
