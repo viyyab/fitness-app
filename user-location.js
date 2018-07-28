@@ -3,7 +3,7 @@
 const functions = require('firebase-functions');
 const DialogflowApp = require('actions-on-google').DialogflowApp;
 
-function userLocation () = {
+function userLocation(req, res) {
 
 exports.dialogflowFirebaseFulfillment = functions.https.onRequest((request, response) => {
 
