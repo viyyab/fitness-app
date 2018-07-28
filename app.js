@@ -21,8 +21,6 @@ app.set('port', (process.env.PORT || 5000))
 //serve static files in the public directory
 app.use(express.static('public'));
 
-app.use(express.bodyParser());
-
 // Process application/json
 app.use(bodyParser.json());
 
