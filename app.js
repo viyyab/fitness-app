@@ -7,7 +7,6 @@ const bodyParser = require('body-parser');
 const ApiAiApp = require('actions-on-google').ApiAiApp;
 const qsr = require('./qsr-apis');
 const app = express();
-const user_location = require('./user-location');
 
 if (!config.API_AI_CLIENT_ACCESS_TOKEN) {
 	throw new Error('missing API_AI_CLIENT_ACCESS_TOKEN');
