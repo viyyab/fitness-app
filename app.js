@@ -66,8 +66,7 @@ app.post('/webhook/', function (req, res) {
 									user_location.userLocation(req, res);
 									console.log(messageData);
 		 							//res.sendStatus(200);
-		 							});
-		 					}
+		 							}
 		 				}
 		 					break;
 
