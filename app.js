@@ -21,8 +21,10 @@ app.set('port', (process.env.PORT || 5000))
 //serve static files in the public directory
 app.use(express.static('public'));
 
+app.use(express.bodyParser());
+
 // Process application/json
-app.use(bodyParser.json())
+app.use(bodyParser.json());
 
 const apiAiService = apiai(config.API_AI_CLIENT_ACCESS_TOKEN, {
 	language: "en",
@@ -53,11 +55,7 @@ app.post('/webhook/', (req, res) => {
 		 					console.log('In request_permission');
 
 		 					if(isDefined(actionName)){
-								const permissions = [
-																					assistant.SupportedPermissions.NAME,
-																					assistant.SupportedPermissions.DEVICE_PRECISE_LOCATION
-																		];
-											assistant.askForPermissions('To locate you', permissions);
+										assistant.askForPermissions('To locate you', assistant.SupportedPermissions.DEVICE_PRECISE_LOCATION);
 		 							}
 		 				}
 		 					break;
@@ -67,7 +65,7 @@ app.post('/webhook/', (req, res) => {
 				 						 if(isDefined(actionName)){
 											 if (assistant.isPermissionGranted()) {
 												 			// permissions granted.
-															let displayName = assistant.getUserName().displayName;
+															//let displayName = assistant.getUserName().displayName;
 															let latitude = assistant.getDeviceLocation().coordinates.latitude;
 															text= `Hi ${displayName} ! Your latitude is ${latitude} `;
 															}else{
