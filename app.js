@@ -4,7 +4,7 @@ const apiai = require('apiai');
 const config = require('./config');
 const express = require('express');
 const bodyParser = require('body-parser');
-const request = require('request');
+const ApiAiApp = require('actions-on-google').ApiAiApp;
 const qsr = require('./qsr-apis');
 const app = express();
 const user_location = require('./user-location');
@@ -17,22 +17,13 @@ if (!config.SERVER_URL) { //used for ink to static files
 }
 
 
-
 app.set('port', (process.env.PORT || 5000))
 
 //serve static files in the public directory
 app.use(express.static('public'));
 
-// Process application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({
-	extended: false
-}))
-
 // Process application/json
 app.use(bodyParser.json())
-
-
-
 
 const apiAiService = apiai(config.API_AI_CLIENT_ACCESS_TOKEN, {
 	language: "en",
@@ -45,7 +36,7 @@ app.get('/', function (req, res) {
 	res.send('Hello world, I am a chat bot')
 })
 
-app.post('/webhook/', function (req, res) {
+app.post('/webhook/', (req, res) => {
 	var data = req.body;
 	var sessionId = req.body.sessionId;
 	console.log(JSON.stringify(data));
@@ -55,22 +46,44 @@ app.post('/webhook/', function (req, res) {
  	var messageData= '' ;
 	var displayText = '';
 	var text = '';
+	const Aiapp = new ApiAiApp({request: req, response: res});
 
-       switch (actionName) {
+    switch (actionName) {
 
-				 case 'request_permission': {
+			case 'request_permission': {
 		 					console.log('In request_permission');
 
 		 					if(isDefined(actionName)){
-
-									user_location.userLocation(req, res);
-									console.log(messageData);
-		 							//res.sendStatus(200);
+								const permissions = [
+																					Aiapp.SupportedPermissions.NAME,
+																					Aiapp.SupportedPermissions.DEVICE_PRECISE_LOCATION
+																		];
+											Aiapp.askForPermissions('To locate you', permissions);
 		 							}
 		 				}
 		 					break;
 
-		case 'pincode.request': {
+			case 'check_permission': {
+				 						 console.log('In request_permission');
+				 						 if(isDefined(actionName)){
+											 if (Aiapp.isPermissionGranted()) {
+												 			// permissions granted.
+															let displayName = Aiapp.getUserName().displayName;
+															let latitude = Aiapp.getDeviceLocation().coordinates.latitude;
+															text= `Hi ${displayName} ! Your latitude is ${latitude} `;
+															}else{
+															// permissions are not granted. ask them one by one manually
+															text= 'Alright. Can you tell me you address please?';
+														}
+														messageData = {
+																speech: text,
+																displayText: text
+																}
+													res.send(messageData);
+				 					 }
+				 					break;
+
+		 case 'pincode.request': {
 					console.log('In action pincode');
 					var displayText = '';
 					if(isDefined(actionName) && parameters !== ''){
