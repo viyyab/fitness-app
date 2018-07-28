@@ -1,7 +1,7 @@
 module.exports = {
     // FB_PAGE_TOKEN: '',
     // FB_VERIFY_TOKEN: '',
-    API_AI_CLIENT_ACCESS_TOKEN: 'f00d3f8b0a7c435cbe24dd356f924138',
+    API_AI_CLIENT_ACCESS_TOKEN: 'e55d03f66dbd4e2787e8a9f57c0c31fb',
     // FB_APP_SECRET: '',
-    SERVER_URL: 'https://sfcc-api-integration.herokuapp.com/',
+    SERVER_URL: 'https://mcdies-app.herokuapp.com/',
 };

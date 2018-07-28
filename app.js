@@ -3,12 +3,12 @@
 const apiai = require('apiai');
 const config = require('./config');
 const express = require('express');
-const crypto = require('crypto');
 const bodyParser = require('body-parser');
 const request = require('request');
-const sfcc = require('./sfcc-apis');
+const qsr = require('./qsr-apis');
 const app = express();
-const uuid = require('uuid');
+const functions = require('firebase-functions');
+const DialogflowApp = require('actions-on-google').DialogflowApp;
 
 
 if (!config.API_AI_CLIENT_ACCESS_TOKEN) {
@@ -39,6 +39,7 @@ app.use(bodyParser.json())
 const apiAiService = apiai(config.API_AI_CLIENT_ACCESS_TOKEN, {
 	language: "en",
 });
+
 const sessionIds = new Map();
 
 // Index route
@@ -48,95 +49,84 @@ app.get('/', function (req, res) {
 
 app.post('/webhook/', function (req, res) {
 	var data = req.body;
+	var sessionId = req.body.sessionId;
 	console.log(JSON.stringify(data));
+	var actionName = req.body.result.action;
+ 	var parameters = req.body.result.parameters;
+ 	var message = req.body.result.resolvedQuery;
+ 	var messageData= '' ;
+	var displayText = '';
+	var text = '';
 
-				if (data.status.code == 200) {
-				 	var resData= receivedMessage(data);
-				}else {
-					console.log("Webhook received unknown message ");
+       switch (actionName) {
+
+				 case 'request_permission': {
+		 					console.log('In request_permission');
+							
+		 					if(isDefined(actionName)){
+
+								const requestPermission = (permit) => {
+      					permit.askForPermission('To locate you', permit.SupportedPermissions.DEVICE_PRECISE_LOCATION);
+    						};
+								const userInfo = (app) => {
+        							if (permit.isPermissionGranted()) {
+            					const address = permit.getDeviceLocation().coordinates;
+            					if (address) {
+													console.log(address);
+                					text= (`You are at ${address}`);
+            					}
+            					else {
+                					text= ('Sorry, I could not figure out where you are.');
+            						}
+        							}
+											messageData = {
+													speech: text,
+													displayText: text
+											}
+    							};
+
+		 							console.log(messageData);
+		 							//res.sendStatus(200);
+		 							res.send(messageData);
+		 						});
+		 					}
+		 				}
+		 					break;
+
+		case 'pincode.request': {
+					console.log('In action pincode');
+					var displayText = '';
+					if(isDefined(actionName) && parameters !== ''){
+						var text = '';
+						var pincode = parameters.any;
+						app1.requestCoordinate(pincode,(error, results) => {
+							if(error){
+								text = 'Error fetching the data';
+							}else {
+								text = `Latitude: ${results.latitude}  Longitude: ${results.longitude}`;
+								messageData = {
+										speech: text,
+										displayText: text
+										}
+
+							}
+							console.log(messageData);
+							//res.sendStatus(200);
+							res.send(messageData);
+						});
+					}
 				}
+					break;
 
-		// Assume all went well.
-		// You must send back a 200, within 20 seconds
-		res.sendStatus(200);
-		res.send(resData);
-});
-
-
-function receivedMessage(data) {
-
-	var actionName = data.result.action;
-	var parameters = data.result.parameters;
-	var message = data.result.resolvedQuery;
-	var sessionId = data.sessionId;
-	if (message) {
-		//send message to api.ai
-		return sendToApiAi(sessionId, data);
-	} else {
-		console.log("No user Input");
-	}
-}
-
-
-function handleApiAiAction(senderId, action, responseText, responseSpeech, contexts, parameters) {
-	switch (action) {
-
-		// case 'action':
-		// 								return sendTextMessage(senderId, responseText);
 		default:
 			//unhandled action, just send back the text
 			sendTextMessage(senderId, responseText);
 	}
-}
+		// Assume all went well.
+		// You must send back a 200, within 20 seconds
 
+});
 
-function handleApiAiResponse(senderId, response) {
-	let responseSpeech = response.result.fulfillment.speech;
-	let responseText = response.result.fulfillment.displayText;
-	let messages = response.result.fulfillment.messages;
-	let action = response.result.action;
-	let contexts = response.result.contexts;
-	let parameters = response.result.parameters;
-
-	if (responseSpeech == '' && responseText == '' && !isDefined(action)) {
-		//api ai could not evaluate input.
-		console.log('Unknown query' + response.result.resolvedQuery);
-		sendTextMessage(senderId, "I'm not sure what you want. Can you be more specific?");
-	} else if (isDefined(action)) {
-		return handleApiAiAction(senderId, action, responseText, responseSpeech, contexts, parameters);
-	}
-}
-
-function sendToApiAi(sessionId, data) {
-
-	let apiaiRequest = apiAiService.textRequest(text, {
-		sessionId: sessionId
-	});
-
-	apiaiRequest.on('response', (response) => {
-		if (isDefined(response.result)) {
-			console.log(response.result);
-			return handleApiAiResponse(sessionId, response);
-		}
-	});
-
-	apiaiRequest.on('error', (error) => console.error(error));
-	apiaiRequest.end();
-}
-
-
-
-
-function sendTextMessage(senderId, text) {
-	var messageData = {
-		fulfillment: {
-			speech: text,
-			displayText: text
-		}
-	}
-
-	return messageData;
-}
 
 function isDefined(obj) {
 	if (typeof obj == 'undefined') {
