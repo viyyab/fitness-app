@@ -4,7 +4,7 @@ const apiai = require('apiai');
 const config = require('./config');
 const express = require('express');
 const bodyParser = require('body-parser');
-const { DialogflowApp } = require('actions-on-google');
+const { dialogflow } = require('actions-on-google');
 const qsr = require('./qsr-apis');
 const app = express();
 
@@ -45,7 +45,7 @@ app.post('/webhook/', (req, res) => {
  	var messageData= '' ;
 	var displayText = '';
 	var text = '';
-	const assistant = new DialogflowApp({request: req, response: res});
+	const assistant = dialogflow({request: req, response: res});
 
     switch (actionName) {
 
