@@ -132,8 +132,8 @@ var createOrderService = (authToken, basketId, callback) => {
     else if(response.statusCode == 200){
       console.log('API hit:', response.statusCode)
       callback(undefined, {
-        instrumentId: response.payment_instruments[0].payment_instrument_id;
-        orderNumber: response.order_no;
+        instrumentId: response.payment_instruments[0].payment_instrument_id,
+        orderNumber: response.order_no
         });
       }
   });
