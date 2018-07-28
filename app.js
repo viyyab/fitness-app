@@ -51,32 +51,38 @@ app.post('/webhook/', (req, res) => {
 
 			case 'request_permission': {
 		 					console.log('In request_permission');
-
 		 					if(isDefined(actionName)){
-										assistant.askForPermissions('To locate you', assistant.SupportedPermissions.DEVICE_PRECISE_LOCATION);
-		 							}
+								assistant.intent('order-restaurant - permission', conv => {
+										conv.ask(new Permission({
+											context: 'To locate you',
+											permissions: 'DEVICE_PRECISE_LOCATION',
+										}));
+									});
+		 						}
 		 				}
 		 					break;
 
 			case 'check_permission': {
-				 						 console.log('In request_permission');
+				 						 console.log('In check_permission');
 				 						 if(isDefined(actionName)){
-											 if (assistant.isPermissionGranted()) {
-												 			// permissions granted.
-															//let displayName = assistant.getUserName().displayName;
-															let latitude = assistant.getDeviceLocation().coordinates.latitude;
-															text= `Hi ${displayName} ! Your latitude is ${latitude} `;
+											 				assistant.intent('order-restaurant - permission- granted', (conv, params, granted) => {
+  														// granted: inferred first (and only) argument value, boolean true if granted, false if not
+  														const explicit = conv.arguments.get('PERMISSION') // also retrievable w/ explicit arguments.get
+  														const name = conv.user.name
+															console.log(conv);
+															text= `Hi ${name} !`;
+															});
+															//let latitude = assistant.getDeviceLocation().coordinates.latitude;
 															}else{
 															// permissions are not granted. ask them one by one manually
-															text= 'Alright. Can you tell me you address please?';
+															text= 'Can you give me the permission please?';
 														}
 														messageData = {
 																speech: text,
 																displayText: text
 																}
 													res.send(messageData);
-				 					 }
-								 }
+				 					 	}
 				 				break;
 
 		 case 'pincode.request': {
