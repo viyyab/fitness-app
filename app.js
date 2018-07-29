@@ -7,7 +7,6 @@ const bodyParser = require('body-parser');
 const { dialogflow } = require('actions-on-google');
 const qsr = require('./qsr-apis');
 const app = express();
-const assistant = dialogflow({request: req, response: res});
 
 if (!config.API_AI_CLIENT_ACCESS_TOKEN) {
 	throw new Error('missing API_AI_CLIENT_ACCESS_TOKEN');
@@ -40,6 +39,7 @@ app.post('/webhook/', (req, res) => {
 	var data = req.body;
 	var sessionId = req.body.sessionId;
 	console.log(JSON.stringify(data));
+	const assistant = dialogflow({request: req, response: res});
 	var actionName = req.body.result.action;
  	var parameters = req.body.result.parameters;
  	var message = req.body.result.resolvedQuery;
