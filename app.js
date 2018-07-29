@@ -76,15 +76,12 @@ app.post('/webhook/', (req, res) => {
 			case 'check_permission': {
 				 						 console.log('In check_permission');
 				 						 if(isDefined(actionName)){
-											 				var returned = (conv, params, granted) => {
-  														// granted: inferred first (and only) argument value, boolean true if granted, false if not
-  														const explicit = conv.arguments.get('PERMISSION') // also retrievable w/ explicit arguments.get
-  														const name = conv.arguments;
-															console.log(conv);
-															console.log(name);
-															text= `Hi ${name} !`;
-															};
-															//let latitude = assistant.getDeviceLocation().coordinates.latitude;
+											 				console.log(req.body);
+											 				if(req.body.inputs[0].arguments[0].boolValue){
+															var lat=req.body.device.location.coordinates.latitude;
+															var lng=req.body.device.location.coordinates.longitude;
+
+															text= `Latitude is ${lat} and Longitude is ${lng}`
 															}else{
 															// permissions are not granted. ask them one by one manually
 															text= 'Can you give me the permission please?';
