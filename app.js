@@ -22,7 +22,7 @@ app.set('port', (process.env.PORT || 5000))
 app.use(express.static('public'));
 
 // Process application/json
-app.use(bodyParser.json(), assistant);
+app.use(bodyParser.json());
 
 const apiAiService = apiai(config.API_AI_CLIENT_ACCESS_TOKEN, {
 	language: "en",
