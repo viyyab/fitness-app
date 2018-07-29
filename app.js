@@ -7,6 +7,7 @@ const bodyParser = require('body-parser');
 const { dialogflow } = require('actions-on-google');
 const qsr = require('./qsr-apis');
 const app = express();
+const assistant = dialogflow({request: req, response: res});
 
 if (!config.API_AI_CLIENT_ACCESS_TOKEN) {
 	throw new Error('missing API_AI_CLIENT_ACCESS_TOKEN');
@@ -22,7 +23,7 @@ app.set('port', (process.env.PORT || 5000))
 app.use(express.static('public'));
 
 // Process application/json
-app.use(bodyParser.json());
+app.use(bodyParser.json(), assistant);
 
 const apiAiService = apiai(config.API_AI_CLIENT_ACCESS_TOKEN, {
 	language: "en",
@@ -45,19 +46,19 @@ app.post('/webhook/', (req, res) => {
  	var messageData= '' ;
 	var displayText = '';
 	var text = '';
-	const assistant = dialogflow({request: req, response: res});
 
-    switch (actionName) {
+	    switch (actionName) {
 
 			case 'request_permission': {
 		 					console.log('In request_permission');
 		 					if(isDefined(actionName)){
-								assistant.intent('order-restaurant - permission', conv => {
+								var conv = () => {
+									console.log('Coversation');
 										conv.ask(new Permission({
 											context: 'To locate you',
 											permissions: 'DEVICE_PRECISE_LOCATION',
 										}));
-									});
+									};
 		 						}
 		 				}
 		 					break;
@@ -65,13 +66,14 @@ app.post('/webhook/', (req, res) => {
 			case 'check_permission': {
 				 						 console.log('In check_permission');
 				 						 if(isDefined(actionName)){
-											 				assistant.intent('order-restaurant - permission- granted', (conv, params, granted) => {
+											 				var returned = (conv, params, granted) => {
   														// granted: inferred first (and only) argument value, boolean true if granted, false if not
   														const explicit = conv.arguments.get('PERMISSION') // also retrievable w/ explicit arguments.get
-  														const name = conv.user.name
+  														const name = conv.arguments;
 															console.log(conv);
+															console.log(name);
 															text= `Hi ${name} !`;
-															});
+															};
 															//let latitude = assistant.getDeviceLocation().coordinates.latitude;
 															}else{
 															// permissions are not granted. ask them one by one manually
