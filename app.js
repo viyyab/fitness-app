@@ -54,11 +54,20 @@ app.post('/webhook/', (req, res) => {
 		 					if(isDefined(actionName)){
 								console.log('Coversation');
 										messageData = {
-											  context: 'To locate you',
-											  permissions: 'DEVICE_PRECISE_LOCATION',
-												speech: 'PLACEHOLDER_FOR_PERMISSION',
-												displayText: 'PLACEHOLDER_FOR_PERMISSION'
-											}
+											"data": {
+												"google": {
+													"expectUserResponse": true,
+													"systemIntent": {
+														"intent": "actions.intent.PERMISSION",
+															"data": {
+																	"@type": "type.googleapis.com/google.actions.v2.PermissionValueSpec",
+																	"optContext": "To provide an accurate experience, ",
+																	"permissions": ["DEVICE_PRECISE_LOCATION"]
+																	}
+																}
+															}
+														}
+													}
 									}
 								res.send(messageData);
 		 				}
