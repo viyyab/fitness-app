@@ -49,17 +49,18 @@ app.post('/webhook/', (req, res) => {
 
 	    switch (actionName) {
 
-			case 'request_permission': {
+			case 'actions.intent.PERMISSION': {
 		 					console.log('In request_permission');
 		 					if(isDefined(actionName)){
-								var conv = () => {
-									console.log('Coversation');
-										conv.ask(new Permission({
-											context: 'To locate you',
-											permissions: 'DEVICE_PRECISE_LOCATION',
-										}));
-									};
-		 						}
+								console.log('Coversation');
+										messageData = {
+											  context: 'To locate you',
+											  permissions: 'DEVICE_PRECISE_LOCATION',
+												speech: 'PLACEHOLDER_FOR_PERMISSION',
+												displayText: 'PLACEHOLDER_FOR_PERMISSION'
+											}
+									}
+								res.send(messageData);
 		 				}
 		 					break;
 
