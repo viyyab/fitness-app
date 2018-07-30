@@ -77,10 +77,12 @@ app.post('/webhook/', (req, res) => {
 							 console.log('In check_permission');
 							 if(isDefined(actionName)){
 								console.log("After entering check permission", JSON.stringify(req.body));
+								console.log(req.body.result.contexts[0].parameters.PERMISSION);
 								if(req.body.result.contexts[0].parameters.PERMISSION){
 								var lat=req.body.originalRequest.data.device.location.coordinates.latitude;
 								var lng=req.body.originalRequest.data.device.location.coordinates.longitude;
-
+								console.log(lat);
+								console.log(lng);
 								text= `Latitude is ${lat} and Longitude is ${lng}`
 								}else{
 								// permissions are not granted. ask them one by one manually
