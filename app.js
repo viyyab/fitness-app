@@ -38,7 +38,7 @@ app.get('/', function (req, res) {
 app.post('/webhook/', (req, res) => {
 	var data = req.body;
 	var sessionId = req.body.sessionId;
-	console.log(JSON.stringify(data));
+	console.log("Request data is", JSON.stringify(data));
 	const assistant = dialogflow({request: req, response: res});
 	var actionName = req.body.result.action;
  	var parameters = req.body.result.parameters;
@@ -49,51 +49,51 @@ app.post('/webhook/', (req, res) => {
 
 	    switch (actionName) {
 
-			case 'actions.intent.PERMISSION': {
-		 					console.log('In request_permission');
+			case 'require_permission': {
+		 					console.log('In require_permission');
 		 					if(isDefined(actionName)){
-								console.log('Coversation');
-										messageData = {
-											"data": {
-												"google": {
-													"expectUserResponse": true,
-													"systemIntent": {
-														"intent": "actions.intent.PERMISSION",
-															"data": {
-																	"@type": "type.googleapis.com/google.actions.v2.PermissionValueSpec",
-																	"optContext": "To provide an accurate experience, ",
-																	"permissions": ["DEVICE_PRECISE_LOCATION"]
-																	}
-																}
-															}
-														}
-													}
+							console.log('Coversation');
+				messageData = {
+					"data": {
+						"google": {
+							"expectUserResponse": true,
+							"systemIntent": {
+								"intent": "actions.intent.PERMISSION",
+							"data": {
+								"@type": "type.googleapis.com/google.actions.v2.PermissionValueSpec",
+								"optContext": "To provide an accurate experience, ",
+								"permissions": ["DEVICE_PRECISE_LOCATION"]
+								}
+							}
 									}
+								}
+							}
+							}
 								res.send(messageData);
 		 				}
-		 					break;
+		 				break;
 
 			case 'check_permission': {
-				 						 console.log('In check_permission');
-				 						 if(isDefined(actionName)){
-											 				console.log(req.body);
-											 				if(req.body.inputs[0].arguments[0].boolValue){
-															var lat=req.body.device.location.coordinates.latitude;
-															var lng=req.body.device.location.coordinates.longitude;
+							 console.log('In check_permission');
+							 if(isDefined(actionName)){
+								console.log("After entering check permission", req.body);
+								if(req.body.inputs[0].arguments[0].boolValue){
+								var lat=req.body.device.location.coordinates.latitude;
+								var lng=req.body.device.location.coordinates.longitude;
 
-															text= `Latitude is ${lat} and Longitude is ${lng}`
-															}else{
-															// permissions are not granted. ask them one by one manually
-															text= 'Can you give me the permission please?';
-														}
-														messageData = {
-																speech: text,
-																displayText: text
-																}
-													res.send(messageData);
-												}
-				 					 	}
-				 				break;
+								text= `Latitude is ${lat} and Longitude is ${lng}`
+								}else{
+								// permissions are not granted. ask them one by one manually
+								text= 'Can you give me the permission please?';
+								}
+								messageData = {
+										speech: text,
+										displayText: text
+										}
+							res.send(messageData);
+							}
+				 		}
+				 	break;
 
 		 case 'pincode.request': {
 					console.log('In action pincode');
@@ -118,7 +118,7 @@ app.post('/webhook/', (req, res) => {
 						});
 					}
 				}
-					break;
+				break;
 
 		default:
 			//unhandled action, just send back the text
