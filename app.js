@@ -86,7 +86,7 @@ app.post('/webhook/', (req, res) => {
 								text= `Thank you for giving me the permission ! Your coordinates are ${lat} ${lng}`
 								}else{
 								// permissions are not granted. ask them one by one manually
-								text= 'I cannot process your order without your permission. Can you please give me the permission ? ';
+								text= 'I am sorry ! I cannot process your order without your permission';
 								}
 								messageData = {
 										speech: text,
