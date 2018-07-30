@@ -83,7 +83,7 @@ app.post('/webhook/', (req, res) => {
 								var lng=req.body.originalRequest.data.device.location.coordinates.longitude;
 								console.log(lat);
 								console.log(lng);
-								text= `Latitude is ${lat} and Longitude is ${lng}`
+								text= `Thank you for providing me the permission ! Your coordinates are ${lat} ${lng}`
 								}else{
 								// permissions are not granted. ask them one by one manually
 								text= 'Can you give me the permission please?';
