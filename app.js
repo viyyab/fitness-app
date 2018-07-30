@@ -122,7 +122,7 @@ app.post('/webhook/', (req, res) => {
 
 		default:
 			//unhandled action, just send back the text
-			sendTextMessage(senderId, responseText);
+			break;
 	}
 		// Assume all went well.
 		// You must send back a 200, within 20 seconds
