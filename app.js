@@ -83,10 +83,10 @@ app.post('/webhook/', (req, res) => {
 								var lng=req.body.originalRequest.data.device.location.coordinates.longitude;
 								console.log(lat);
 								console.log(lng);
-								text= `Thank you for providing me the permission ! Your coordinates are ${lat} ${lng}`
+								text= `Thank you for giving me the permission ! Your coordinates are ${lat} ${lng}`
 								}else{
 								// permissions are not granted. ask them one by one manually
-								text= 'Can you give me the permission please?';
+								text= 'I cannot process your order without your permission. Can you please give me the permission ? ';
 								}
 								messageData = {
 										speech: text,
