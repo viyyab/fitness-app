@@ -61,7 +61,7 @@ app.post('/webhook/', (req, res) => {
 								"intent": "actions.intent.PERMISSION",
 							"data": {
 								"@type": "type.googleapis.com/google.actions.v2.PermissionValueSpec",
-								"optContext": "To provide an accurate experience, ",
+								"optContext": "In order to process your order, ",
 								"permissions": ["DEVICE_PRECISE_LOCATION"]
 								}
 							}
