@@ -39,6 +39,18 @@ app.post('/webhook/', (req, res) => {
 	var data = req.body;
 	var sessionId = req.body.sessionId;
 	console.log("Request data is", JSON.stringify(data));
+
+	setTimeout(() => {
+	  qsr.getAuthTokenService((error, result) => {
+			if(error) {
+				console.log(error);
+			} else {
+				var access_token = results.access_token;
+				var refresh_token = results.refresh_token;
+			}
+		});
+	}, 2000);
+
 	const assistant = dialogflow({request: req, response: res});
 	var actionName = req.body.result.action;
  	var parameters = req.body.result.parameters;
