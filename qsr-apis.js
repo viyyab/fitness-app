@@ -5,17 +5,16 @@ var getAuthTokenService = (callback) =>{
 
   var username= 'gwengraman@gmail.com';
   var password= 'Gwen@123';
-  var authToken= "Basic " + new Buffer(username + ':' + password).toString('Base64');
   console.log('Auth token API hit');
   request({
-    url: 'https://capgemini01-alliance-prtnr-eu06-dw.demandware.net/s/CapCafe/dw/shop/v18_3/customers/auth?client_id=e4bd2b6d-1567-475d-9eb2-b2c86a37a560' ,
-    body: {
-      "type": "credentials"
+    url: 'https://localhost:9002/authorizationserver/oauth/token' ,
+    form: {
+    username: username,
+    password: password
     },
     method: 'POST',
     headers: {
-        "content-type": "application/json",
-        "authorization": authToken
+        "content-type": "application/x-www-form-urlencoded"
       },
     json: true
   }, (error, response, body) => {
@@ -30,22 +29,26 @@ var getAuthTokenService = (callback) =>{
       console.log('API hit:', response.statusCode)
 
       callback(undefined, {
-        token: response.headers['authorization'],
-        customer_id: body.customer_id,
-        email: body.email,
+        token: body.access_token,
+        refresh_token: body.refresh_token,
         });
       }
   });
 };
 
-var drinksCallService = (drinkId, callback) =>{
+var nearestStoreService = (lat, lng, rad, callback) =>{
 
-  console.log('Drinks API hit');
+  console.log('Nearest store API hit');
   request({
-    url: "https://capgemini01-alliance-prtnr-eu06-dw.demandware.net/s/CapCafe/dw/shop/v18_3/products/(proteindrink,"+ drinkId +",personaltrainer)?expand=,prices&client_id=e4bd2b6d-1567-475d-9eb2-b2c86a37a560" ,
+    url: 'https://localhost:9002/qsrcommercewebservices/v2/qsr/fasteststores' ,
+    form: {
+    latitude: lat,
+    longitude: lng,
+    radius: rad
+    },
     method: 'GET',
     headers: {
-        "content-type": "application/json",
+        "content-type": "application/x-www-form-urlencoded",
         },
     json: true
   }, (error, response, body) => {
@@ -53,13 +56,18 @@ var drinksCallService = (drinkId, callback) =>{
     if(error){
       callback('There was an error connecting to the server');
     }
-    else if(response.statusCode == 400){
+    else if(response.statusCode == 401){
       callback('Unable to get the result');
     }
     else if(response.statusCode == 200){
       console.log('API hit:', response.statusCode)
 
-      callback(undefined, response);
+      callback(undefined, {
+        address: body.stores[0].address.line1,
+        storeId : body.stores[0].address.id,
+        name: body.stores[0].displayName,
+        distance : body.stores[0].formattedDistance
+        });
       }
   });
 
@@ -341,7 +349,7 @@ var updatingPaymentService = (authToken, instrumentId, total, orderNumber, callb
 
 module.exports = {
     getAuthTokenService,
-    drinksCallService,
+    nearestStoreService,
     createBasketService,
     createOrderService,
     addItemService,
