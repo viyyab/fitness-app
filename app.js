@@ -83,7 +83,7 @@ app.post('/webhook/', (req, res) => {
 								var lng=req.body.originalRequest.data.device.location.coordinates.longitude;
 								console.log(lat);
 								console.log(lng);
-								text= `Thank you for giving me the permission ! Your coordinates are ${lat} ${lng}`
+								text= `Thank you for your permission ! I can place an order for you at the nearest McDonald’s, which is a 10 minutes walk from your current location. What would you like to order?”`
 								}else{
 								// permissions are not granted. ask them one by one manually
 								text= 'I am sorry ! I cannot process your order without your permission';
