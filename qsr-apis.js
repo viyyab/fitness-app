@@ -61,13 +61,38 @@ var nearestStoreService = (lat, lng, rad, callback) =>{
     }
     else if(response.statusCode == 200){
       console.log('API hit:', response.statusCode)
-
       callback(undefined, {
         address: body.stores[0].address.line1,
         storeId : body.stores[0].address.id,
         name: body.stores[0].displayName,
-        distance : body.stores[0].formattedDistance
+        distance : body.stores[0].formattedDistance,
+        sLat : body.stores[0].geoPoint.latitude,
+        sLng : body.stores[0].geoPoint.longitude
         });
+      }
+  });
+
+};
+
+
+var calculateDistanceService = (uLat, uLng, sLat, sLng, callback) => {
+
+  console.log('Calculate distance API hit');
+  request({
+    url: `https://maps.googleapis.com/maps/api/distancematrix/json?origins=${uLat},${uLng}&destinations=${sLat},${sLng}&departure_time=now&mode=walking`,
+    method: 'GET',
+    json: true
+  }, (error, response, body) => {
+    if(error){
+      callback('There was an error connecting to the server');
+    }
+    else if(response.statusCode == 200){
+      callback(undefined, {
+          duration : body.rows[0].elements[0].duration.text
+        });
+    }
+    else {
+      callback('Unable to get the distance');
       }
   });
 
@@ -350,6 +375,7 @@ var updatingPaymentService = (authToken, instrumentId, total, orderNumber, callb
 module.exports = {
     getAuthTokenService,
     nearestStoreService,
+    calculateDistanceService,
     createBasketService,
     createOrderService,
     addItemService,
