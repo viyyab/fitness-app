@@ -59,31 +59,31 @@ app.post('/webhook/', (req, res) => {
 	var displayText = '';
 	var text = '';
 
-	    switch (actionName) {
+	switch (actionName) {
 
 			case 'require_permission': {
 		 					console.log('In require_permission');
 		 					if(isDefined(actionName)){
 							console.log('Coversation');
-				messageData = {
-					"data": {
-						"google": {
-							"expectUserResponse": true,
-							"systemIntent": {
-								"intent": "actions.intent.PERMISSION",
-							"data": {
-								"@type": "type.googleapis.com/google.actions.v2.PermissionValueSpec",
-								"optContext": "To process your order, ",
-								"permissions": ["DEVICE_PRECISE_LOCATION"]
-								}
-							}
-									}
-								}
-							}
-							}
-								res.send(messageData);
-		 				}
-		 				break;
+							messageData = {
+									"data": {
+										"google": {
+											"expectUserResponse": true,
+											"systemIntent": {
+													"intent": "actions.intent.PERMISSION",
+													"data": {
+															"@type": "type.googleapis.com/google.actions.v2.PermissionValueSpec",
+															"optContext": "To process your order, ",
+															"permissions": ["DEVICE_PRECISE_LOCATION"]
+																	}
+																}
+															}
+														}
+													}
+												}
+												res.send(messageData);
+		 								}
+		 							break;
 
 			case 'check_permission': {
 							 console.log('In check_permission');
@@ -91,11 +91,21 @@ app.post('/webhook/', (req, res) => {
 								console.log("After entering check permission", JSON.stringify(req.body));
 								//console.log(req.body.originalRequest.data.inputs[0].arguments[0].boolValue);
 								if(req.body.originalRequest.data.inputs[0].arguments[0].boolValue){
-								var lat=req.body.originalRequest.data.device.location.coordinates.latitude;
-								var lng=req.body.originalRequest.data.device.location.coordinates.longitude;
-								//console.log(lat);
-								//console.log(lng);
-								text= `Thank you for your permission ! I can place an order for you at the nearest McDonald’s, which is a 10 minutes walk from your current location. What would you like to order?”`
+								var ulat=req.body.originalRequest.data.device.location.coordinates.latitude;
+								var ulng=req.body.originalRequest.data.device.location.coordinates.longitude;
+								qsr.nearestStoreService(ulat,ulng, 5000, (error, storeResults) => {
+									if(error){
+										text = error;
+									}else {
+										qsr.calculateDistanceService(ulat, ulng, storeResults.sLat, storeResults.sLng, (error, distanceResults) => {
+											if(error){
+												text = error;
+											}else {
+												text= `Thank you for your permission ! I can place an order for you at McDonald’s at ${storeResults.address}, which is a ${distanceResults.duration} walk from your current location. What would you like to order?`
+											}
+										});
+									}
+								});
 								}else{
 								// permissions are not granted. ask them one by one manually
 								text= 'I am sorry ! I cannot process your order without your permission';
@@ -107,7 +117,8 @@ app.post('/webhook/', (req, res) => {
 							res.send(messageData);
 							}
 				 		}
-				 	break;
+				 		break;
+
 
 		 case 'pincode.request': {
 					console.log('In action pincode');
@@ -138,9 +149,6 @@ app.post('/webhook/', (req, res) => {
 			//unhandled action, just send back the text
 			break;
 	}
-		// Assume all went well.
-		// You must send back a 200, within 20 seconds
-
 });
 
 
