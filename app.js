@@ -94,19 +94,19 @@ app.post('/webhook/', (req, res) => {
 								var ulng=req.body.originalRequest.data.device.location.coordinates.longitude;
 								console.log(ulat);
 								console.log(ulng);
-								// qsr.nearestStoreService(ulat, ulng, (error, storeResults) => {
-								// 	if(error){
-								// 		text = error;
-								// 	}else {
-										// qsr.calculateDistanceService(ulat, ulng, 12.951026, 77.699306, (error, distanceResults) => {
-										// 	if(error){
-										// 		text = error;
-										// 	}else {
-												text= `Thank you for your permission ! I can place an order for you at McDonald’s, which is a 10 mins walk from your current location. What would you like to order?`
-										// 	}
-										// });
-									//}
-								//});
+								 qsr.nearestStoreService(ulat, ulng, (error, storeResults) => {
+								 	if(error){
+								 		text = error;
+								 	}else {
+										 qsr.calculateDistanceService(ulat, ulng, storeResults.sLat, storeResults.sLng, (error, distanceResults) => {
+										 	if(error){
+										 		text = error;
+										 	}else {
+												text= `Thank you for your permission ! I can place an order for you at McDonald’s at ${storeResults.address}, which is a ${distanceResults.duration} walk from your current location. What would you like to order?`
+										 	}
+										 });
+									}
+								});
 								}else{
 								// permissions are not granted. ask them one by one manually
 								text= 'I am sorry ! I cannot process your order without your permission';

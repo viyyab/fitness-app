@@ -44,12 +44,12 @@ var nearestStoreService = (ulat, ulng, callback) =>{
     url: `https://34.195.45.172:9002/qsrcommercewebservices/v2/qsr/fasteststores?latitude=${ulat}&longitude=${ulng}&radius=8000`,
     method: 'GET',
     headers: {
-         "content-type": "application/x-www-form-urlencoded",
+         "content-type": "application/x-www-form-urlencoded"
       },
     json: true
     }, (error, response, body) => {
     if(error){
-      callback('There was an error connecting to the server');
+      callback('There was an error connecting to the nearest store server');
     }
     else if(response.statusCode == 401){
       callback('Unable to get the result');
@@ -79,7 +79,7 @@ var calculateDistanceService = (uLat, uLng, sLat, sLng, callback) => {
     json: true
   }, (error, response, body) => {
     if(error){
-      callback('There was an error connecting to the server');
+      callback('There was an error connecting to the duration server');
     }
     else if(response.statusCode == 200){
       callback(undefined, {
