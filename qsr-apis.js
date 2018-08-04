@@ -42,7 +42,7 @@ var nearestStoreService = (ulat, ulng, callback) =>{
   console.log('Nearest store API hit');
   request({
     url: `https://34.195.45.172:9002/qsrcommercewebservices/v2/qsr/fasteststores?latitude=${ulat}&longitude=${ulng}&radius=8000`,
-    method: 'GET'
+    method: 'GET',
     // headers: {
     //     "content-type": "application/x-www-form-urlencoded",
     //     },
