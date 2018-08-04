@@ -40,18 +40,13 @@ var nearestStoreService = (lat, lng, rad, callback) =>{
 
   console.log('Nearest store API hit');
   request({
-    url: 'https://34.195.45.172:9002/qsrcommercewebservices/v2/qsr/fasteststores' ,
-    form: {
-    latitude: lat,
-    longitude: lng,
-    radius: rad
-    },
+    url: 'https://34.195.45.172:9002/qsrcommercewebservices/v2/qsr/fasteststores?latitude=${lat}&longitude=${lng}&radius=${rad}' ,
     method: 'GET',
     headers: {
         "content-type": "application/x-www-form-urlencoded",
         },
     json: true
-  }, (error, response, body) => {
+    }, (error, response, body) => {
 
     if(error){
       callback('There was an error connecting to the server');
@@ -62,12 +57,12 @@ var nearestStoreService = (lat, lng, rad, callback) =>{
     else if(response.statusCode == 200){
       console.log('API hit:', response.statusCode)
       callback(undefined, {
-        address: body.stores[0].address.line1,
-        storeId : body.stores[0].address.id,
-        name: body.stores[0].displayName,
-        distance : body.stores[0].formattedDistance,
-        sLat : body.stores[0].geoPoint.latitude,
-        sLng : body.stores[0].geoPoint.longitude
+        address: body.pointOfServices[0].address.line1,
+        storeId : body.pointOfServices[0].address.id,
+        name: body.pointOfServices[0].displayName,
+        distance : body.pointOfServices[0].formattedDistance,
+        sLat : body.pointOfServices[0].geoPoint.latitude,
+        sLng : body.pointOfServices[0].geoPoint.longitude
         });
       }
   });
