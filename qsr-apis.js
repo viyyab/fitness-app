@@ -36,17 +36,17 @@ const request= require('request');
 //   });
 // };
 
-var nearestStoreService = (lat, lng, rad, callback) =>{
+var nearestStoreService = (ulat, ulng, callback) =>{
   console.log(lat);
   console.log(lng);
   console.log('Nearest store API hit');
   request({
-    url: 'https://34.195.45.172:9002/qsrcommercewebservices/v2/qsr/fasteststores?latitude=${lat}&longitude=${lng}&radius=${rad}' ,
+    url: `https://34.195.45.172:9002/qsrcommercewebservices/v2/qsr/fasteststores?latitude=${ulat}&longitude=${ulng}&radius=8000`,
     method: 'GET'
     // headers: {
     //     "content-type": "application/x-www-form-urlencoded",
     //     },
-    // json: true
+    json: true
     }, (error, response, body) => {
 
     if(error){

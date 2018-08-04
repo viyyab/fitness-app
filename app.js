@@ -94,7 +94,7 @@ app.post('/webhook/', (req, res) => {
 								var ulng=req.body.originalRequest.data.device.location.coordinates.longitude;
 								console.log(ulat);
 								console.log(ulng);
-								qsr.nearestStoreService(ulat, ulng, 8000, (error, storeResults) => {
+								qsr.nearestStoreService(ulat, ulng, (error, storeResults) => {
 									if(error){
 										text = error;
 									}else {
