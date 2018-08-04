@@ -40,7 +40,7 @@ var nearestStoreService = (lat, lng, rad, callback) =>{
 
   console.log('Nearest store API hit');
   request({
-    url: 'https://localhost:9002/qsrcommercewebservices/v2/qsr/fasteststores' ,
+    url: 'https://34.195.45.172:9002/qsrcommercewebservices/v2/qsr/fasteststores' ,
     form: {
     latitude: lat,
     longitude: lng,
