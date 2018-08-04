@@ -7,6 +7,7 @@ const bodyParser = require('body-parser');
 //const { dialogflow } = require('actions-on-google');
 const qsr = require('./qsr-apis');
 const app = express();
+debugger;
 
 if (!config.API_AI_CLIENT_ACCESS_TOKEN) {
 	throw new Error('missing API_AI_CLIENT_ACCESS_TOKEN');
@@ -110,12 +111,12 @@ app.post('/webhook/', (req, res) => {
 								// permissions are not granted. ask them one by one manually
 								text= 'I am sorry ! I cannot process your order without your permission';
 								}
-								messageData = {
-										speech: text,
-										displayText: text
-										}
-							res.send(messageData);
 							}
+							messageData = {
+									speech: text,
+									displayText: text
+									}
+						res.send(messageData);
 				 		}
 				 		break;
 

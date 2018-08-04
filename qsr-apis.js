@@ -1,40 +1,40 @@
 const request= require('request');
 
 
-var getAuthTokenService = (callback) =>{
-
-  var username= 'gwengraman@gmail.com';
-  var password= 'Gwen@123';
-  console.log('Auth token API hit');
-  request({
-    url: 'https://localhost:9002/authorizationserver/oauth/token' ,
-    form: {
-    username: username,
-    password: password
-    },
-    method: 'POST',
-    headers: {
-        "content-type": "application/x-www-form-urlencoded"
-      },
-    json: true
-  }, (error, response, body) => {
-
-    if(error){
-      callback('There was an error connecting to the server');
-    }
-    else if(response.statusCode == 400){
-      callback('Unable to get the token');
-    }
-    else if(response.statusCode == 200){
-      console.log('API hit:', response.statusCode)
-
-      callback(undefined, {
-        token: body.access_token,
-        refresh_token: body.refresh_token,
-        });
-      }
-  });
-};
+// var getAuthTokenService = (callback) =>{
+//
+//   var username= 'gwengraman@gmail.com';
+//   var password= 'Gwen@123';
+//   console.log('Auth token API hit');
+//   request({
+//     url: 'https://localhost:9002/authorizationserver/oauth/token' ,
+//     form: {
+//     username: username,
+//     password: password
+//     },
+//     method: 'POST',
+//     headers: {
+//         "content-type": "application/x-www-form-urlencoded"
+//       },
+//     json: true
+//   }, (error, response, body) => {
+//
+//     if(error){
+//       callback('There was an error connecting to the server');
+//     }
+//     else if(response.statusCode == 400){
+//       callback('Unable to get the token');
+//     }
+//     else if(response.statusCode == 200){
+//       console.log('API hit:', response.statusCode)
+//
+//       callback(undefined, {
+//         token: body.access_token,
+//         refresh_token: body.refresh_token,
+//         });
+//       }
+//   });
+// };
 
 var nearestStoreService = (lat, lng, rad, callback) =>{
   console.log(lat);
@@ -369,7 +369,7 @@ var updatingPaymentService = (authToken, instrumentId, total, orderNumber, callb
 
 
 module.exports = {
-    getAuthTokenService,
+    //getAuthTokenService,
     nearestStoreService,
     calculateDistanceService,
     createBasketService,
