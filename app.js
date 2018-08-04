@@ -40,7 +40,6 @@ app.post('/webhook/', (req, res) => {
 	var sessionId = req.body.sessionId;
 	console.log("Request data is", JSON.stringify(data));
 
-	setInterval(() => {
 	  qsr.getAuthTokenService((error, result) => {
 			if(error) {
 				console.log(error);
@@ -49,7 +48,6 @@ app.post('/webhook/', (req, res) => {
 				var refresh_token = results.refresh_token;
 			}
 		});
-	}, 3000);
 
 	const assistant = dialogflow({request: req, response: res});
 	var actionName = req.body.result.action;
