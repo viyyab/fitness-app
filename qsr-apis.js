@@ -46,9 +46,8 @@ var nearestStoreService = (ulat, ulng, callback) =>{
     headers: {
          "content-type": "application/x-www-form-urlencoded",
       },
-    //json: true
+    json: true
     }, (error, response, body) => {
-      console.log(body);
     if(error){
       callback('There was an error connecting to the server');
     }
@@ -77,7 +76,7 @@ var calculateDistanceService = (uLat, uLng, sLat, sLng, callback) => {
   request({
     url: `https://maps.googleapis.com/maps/api/distancematrix/json?origins=${uLat},${uLng}&destinations=${sLat},${sLng}&departure_time=now&mode=walking`,
     method: 'GET',
-    //json: true
+    json: true
   }, (error, response, body) => {
     if(error){
       callback('There was an error connecting to the server');

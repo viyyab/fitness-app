@@ -39,7 +39,7 @@ app.get('/', function (req, res) {
 app.post('/webhook/', (req, res) => {
 	var data = req.body;
 	var sessionId = req.body.sessionId;
-	console.log("Request data is", JSON.stringify(data));
+//	console.log("Request data is", JSON.stringify(data));
 
 	  // qsr.getAuthTokenService((error, result) => {
 		// 	if(error) {
@@ -87,26 +87,26 @@ app.post('/webhook/', (req, res) => {
 			case 'check_permission': {
 							 console.log('In check_permission');
 							 if(isDefined(actionName)){
-								console.log("After entering check permission", JSON.stringify(req.body));
+								//console.log("After entering check permission", JSON.stringify(req.body));
 								//console.log(req.body.originalRequest.data.inputs[0].arguments[0].boolValue);
 								if(req.body.originalRequest.data.inputs[0].arguments[0].boolValue){
 								var ulat=req.body.originalRequest.data.device.location.coordinates.latitude;
 								var ulng=req.body.originalRequest.data.device.location.coordinates.longitude;
 								console.log(ulat);
 								console.log(ulng);
-								qsr.nearestStoreService(ulat, ulng, (error, storeResults) => {
-									if(error){
-										text = error;
-									}else {
-										qsr.calculateDistanceService(ulat, ulng, storeResults.sLat, storeResults.sLng, (error, distanceResults) => {
+								// qsr.nearestStoreService(ulat, ulng, (error, storeResults) => {
+								// 	if(error){
+								// 		text = error;
+								// 	}else {
+										qsr.calculateDistanceService(ulat, ulng, 12.951026, 77.699306, (error, distanceResults) => {
 											if(error){
 												text = error;
 											}else {
-												text= `Thank you for your permission ! I can place an order for you at McDonald’s at ${storeResults.address}, which is a ${distanceResults.duration} walk from your current location. What would you like to order?`
+												text= `Thank you for your permission ! I can place an order for you at McDonald’s, which is a ${distanceResults.duration} walk from your current location. What would you like to order?`
 											}
 										});
-									}
-								});
+									//}
+								//});
 								}else{
 								// permissions are not granted. ask them one by one manually
 								text= 'I am sorry ! I cannot process your order without your permission';
