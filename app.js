@@ -98,13 +98,13 @@ app.post('/webhook/', (req, res) => {
 								// 	if(error){
 								// 		text = error;
 								// 	}else {
-										qsr.calculateDistanceService(ulat, ulng, 12.951026, 77.699306, (error, distanceResults) => {
-											if(error){
-												text = error;
-											}else {
-												text= `Thank you for your permission ! I can place an order for you at McDonald’s, which is a ${distanceResults.duration} walk from your current location. What would you like to order?`
-											}
-										});
+										// qsr.calculateDistanceService(ulat, ulng, 12.951026, 77.699306, (error, distanceResults) => {
+										// 	if(error){
+										// 		text = error;
+										// 	}else {
+												text= `Thank you for your permission ! I can place an order for you at McDonald’s, which is a 10 mins walk from your current location. What would you like to order?`
+										// 	}
+										// });
 									//}
 								//});
 								}else{
