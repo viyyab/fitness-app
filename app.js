@@ -4,7 +4,7 @@ const apiai = require('apiai');
 const config = require('./config');
 const express = require('express');
 const bodyParser = require('body-parser');
-const { dialogflow } = require('actions-on-google');
+//const { dialogflow } = require('actions-on-google');
 const qsr = require('./qsr-apis');
 const app = express();
 
@@ -40,16 +40,16 @@ app.post('/webhook/', (req, res) => {
 	var sessionId = req.body.sessionId;
 	console.log("Request data is", JSON.stringify(data));
 
-	  qsr.getAuthTokenService((error, result) => {
-			if(error) {
-				console.log(error);
-			} else {
-				var access_token = results.access_token;
-				var refresh_token = results.refresh_token;
-			}
-		});
+	  // qsr.getAuthTokenService((error, result) => {
+		// 	if(error) {
+		// 		console.log(error);
+		// 	} else {
+		// 		var access_token = results.access_token;
+		// 		var refresh_token = results.refresh_token;
+		// 	}
+		// });
 
-	const assistant = dialogflow({request: req, response: res});
+	// const assistant = dialogflow({request: req, response: res});
 	var actionName = req.body.result.action;
  	var parameters = req.body.result.parameters;
  	var message = req.body.result.resolvedQuery;
@@ -91,7 +91,9 @@ app.post('/webhook/', (req, res) => {
 								if(req.body.originalRequest.data.inputs[0].arguments[0].boolValue){
 								var ulat=req.body.originalRequest.data.device.location.coordinates.latitude;
 								var ulng=req.body.originalRequest.data.device.location.coordinates.longitude;
-								qsr.nearestStoreService(ulat,ulng, 8000, (error, storeResults) => {
+								console.log(ulat);
+								console.log(ulng);
+								qsr.nearestStoreService(ulat, ulng, 8000, (error, storeResults) => {
 									if(error){
 										text = error;
 									}else {

@@ -37,15 +37,16 @@ var getAuthTokenService = (callback) =>{
 };
 
 var nearestStoreService = (lat, lng, rad, callback) =>{
-
+  console.log(lat);
+  console.log(lng);
   console.log('Nearest store API hit');
   request({
     url: 'https://34.195.45.172:9002/qsrcommercewebservices/v2/qsr/fasteststores?latitude=${lat}&longitude=${lng}&radius=${rad}' ,
-    method: 'GET',
-    headers: {
-        "content-type": "application/x-www-form-urlencoded",
-        },
-    json: true
+    method: 'GET'
+    // headers: {
+    //     "content-type": "application/x-www-form-urlencoded",
+    //     },
+    // json: true
     }, (error, response, body) => {
 
     if(error){
