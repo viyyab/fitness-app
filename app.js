@@ -85,12 +85,12 @@ app.post('/webhook/', (req, res) => {
 								 	if(error){
 								 		text = error;
 								 	}else {
+										text= `I can place an order for you at the nearest McDonald’s at ${storeResults.address}, which is a 10mins walk from your current location. What would you like to order?`;
 										console.log(storeResults);
 										address= storeResults.address;
 										console.log(address);
 										 }
 									});
-								text= `I can place an order for you at the nearest McDonald’s at ${storeResults.address}, which is a 10mins walk from your current location. What would you like to order?`;
 								}else{
 								// permissions are not granted. ask them one by one manually
 								text= 'I am sorry ! I cannot process your order without your permission';
