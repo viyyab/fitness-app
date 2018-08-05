@@ -18,7 +18,7 @@ if (!config.SERVER_URL) { //used for ink to static files
 }
 
 
-app.set('port', (process.env.PORT || 5000))
+app.set('port', (process.env.PORT || 4984))
 
 //serve static files in the public directory
 app.use(express.static('public'));
@@ -46,10 +46,7 @@ app.post('/webhook/', (req, res) => {
   var displayText = '';
 	var text = '';
 	var address = '';
-	var messageData = {
-			speech: text,
-			displayText: text
-			}
+	var messageData = '';
 	switch (actionName) {
 
 			case 'require_permission': {
@@ -84,9 +81,7 @@ app.post('/webhook/', (req, res) => {
 								if(req.body.originalRequest.data.inputs[0].arguments[0].boolValue){
 								var ulat=req.body.originalRequest.data.device.location.coordinates.latitude;
 								var ulng=req.body.originalRequest.data.device.location.coordinates.longitude;
-								console.log(ulat);
-								console.log(ulng);
-								 nearestStore.nearestStoreService(ulat, ulng, (error, storeResults) => {
+								nearestStore.nearestStoreService(ulat, ulng, (error, storeResults) => {
 								 	if(error){
 								 		text = error;
 								 	}else {
@@ -95,12 +90,15 @@ app.post('/webhook/', (req, res) => {
 										console.log(address);
 										 }
 									});
-
-									text= `I can place an order for you at the nearest McDonald’s at ${address}, which is a 10mins walk from your current location. What would you like to order?`;
+								text= `I can place an order for you at the nearest McDonald’s at ${address}, which is a 10mins walk from your current location. What would you like to order?`;
 								}else{
 								// permissions are not granted. ask them one by one manually
 								text= 'I am sorry ! I cannot process your order without your permission';
 								}
+								messageData = {
+										speech: text,
+										displayText: text
+										}
 							}
 						res.send(messageData);
 				 		}
