@@ -85,15 +85,11 @@ app.post('/webhook/', (req, res) => {
 								 	if(error){
 								 		text = error;
 								 	}else {
-										qsr.calculateDistanceService(ulat, ulng, storeResults.sLat, storeResults.sLng, (error, results) => {
-											console.log(storeResults);
-											console.log(storeResults.address);
-											console.log(results);
-											console.log(results.duration);
-										});
-										}
+										console.log(storeResults);
+										text = storeResults;
+										  	}
 									});
-								text= `I can place an order for you at the nearest McDonald’s at ${storeResults.address}, which is a 10mins walk from your current location. What would you like to order?`;
+								//text= `I can place an order for you at the nearest McDonald’s at ${storeResults.address}, which is a 10mins walk from your current location. What would you like to order?`;
 								}else{
 								// permissions are not granted. ask them one by one manually
 								text= 'I am sorry ! I cannot process your order without your permission';

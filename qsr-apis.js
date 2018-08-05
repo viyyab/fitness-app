@@ -56,16 +56,15 @@ var nearestStoreService = (ulat, ulng, callback) =>{
       callback('Unable to get the result');
     }
     else if(response.statusCode == 200){
-      console.log('API hit:', response.statusCode)
-      callback(undefined, {
-        address: body.pointOfServices[0].address.line1,
-        storeId : body.pointOfServices[0].address.id,
-        name: body.pointOfServices[0].displayName,
-        distance : body.pointOfServices[0].formattedDistance,
-        sLat : body.pointOfServices[0].geoPoint.latitude,
-        sLng : body.pointOfServices[0].geoPoint.longitude
-        });
-      }
+      console.log('API hit:', response.statusCode);
+      calculateDistanceService(ulat, ulng, body.pointOfServices[0].geoPoint.latitude, body.pointOfServices[0].geoPoint.longitude, (error, result) => {
+        if(error){
+          text = error;
+        }else {
+          callback(`I can place an order for you at the nearest McDonald’s at ${body.pointOfServices[0].address.line1}, which is a ${result.duration} walk from your current location. What would you like to order?`);
+              }
+      });
+    }
   });
 
 };
