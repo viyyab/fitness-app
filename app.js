@@ -5,7 +5,8 @@ const config = require('./config');
 const express = require('express');
 const bodyParser = require('body-parser');
 //const { dialogflow } = require('actions-on-google');
-const qsr = require('./qsr-apis');
+const nearestStore= require('./nearest_store/nearestStore.js');
+const request= require('request');
 const app = express();
 debugger;
 
@@ -39,18 +40,6 @@ app.get('/', function (req, res) {
 app.post('/webhook/', (req, res) => {
 	var data = req.body;
 	var sessionId = req.body.sessionId;
-//	console.log("Request data is", JSON.stringify(data));
-
-	  // qsr.getAuthTokenService((error, result) => {
-		// 	if(error) {
-		// 		console.log(error);
-		// 	} else {
-		// 		var access_token = results.access_token;
-		// 		var refresh_token = results.refresh_token;
-		// 	}
-		// });
-
-	// const assistant = dialogflow({request: req, response: res});
 	var actionName = req.body.result.action;
  	var parameters = req.body.result.parameters;
  	var message = req.body.result.resolvedQuery;
@@ -94,19 +83,13 @@ app.post('/webhook/', (req, res) => {
 								var ulng=req.body.originalRequest.data.device.location.coordinates.longitude;
 								console.log(ulat);
 								console.log(ulng);
-								 qsr.nearestStoreService(ulat, ulng, (error, storeResults) => {
+								 nearestStore.nearestStoreService(ulat, ulng, (error, storeResults) => {
 								 	if(error){
 								 		text = error;
 								 	}else {
-										 qsr.calculateDistanceService(ulat, ulng, storeResults.sLat, storeResults.sLng, (error, distanceResults) => {
-										 	if(error){
-										 		text = error;
-										 	}else {
-												text= `Thank you for your permission ! I can place an order for you at McDonald’s at ${storeResults.address}, which is a ${distanceResults.duration} walk from your current location. What would you like to order?`
+										 text= `Thank you for your permission ! I can place an order for you at McDonald’s at ${storeResults.address}, which is a 10mins walk from your current location. What would you like to order?`
 										 	}
-										 });
-									}
-								});
+									});
 								}else{
 								// permissions are not granted. ask them one by one manually
 								text= 'I am sorry ! I cannot process your order without your permission';
