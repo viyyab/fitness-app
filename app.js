@@ -45,6 +45,7 @@ app.post('/webhook/', (req, res) => {
  	var message = req.body.result.resolvedQuery;
   var displayText = '';
 	var text = '';
+	var address = '';
 	var messageData = {
 			speech: text,
 			displayText: text
@@ -90,7 +91,7 @@ app.post('/webhook/', (req, res) => {
 								 		text = error;
 								 	}else {
 										console.log(storeResults);
-										var address= storeResults.address;
+										address= storeResults.address;
 										console.log(address);
 										 }
 									});
