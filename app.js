@@ -6,7 +6,6 @@ const express = require('express');
 const bodyParser = require('body-parser');
 //const { dialogflow } = require('actions-on-google');
 const qsr= require('./qsr-apis.js');
-const nearest= require('./nearestStore.js');
 const request= require('request');
 const app = express();
 debugger;
