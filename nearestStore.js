@@ -26,7 +26,6 @@ var nearestStoreService = (ulat, ulng, callback) =>{
     }
     else if(response.statusCode == 200){
       console.log('API hit:', response.statusCode)
-      console.log(JSON.stringify(body));
       console.log(body.pointOfServices[0].geoPoint.latitude);
       console.log(body.pointOfServices[0].displayName);
       callback(undefined, {
