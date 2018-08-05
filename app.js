@@ -91,6 +91,7 @@ app.post('/webhook/', (req, res) => {
 												console.log(error);
 											}else {
 												console.log(durationResult.duration);
+												text= 'Thank you for the permission ! I can place an order for you at Mcdonalds at , which is a walk from your place. What would you like to order ?';
 											}
 										});
 									};
