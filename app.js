@@ -5,7 +5,7 @@ const config = require('./config');
 const express = require('express');
 const bodyParser = require('body-parser');
 //const { dialogflow } = require('actions-on-google');
-const nearestStore= require('./nearest_store/nearestStore.js');
+const nearestStore= require('./nearestStore.js');
 const request= require('request');
 const app = express();
 debugger;
