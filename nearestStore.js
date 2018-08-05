@@ -4,8 +4,9 @@ const axios= require('axios');
 var nearestStoreService = (ulat, ulng) =>{
   console.log('Nearest store API hit');
   return new Promise((resolve, reject) => {
-  axios.get({
-    url: `https://34.195.45.172:9002/qsrcommercewebservices/v2/qsr/fasteststores?latitude=${ulat}&longitude=${ulng}&radius=8000`,
+  axios({
+    method: 'get',
+    url: "https://34.195.45.172:9002/qsrcommercewebservices/v2/qsr/fasteststores?latitude="+ulat+"&longitude="+ulng+"&radius=8000",
     rejectUnauthorized: false,
     headers: {
          "content-type": "application/x-www-form-urlencoded"
