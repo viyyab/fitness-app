@@ -16,9 +16,9 @@ var nearestStoreService = (ulat, ulng) =>{
       throw new Error('Unable to fetch the address');
     }else {
       resolve({
-      latitude : response.body.pointOfServices[0].geoPoint.latitude;
-      longitude : response.body.pointOfServices[0].geoPoint.longitude;
-      address : response.body.pointOfServices[0].address.line1;
+      latitude : response.body.pointOfServices[0].geoPoint.latitude,
+      longitude : response.body.pointOfServices[0].geoPoint.longitude,
+      address : response.body.pointOfServices[0].address.line1
     });
     }
   }).catch((error) =>{
