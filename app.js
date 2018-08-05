@@ -5,7 +5,7 @@ const config = require('./config');
 const express = require('express');
 const bodyParser = require('body-parser');
 //const { dialogflow } = require('actions-on-google');
-const nearestStore= require('./nearestStore.js');
+const qsr= require('./qsr-apis.js');
 const request= require('request');
 const app = express();
 debugger;
@@ -81,16 +81,19 @@ app.post('/webhook/', (req, res) => {
 								if(req.body.originalRequest.data.inputs[0].arguments[0].boolValue){
 								var ulat=req.body.originalRequest.data.device.location.coordinates.latitude;
 								var ulng=req.body.originalRequest.data.device.location.coordinates.longitude;
-								nearestStore.nearestStoreService(ulat, ulng, (error, storeResults) => {
+								qsr.nearestStoreService(ulat, ulng, (error, storeResults) => {
 								 	if(error){
 								 		text = error;
 								 	}else {
-										text= `I can place an order for you at the nearest McDonald’s at ${storeResults.address}, which is a 10mins walk from your current location. What would you like to order?`;
-										console.log(storeResults);
-										address= storeResults.address;
-										console.log(address);
-										 }
+										qsr.calculateDistanceService(ulat, ulng, storeResults.sLat, storeResults.sLng, (error, results) => {
+											console.log(storeResults);
+											console.log(storeResults.address);
+											console.log(results);
+											console.log(results.duration);
+										});
+										}
 									});
+								text= `I can place an order for you at the nearest McDonald’s at ${storeResults.address}, which is a 10mins walk from your current location. What would you like to order?`;
 								}else{
 								// permissions are not granted. ask them one by one manually
 								text= 'I am sorry ! I cannot process your order without your permission';

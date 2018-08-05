@@ -43,6 +43,7 @@ var nearestStoreService = (ulat, ulng, callback) =>{
   request({
     url: `https://34.195.45.172:9002/qsrcommercewebservices/v2/qsr/fasteststores?latitude=${ulat}&longitude=${ulng}&radius=8000`,
     method: 'GET',
+    rejectUnauthorized: false,
     headers: {
          "content-type": "application/x-www-form-urlencoded"
       },
@@ -76,6 +77,7 @@ var calculateDistanceService = (uLat, uLng, sLat, sLng, callback) => {
   request({
     url: `https://maps.googleapis.com/maps/api/distancematrix/json?origins=${uLat},${uLng}&destinations=${sLat},${sLng}&departure_time=now&mode=walking`,
     method: 'GET',
+    rejectUnauthorized: false,
     json: true
   }, (error, response, body) => {
     if(error){
