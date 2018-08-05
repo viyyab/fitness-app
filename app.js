@@ -86,7 +86,7 @@ app.post('/webhook/', (req, res) => {
 										console.log(error);
 									}else {
 										console.log(storeResult);
-										qsr.calculateDistanceService(ulat, ulng, storeResult.uLat, storeResult.uLng, (error, durationResult) =>{
+										qsr.calculateDistanceService(ulat, ulng, storeResult.sLat, storeResult.sLng, (error, durationResult) =>{
 											if(error){
 												console.log(error);
 											}else {
