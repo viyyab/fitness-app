@@ -43,10 +43,12 @@ app.post('/webhook/', (req, res) => {
 	var actionName = req.body.result.action;
  	var parameters = req.body.result.parameters;
  	var message = req.body.result.resolvedQuery;
- 	var messageData= '' ;
-	var displayText = '';
+  var displayText = '';
 	var text = '';
-
+	var messageData = {
+			speech: text,
+			displayText: text
+			}
 	switch (actionName) {
 
 			case 'require_permission': {
@@ -93,16 +95,12 @@ app.post('/webhook/', (req, res) => {
 										 }
 									});
 
-									text= "Thank you for your permission ! I can place an order for you at McDonald’s at , which is a 10mins walk from your current location. What would you like to order?";
+									text= `I can place an order for you at the nearest McDonald’s at ${address}, which is a 10mins walk from your current location. What would you like to order?`;
 								}else{
 								// permissions are not granted. ask them one by one manually
 								text= 'I am sorry ! I cannot process your order without your permission';
 								}
 							}
-							messageData = {
-									speech: text,
-									displayText: text
-									}
 						res.send(messageData);
 				 		}
 				 		break;
