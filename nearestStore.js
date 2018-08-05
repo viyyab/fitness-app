@@ -1,40 +1,34 @@
-const request= require('request');
+const axios= require('axios');
 
 
-
-
-var nearestStoreService = (ulat, ulng, callback) =>{
+var nearestStoreService = (ulat, ulng) =>{
   console.log('Nearest store API hit');
-  request({
-    url: `https://34.195.45.172:9002/qsrcommercewebservices/v2/qsr/fasteststores?latitude=${ulat}&longitude=${ulng}&radius=8000`,
-    method: 'GET',
+  return new Promise((resolve, reject) => {
+  axios.get({
+    url : `https://34.195.45.172:9002/qsrcommercewebservices/v2/qsr/fasteststores?latitude=${ulat}&longitude=${ulng}&radius=8000`,
     rejectUnauthorized: false,
     headers: {
          "content-type": "application/x-www-form-urlencoded"
       },
     json: true
-    }, (error, response, body) => {
-    if(error){
-      console.log(error);
-      console.log(response);
-      callback('There was an error connecting to the nearest store server');
+  }).then((response) => {
+    if(response.statusCode !== 200) {
+      throw new Error('Unable to fetch the address');
+    }else {
+      resolve({
+      latitude : response.body.pointOfServices[0].geoPoint.latitude;
+      longitude : response.body.pointOfServices[0].geoPoint.longitude;
+      address : response.body.pointOfServices[0].address.line1;
+    });
     }
-    else if(response.statusCode == 401){
-      callback('Unable to get the result');
+  }).catch((error) =>{
+    if(error.code == 'ENOTFOUND'){
+      reject('Unable to connect to servers');
+    } else {
+      reject(error.message);
     }
-    else if(response.statusCode == 200){
-      console.log('API hit:', response.statusCode)
-      callback(undefined, {
-        address: body.pointOfServices[0].address.line1,
-        storeId : body.pointOfServices[0].address.id,
-        name: body.pointOfServices[0].displayName,
-        distance : body.pointOfServices[0].formattedDistance,
-        sLat : body.pointOfServices[0].geoPoint.latitude,
-        sLng : body.pointOfServices[0].geoPoint.longitude
-        });
-      };
   });
-
+});
 };
 
 
