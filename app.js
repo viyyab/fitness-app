@@ -90,7 +90,7 @@ app.post('/webhook/', (req, res) => {
 											if(error){
 												console.log(error);
 											}else {
-												console.log(duationResult.duration);
+												console.log(durationResult.duration);
 											}
 										});
 									};
