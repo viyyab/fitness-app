@@ -58,7 +58,7 @@ var nearestStoreService = (ulat, ulng, callback) =>{
     else if(response.statusCode == 200){
       console.log('API hit:', response.statusCode);
       callback (undefined, {
-        address: body.pointOfServices[0].address.line1,
+        address: body.pointOfServices[0].address.line2,
         storeId : body.pointOfServices[0].address.id,
         name: body.pointOfServices[0].displayName,
         distance : body.pointOfServices[0].formattedDistance,
