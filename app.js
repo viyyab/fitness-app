@@ -93,7 +93,7 @@ app.post('/webhook/', (req, res) => {
 												console.log(error);
 											}else {
 												console.log(durationResult.duration);
-												text= `Thank you for your permission ! I can place an order for you at the nearest ${storeResult.displayName} at ${storeResult.address}, which is a ${durationResult.duration} walk from your place. What would you like to order ?`;
+												text= `Thank you for your permission ! I can place an order for you at the nearest ${storeResult.name} at ${storeResult.address}, which is a ${durationResult.duration} walk from your place. What would you like to order ?`;
 												messageData = {
 														speech: text,
 														displayText: text
