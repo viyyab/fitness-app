@@ -81,17 +81,19 @@ app.post('/webhook/', (req, res) => {
 								if(req.body.originalRequest.data.inputs[0].arguments[0].boolValue){
 								var ulat=req.body.originalRequest.data.device.location.coordinates.latitude;
 								var ulng=req.body.originalRequest.data.device.location.coordinates.longitude;
-								qsr.nearestStoreService(ulat, ulng, (error, storeResult) =>{
+								var uLat = 12.9666400;
+								var uLng = 77.7232870;
+								qsr.nearestStoreService(uLat, uLng, (error, storeResult) =>{
 									if(error){
 										console.log(error);
 									}else {
 										console.log(storeResult);
-										qsr.calculateDistanceService(ulat, ulng, storeResult.sLat, storeResult.sLng, (error, durationResult) =>{
+										qsr.calculateDistanceService(uLat, uLng, storeResult.sLat, storeResult.sLng, (error, durationResult) =>{
 											if(error){
 												console.log(error);
 											}else {
 												console.log(durationResult.duration);
-												text= `Thank you for your permission ! I can place an order for you at McDonalds at ${storeResult.address}, which is a ${durationResult.duration} walk from your place. What would you like to order ?`;
+												text= `Thank you for your permission ! I can place an order for you at the nearest ${storeResult.displayName} at ${storeResult.address}, which is a ${durationResult.duration} walk from your place. What would you like to order ?`;
 												messageData = {
 														speech: text,
 														displayText: text
