@@ -4,10 +4,15 @@ const apiai = require('apiai');
 const config = require('./config');
 const express = require('express');
 const bodyParser = require('body-parser');
-//const { dialogflow } = require('actions-on-google');
 const qsr= require('./qsr-apis.js');
 const request= require('request');
 const app = express();
+var access_token = '';
+var refresh_token= '';
+var displayText = '';
+var text = '';
+var address = '';
+var messageData = '';
 debugger;
 
 if (!config.API_AI_CLIENT_ACCESS_TOKEN) {
@@ -38,15 +43,20 @@ app.get('/', function (req, res) {
 })
 
 app.post('/webhook/', (req, res) => {
+
+	qsr.getAuthTokenService((error, result) => {
+		if(error){
+			console.log("Token cannot be generated");
+		} else {
+			access_token = result.token;
+			refresh_token = result.refresh_token;
+		}
+	});
 	var data = req.body;
 	var sessionId = req.body.sessionId;
 	var actionName = req.body.result.action;
  	var parameters = req.body.result.parameters;
  	var message = req.body.result.resolvedQuery;
-  var displayText = '';
-	var text = '';
-	var address = '';
-	var messageData = '';
 	switch (actionName) {
 
 			case 'require_permission': {
