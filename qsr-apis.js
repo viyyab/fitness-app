@@ -7,8 +7,11 @@ var getAuthTokenService = (callback) =>{
   var password= 'Gwen@123';
   console.log('Auth token API hit');
   request({
-    url: 'https://localhost:9002/authorizationserver/oauth/token' ,
+    url: 'https://34.195.45.172:9002/authorizationserver/oauth/token' ,
     form: {
+    client_id: 'mobile_android',
+    client_secret: 'secret',
+    grant_type: 'client_credentials',
     username: username,
     password: password
     },
@@ -95,21 +98,17 @@ var calculateDistanceService = (uLat, uLng, sLat, sLng, callback) => {
 
 };
 
-var createBasketService = (authToken, email,callback) => {
+var createCartService = (authToken, email,callback) => {
 
-  console.log('Create basket API hit');
+  console.log('Create cart API hit');
   request({
-    url: 'https://capgemini01-alliance-prtnr-eu06-dw.demandware.net/s/CapCafe/dw/shop/v18_3/baskets',
-    body: {
-      "customer_info": {
-          "email" : email
-      }
-    },
+    url: `https://34.195.45.172:9002/qsrcommercewebservices/v2/qsr/users/${email}/carts`,
     method: 'POST',
     headers: {
-        "content-type": "application/json",
-        "authorization": authToken
+        "content-type": "application/x-www-form-urlencoded",
+        "authorization": `Bearer ${authToken}`
       },
+    rejectUnauthorized: false,
     json: true
   }, (error, response, body) => {
 
@@ -117,7 +116,7 @@ var createBasketService = (authToken, email,callback) => {
       callback('There was an error connecting to the server');
     }
     else if(response.statusCode == 401){
-      callback('Unable to create the basket');
+      callback('Unable to create the cart');
     }
     else if(response.statusCode == 200){
       console.log('API hit:', response.statusCode)
@@ -126,24 +125,19 @@ var createBasketService = (authToken, email,callback) => {
         basketId: response.basket_id
         });
       }
-    else if(response.statusCode == 400){
-      console.log('API hit:', response.statusCode)
-
-      callback(undefined, {
-        basketId: response.fault.arguments.basketIds
-        });
-      }
-  });
+    });
 
 };
 
-var createOrderService = (authToken, basketId, callback) => {
+var addProductsToCart = (authToken, cartId, email, storeName, callback) => {
 
   console.log('Create order API hit');
   request({
-    url: 'https://capgemini01-alliance-prtnr-eu06-dw.demandware.net/s/CapCafe/dw/shop/v18_3/orders',
-    body: {
-        "basket_id" : basketId
+    url: `https://localhost:9002/qsrcommercewebservices/v2/qsr/users/${email}/carts/${cartId}/entries`,
+    form: {
+        'code' : cartId,
+        'qty': 1,
+        'pickupStore':
     },
     method: 'POST',
     headers: {
