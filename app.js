@@ -15,6 +15,7 @@ var address = '';
 var messageData = '';
 debugger;
 
+
 if (!config.API_AI_CLIENT_ACCESS_TOKEN) {
 	throw new Error('missing API_AI_CLIENT_ACCESS_TOKEN');
 }
