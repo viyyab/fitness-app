@@ -137,7 +137,7 @@ var addProductsToCart = (authToken, cartId, email, storeName, callback) => {
     form: {
         'code' : cartId,
         'qty': 1,
-        'pickupStore':
+        'pickupStore': storeName
     },
     method: 'POST',
     headers: {
