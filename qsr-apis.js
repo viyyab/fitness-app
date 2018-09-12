@@ -90,7 +90,7 @@ var calculateDistanceService = (uLat, uLng, sLat, sLng, callback) => {
     }
     else if(response.statusCode == 200){
       callback(undefined, {
-          duration : body.rows[0].elements[0].duration.text
+          //duration : body.rows[0].elements[0].duration.text
         });
     }
     else {
