@@ -87,8 +87,8 @@ app.post('/webhook/', (req, res) => {
 			case 'check_permission': {
 							 console.log('In check_permission');
 							 if(isDefined(actionName)){
-								//console.log("After entering check permission", JSON.stringify(req.body));
-								//console.log(req.body.originalRequest.data.inputs[0].arguments[0].boolValue);
+								console.log("After entering check permission", JSON.stringify(req.body));
+								console.log(req.body.originalRequest.data.inputs[0].arguments[0].boolValue);
 								if(req.body.originalRequest.data.inputs[0].arguments[0].boolValue){
 								var ulat=req.body.originalRequest.data.device.location.coordinates.latitude;
 								var ulng=req.body.originalRequest.data.device.location.coordinates.longitude;
