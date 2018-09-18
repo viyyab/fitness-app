@@ -11,13 +11,14 @@ var getAuthTokenService = (callback) =>{
   request({
     url: 'https://34.195.45.172:9002/authorizationserver/oauth/token' ,
     form: {
-    client_id: 'mobile_android',
+    client_id:'webshop_client',
     client_secret: 'secret',
     grant_type: 'client_credentials',
     username: username,
     password: password
     },
     method: 'POST',
+    rejectUnauthorized: false,
     headers: {
         "content-type": "application/x-www-form-urlencoded"
       },
