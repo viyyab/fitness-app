@@ -81,7 +81,7 @@ var calculateDistanceService = (uLat, uLng, sLat, sLng, callback) => {
 
   console.log('Calculate distance API hit');
   request({
-    url: `https://maps.googleapis.com/maps/api/distancematrix/json?origins=${uLat},${uLng}&destinations=${sLat},${sLng}&departure_time=now&mode=walking&key=AIzaSyCGcbMTx0eAQI-6YTeLtTwy7SWQXbcFUzE`,
+    url: `https://maps.googleapis.com/maps/api/distancematrix/json?origins=${uLat},${uLng}&destinations=${sLat},${sLng}&departure_time=now&mode=walking&key=AIzaSyApMGv2qbCLA5Fk9XX4UmiKT7QkhkRcOV4`,
     method: 'GET',
     rejectUnauthorized: false,
     json: true
