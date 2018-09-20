@@ -73,7 +73,7 @@ app.post('/webhook/', (req, res) => {
 													"data": {
 															"@type": "type.googleapis.com/google.actions.v2.PermissionValueSpec",
 															"optContext": "To process your order, ",
-															"permissions": ["DEVICE_PRECISE_LOCATION"]
+															"permissions": ["DEVICE_COARSE_LOCATION"]
 																	}
 																}
 															}
@@ -90,12 +90,12 @@ app.post('/webhook/', (req, res) => {
 								console.log("After entering check permission", JSON.stringify(req.body));
 								console.log(req.body.originalRequest.data.inputs[0].arguments[0].boolValue);
 								if(req.body){
-								var uLat=req.body.originalRequest.data.device.location.coordinates.latitude;
-								var uLng=req.body.originalRequest.data.device.location.coordinates.longitude;
+								//var uLat=req.body.originalRequest.data.device.location.coordinates.latitude;
+								//var uLng=req.body.originalRequest.data.device.location.coordinates.longitude;
 								//var uLat = 12.9666400;
 								//var uLng = 77.7232870;
-								//var uLat = 41.8834;
-								//var uLng = -87.6537;
+								var uLat = 41.8834;
+								var uLng = -87.6537;
 									
 								qsr.nearestStoreService(uLat, uLng, (error, storeResult) =>{
 									if(error){
