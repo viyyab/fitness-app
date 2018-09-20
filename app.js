@@ -89,7 +89,7 @@ app.post('/webhook/', (req, res) => {
 							 if(isDefined(actionName)){
 								console.log("After entering check permission", JSON.stringify(req.body));
 								console.log(req.body.originalRequest.data.inputs[0].arguments[0].boolValue);
-								if(req.body.originalRequest.data.inputs[0].arguments[0].boolValue){
+								if(req.body){
 								//var uLat=req.body.originalRequest.data.device.location.coordinates.latitude;
 								//var uLng=req.body.originalRequest.data.device.location.coordinates.longitude;
 								var uLat = 12.9666400;
