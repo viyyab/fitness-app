@@ -78,8 +78,9 @@ app.post('/webhook/', (req, res) => {
 																}
 															}
 														}
-									}
+									} 
 								res.send(messageData);
+							     }
 		 					}
 		 					break;
 				
