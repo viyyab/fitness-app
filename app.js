@@ -54,6 +54,7 @@ app.post('/webhook/', (req, res) => {
 			refresh_token = result.refresh_token;
 		}
 	});
+	console.log(JSON.stringify(req.body));
 	var data = req.body;
 	var sessionId = req.body.sessionId;
 	var actionName = req.body.result.action;
