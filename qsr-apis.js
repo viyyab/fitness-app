@@ -127,7 +127,7 @@ var createCartService = (authToken, email,callback) => {
       console.log('API hit:', response.statusCode)
 
       callback(undefined, {
-        basketId: response.basket_id
+        cartId: response.code
         });
       }
     });
@@ -146,9 +146,10 @@ var addProductsToCart = (authToken, cartId, email, storeName, callback) => {
     },
     method: 'POST',
     headers: {
-        "content-type": "application/json",
-        "authorization": authToken
+        "content-type": "application/x-www-form-urlencoded",
+        "authorization": `bearer ${authToken}`
       },
+    rejectUnauthorized: false,
     json: true
   }, (error, response, body) => {
 
