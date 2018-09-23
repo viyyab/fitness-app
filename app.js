@@ -80,10 +80,10 @@ app.post('/webhook/', (req, res) => {
 														}
 									}
 								res.send(messageData);
-		 								}
-		 							break;
-
-			case 'check_permission': {
+		 					}
+		 					break;
+				
+				case 'check_permission': {
 							 console.log('In check_permission');
 							 if(isDefined(actionName)){
 								console.log("After entering check permission", JSON.stringify(req.body));
