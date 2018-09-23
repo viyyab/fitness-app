@@ -6,6 +6,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const qsr= require('./qsr-apis.js');
 const request= require('request');
+const DialogflowApp = require('actions-on-google').DialogflowApp;
 const app = express();
 var access_token = '';
 var refresh_token= '';
@@ -65,7 +66,6 @@ app.post('/webhook/', (req, res) => {
 		 					if(isDefined(actionName)){
 							console.log('Coversation');
 							messageData = {
-								data:  {
   									"conversationToken": "{\"state\":null,\"data\":{}}",
   									"expectUserResponse": true,
   									"expectedInputs": [
@@ -89,13 +89,12 @@ app.post('/webhook/', (req, res) => {
               					"DEVICE_PRECISE_LOCATION"
             													]
           										}
-        								}
+        								    }
       										]
     										}
   										]
 											}
 													}
-												}
 												res.send(messageData);
 		 								}
 		 							break;
