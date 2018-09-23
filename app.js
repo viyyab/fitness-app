@@ -64,7 +64,7 @@ app.post('/webhook/', (req, res) => {
 		 					console.log('In require_permission');
 		 					if(isDefined(actionName)){
 							console.log('Coversation');
-							messageData = {
+							messageData = 
 								{
   "conversationToken": "{\"state\":null,\"data\":{}}",
   "expectUserResponse": true,
@@ -93,7 +93,7 @@ app.post('/webhook/', (req, res) => {
     }
   ]
 }
-									} 
+									
 								res.send(messageData);
 							     }
 		 					}
