@@ -96,7 +96,7 @@ app.post('/webhook/', (req, res) => {
 								//var uLng = 77.7232870;
 								var uLat = 41.8834;
 								var uLng = -87.6537;
-									
+
 								qsr.nearestStoreService(uLat, uLng, (error, storeResult) =>{
 									if(error){
 										console.log(error);
