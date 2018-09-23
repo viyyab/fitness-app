@@ -65,7 +65,7 @@ app.post('/webhook/', (req, res) => {
 		 					if(isDefined(actionName)){
 							console.log('Coversation');
 							messageData = {
-																	data:  {
+																	"data":  {
   									"conversationToken": "{\"state\":null,\"data\":{}}",
   									"expectUserResponse": true,
   									"expectedInputs": [
