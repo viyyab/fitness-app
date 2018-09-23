@@ -65,38 +65,38 @@ app.post('/webhook/', (req, res) => {
 		 					if(isDefined(actionName)){
 							console.log('Coversation');
 							messageData = {
-																	"data":  {
+								"data":  {
   									"conversationToken": "{\"state\":null,\"data\":{}}",
   									"expectUserResponse": true,
   									"expectedInputs": [
-    								{
-      									"inputPrompt": {
-        								"initialPrompts": [
-          							{
-            							"textToSpeech": "PLACEHOLDER_FOR_PERMISSION"
-          							}
+    											{
+      											"inputPrompt": {
+        										"initialPrompts": [
+          											{
+            									   "textToSpeech": "PLACEHOLDER_FOR_PERMISSION"
+          											}
         												],
-        									"noInputPrompts": []
+        									    "noInputPrompts": []
       											},
       									"possibleIntents": [
         								{
           							"intent": "actions.intent.PERMISSION",
           							"inputValueData": {
-            						"@type": "type.googleapis.com/google.actions.v2.PermissionValueSpec",
-            						"optContext": "To process your order",
-            						"permissions": [
-              					"DEVICE_COARSE_LOCATION",
-              					"DEVICE_PRECISE_LOCATION"
-            													]
+            							"@type": "type.googleapis.com/google.actions.v2.PermissionValueSpec",
+            							"optContext": "To process your order",
+            							"permissions": [
+              								//"DEVICE_COARSE_LOCATION",
+              								"DEVICE_PRECISE_LOCATION"
+            								 	]
           										}
-        								}
-      										]
-    										}
-  										]
-											}
-													}
-												}
-												res.send(messageData);
+        									       }
+      									             ]
+    									            }
+  								                   ]
+									          }
+										}
+									      }
+										res.send(messageData);
 		 								}
 		 							break;
 
