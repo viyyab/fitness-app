@@ -111,7 +111,7 @@ var createCartService = (authToken, email,callback) => {
     method: 'POST',
     headers: {
         "content-type": "application/x-www-form-urlencoded",
-        "authorization": `Bearer ${authToken}`
+        "authorization": `bearer ${authToken}`
       },
     rejectUnauthorized: false,
     json: true
