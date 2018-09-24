@@ -303,7 +303,7 @@ var placeOrderService = (authToken, cartId, email, storeId, callback) => {
           else if(response.statusCode == 401 || response.statusCode == 400){
             callback('Unable to place an order');
           }
-          else if(response.statusCode == 200){
+          else if(response.statusCode == 201){
             console.log("Place order API hit:", response.statusCode);
             callback(undefined, {
               code: body.code
