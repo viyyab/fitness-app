@@ -120,29 +120,28 @@ var createCartService = (authToken, email,callback) => {
     if(error){
       callback('There was an error connecting to the server');
     }
-    else if(response.statusCode == 401){
+    else if(response.statusCode == 400){
       callback('Unable to create the cart');
     }
-    else if(response.statusCode == 200){
+    else if(response.statusCode == 201){
       console.log('API hit:', response.statusCode)
 
       callback(undefined, {
-        cartId: response.code
+        cartId: body.code
         });
       }
     });
 
 };
 
-var addProductsToCart = (authToken, cartId, email, storeName, callback) => {
+var addProductsToCart = (authToken, cartId, email, productCode, callback) => {
 
-  console.log('Create order API hit');
+  console.log('Add products API hit');
   request({
-    url: `https://localhost:9002/qsrcommercewebservices/v2/qsr/users/${email}/carts/${cartId}/entries`,
+    url: `https://34.195.45.172:9002/qsrcommercewebservices/v2/qsr/users/${email}/carts/${cartId}/entries`,
     form: {
-        'code' : cartId,
-        'qty': 1,
-        'pickupStore': storeName
+        'code' : productCode,
+        'qty': 1
     },
     method: 'POST',
     headers: {
@@ -157,214 +156,159 @@ var addProductsToCart = (authToken, cartId, email, storeName, callback) => {
       callback('There was an error connecting to the server');
     }
     else if(response.statusCode == 401){
-      callback('Unable to create order for the basket');
+      callback('Unable to add products');
     }
     else if(response.statusCode == 200){
       console.log('API hit:', response.statusCode)
       callback(undefined, {
-        instrumentId: response.payment_instruments[0].payment_instrument_id,
-        orderNumber: response.order_no
+        //instrumentId: response.payment_instruments[0].payment_instrument_id,
+       // orderNumber: body.order_no
         });
       }
   });
 
 };
 
-var addItemService = (authToken, basketId, proteinDrinkId, specialDrinkId, trainerId, callback) => {
 
-    console.log('Add items API hit');
-    request({
-      url: 'https://capgemini01-alliance-prtnr-eu06-dw.demandware.net/s/CapCafe/dw/shop/v18_3/baskets/'+ basketId + '/items',
-      body: [
-   {
-      "product_id":trainerId,
-      "quantity":1.00
-   },
-   {
-      "product_id":specialDrinkId,
-      "quantity":1.00
-   },
-   {
-      "product_id":proteinDrinkId,
-      "quantity":1.00
-   }
- ],
-      method: 'POST',
-      headers: {
-          "content-type": "application/json",
-          "authorization": authToken
-        },
-      json: true
-    }, (error, response, body) => {
-
-      if(error){
-        callback('There was an error connecting to the server');
-      }
-      else if(response.statusCode == 401){
-        callback('Unable to add items to the basket');
-      }
-      else if(response.statusCode == 200){
-        console.log("API hit:", response.statusCode);
-        callback('API hit and items added to the basketId:', basketId);
-        }
-    });
-};
-
-var gettingAddressIdService = (authToken, customerId, callback) => {
-  console.log('Get address Id API hit');
+var fetchCartService = (authToken, cartId, email, callback) => {
+  console.log('View cart API hit');
   request({
-    url: 'https://capgemini01-alliance-prtnr-eu06-dw.demandware.net/s/CapCafe/dw/shop/v18_3/customers/'+ customerId + '/addresses',
+    url: `https://34.195.45.172:9002/qsrcommercewebservices/v2/qsr/users/${email}/carts/${cartId}`,
     method: 'GET',
     headers: {
-        "content-type": "application/json",
-        "authorization": authToken
+        "content-type": "application/x-www-form-urlencoded",
+        "authorization": `bearer ${authToken}`
       },
+    rejectUnauthorized: false,
     json: true
   }, (error, response, body) => {
 
     if(error){
       callback('There was an error connecting to the server');
     }
-    else if(response.statusCode == 401){
-      callback('Unable to get the address Id');
+    else if(response.statusCode == 401 || response.statusCode == 400 ){
+      callback('Unable to fetch cart');
     }
     else if(response.statusCode == 200){
       console.log('API hit:', response.statusCode)
       callback(undefined, {
-        addressId: response.data[0].address_id
+        totalItems: body.totalItems ,
+        totalPrice: body.totalPriceWithTax.value
         });
       }
   });
 
 };
 
-var settingAddressIdService = (authToken, basketId, addressId) => {
+var settingDeliveryModeService = (authToken, cartId, email, callback) => {
 
-  console.log('Setting address API hit');
+  console.log('Setting delivery mode API hit');
   request({
-    url: 'https://capgemini01-alliance-prtnr-eu06-dw.demandware.net/s/CapCafe/dw/shop/v18_3/baskets/' + basketId + '/shipments/me/shipping_address?use_as_billing=true&customer_address_id=' + addressId,
-    body: {},
+    url: `https://34.195.45.172:9002/qsrcommercewebservices/v2/qsr/users/${email}/carts/${cartId}/deliverymode?deliveryModeId=pickup`,
     method: 'PUT',
     headers: {
-        "content-type": "application/json",
-        "authorization": authToken
+        "content-type": "application/x-www-form-urlencoded",
+        "authorization": `bearer ${authToken}`
       },
+    rejectUnauthorized: false,
     json: true
   }, (error, response, body) => {
 
     if(error){
       callback('There was an error connecting to the server');
     }
-    else if(response.statusCode == 401){
-      callback('Unable to set address Id for the basket');
+    else if(response.statusCode == 401 || response.statusCode == 400){
+      callback('Unable to set delivery mode for the cart');
     }
     else if(response.statusCode == 200){
       console.log("API hit:", response.statusCode);
-      callback('API hit and address Id set to the basketId:', basketId);
-      }
+    }
   });
 
 };
 
-var settingShippingService = (authToken, basketId, callback) => {
+var gettingSavedCardDetailsService = (authToken, email, callback) => {
 
-    console.log('Setting shipping_method API hit');
+    console.log('Getting saved card details of a user API hit');
     request({
-      url: 'https://capgemini01-alliance-prtnr-eu06-dw.demandware.net/s/CapCafe/dw/shop/v18_3/baskets/'+ basketId + '/shipments/me/shipping_method',
-      body: {
-        "id": "storepickup"
-      },
-      method: 'PUT',
+      url: `https://34.195.45.172:9002/qsrcommercewebservices/v2/qsr/users/${email}/paymentdetails`,
+      method: 'GET',
       headers: {
-          "content-type": "application/json",
-          "authorization": authToken
-        },
+        "content-type": "application/x-www-form-urlencoded",
+        "authorization": `bearer ${authToken}`
+      },
+      rejectUnauthorized: false,
       json: true
     }, (error, response, body) => {
 
       if(error){
         callback('There was an error connecting to the server');
       }
-      else if(response.statusCode == 401){
-        callback('Unable to set shipping_method for the basket');
+      else if(response.statusCode == 401 || response.statusCode == 400){
+        callback('Unable to get saved card details for the user');
       }
       else if(response.statusCode == 200){
         console.log("API hit:", response.statusCode);
         callback(undefined, {
-          total: response.order_total
+          cardNumber: body.payments[0].cardNumber,
+          cardId: body.payments[0].billingAddress.id
           });
         }
     });
 };
 
-var addPaymentService = (authToken, basketId, total, callback) => {
+var addCardPaymentService = (authToken, cartId, email, cardId, callback) => {
 
       console.log('Adding payment API hit');
       request({
-        url: 'https://capgemini01-alliance-prtnr-eu06-dw.demandware.net/s/CapCafe/dw/shop/v18_3/baskets/'+ basketId +'/payment_instruments',
-        body: {
-            "amount" : total,
-            "payment_card" : {
-                     "number":"411111111111111",
-                     "security_code":"121",
-                     "holder":"John Doe",
-                     "card_type":"Visa",
-                     "expiration_month":1,
-                     "expiration_year":2021
-                    },
-            "payment_method_id" : "CREDIT_CARD"
-          },
-        method: 'POST',
+        url: `https://34.195.45.172:9002/qsrcommercewebservices/v2/qsr/users/${email}/carts/${cartId}/paymentdetails?paymentDetailsId=${cardId}`,
+        method: 'PUT',
         headers: {
-            "content-type": "application/json",
-            "authorization": authToken
-          },
+        "content-type": "application/x-www-form-urlencoded",
+        "authorization": `bearer ${authToken}`
+         },
+        rejectUnauthorized: false,
         json: true
-      }, (error, response, body) => {
+         }, (error, response, body) => {
 
         if(error){
           callback('There was an error connecting to the server');
         }
-        else if(response.statusCode == 401){
-          callback('Unable to add payment_method for the basket');
+        else if(response.statusCode == 401 || response.statusCode == 400){
+          callback('Unable to add payment_method for the cart');
         }
         else if(response.statusCode == 200){
           console.log("API hit:", response.statusCode);
-          callback('API hit and payment Id set to the basketId:', basketId);
-          }
+         }
       });
 };
 
-var updatingPaymentService = (authToken, instrumentId, total, orderNumber, callback) => {
+var placeOrderService = (authToken, cartId, email, storeId, callback) => {
 
-        console.log('Updating payment API hit');
+        console.log('Placing order API hit');
         request({
-          url: 'https://capgemini01-alliance-prtnr-eu06-dw.demandware.net/s/CapCafe/dw/shop/v18_3/orders/' + orderNumber	+ '/payment_instruments/' + instrumentId,
-          body: {
-              "amount" : total,
-              "payment_card" : {
-                  "card_type":"Visa"
-                  },
-              "payment_method_id" : "CREDIT_CARD"
-            },
-          method: 'PATCH',
+          url: `https://34.195.45.172:9002/qsrcommercewebservices/v2/qsr/users/${email}/orders?cartId=${cartId}&storeCode=${storeId}&deliveryCode=pickup`,
+          method: 'POST',
           headers: {
-              "content-type": "application/json",
-              "authorization": authToken
-            },
+           "content-type": "application/x-www-form-urlencoded",
+           "authorization": `bearer ${authToken}`
+           },
+          rejectUnauthorized: false,
           json: true
-        }, (error, response, body) => {
+          }, (error, response, body) => {
 
           if(error){
             callback('There was an error connecting to the server');
           }
-          else if(response.statusCode == 401){
-            callback('Unable to update payment_method for the basket');
+          else if(response.statusCode == 401 || response.statusCode == 400){
+            callback('Unable to place an order');
           }
           else if(response.statusCode == 200){
             console.log("API hit:", response.statusCode);
-            callback('API hit and updating payment Id done');
-            }
+            callback(undefined, {
+              //cardNumber: body.payments[0].cardNumber,
+              //cardId: body.payments[0].billingAddress.id
+           });
         });
 };
 
@@ -373,14 +317,11 @@ module.exports = {
     getAuthTokenService,
     nearestStoreService,
     calculateDistanceService,
-    //createBasketService,
     createCartService,
-    //createOrderService,
     addProductsToCart,
-    addItemService,
-    gettingAddressIdService,
-    settingAddressIdService,
-    settingShippingService,
-    addPaymentService,
-    updatingPaymentService,
+    fetchCartService,
+    settingDeliveryModeService,
+    gettingSavedCardDetailsService,
+    addCardPaymentService,
+    placeOrderService,
 };
