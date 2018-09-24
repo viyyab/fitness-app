@@ -11,9 +11,14 @@ const app = express();
 var access_token = '';
 var refresh_token= '';
 var displayText = '';
-var text = '';
+var cardId = '';
+var cartId = '';
+var storeName = '';
+var storeId = '';
 var address = '';
 var messageData = '';
+var email= 'a.b@gmail.com';
+var password= 'a.b@gmail.com';
 debugger;
 
 
@@ -46,7 +51,7 @@ app.get('/', function (req, res) {
 
 app.post('/webhook/', (req, res) => {
 
-	qsr.getAuthTokenService((error, result) => {
+	qsr.getAuthTokenService(email, password, (error, result) => {
 		if(error){
 			console.log("Token cannot be generated");
 		} else {
@@ -130,34 +135,118 @@ app.post('/webhook/', (req, res) => {
 							}
 				 		}
 				 		break;
-
-
-		 case 'pincode.request': {
-					console.log('In action pincode');
-					var displayText = '';
+		 case 'productsOrderMac': {
+					console.log('In action products order Mac');
+					var productName = req.body.parameters;
 					if(isDefined(actionName) && parameters !== ''){
 						var text = '';
-						var pincode = parameters.any;
-						app1.requestCoordinate(pincode,(error, results) => {
+						qsr.createCartService(access_token, email, (error,result) =>{
 							if(error){
-								text = 'Error fetching the data';
+								console.log(error);
 							}else {
-								text = `Latitude: ${results.latitude}  Longitude: ${results.longitude}`;
-								messageData = {
-										speech: text,
-										displayText: text
+								console.log('Cart is created '+result.cartId);
+								cartId=result.cartId;
+								qsr.addProductsToCart(access_token, cartId, email, 5, storeName, (error,result)=> {
+									if(error){
+										console.log(error);
+									}else {
+										text= `Okay ! I've ordered you a ${productName}, would you also like to order fries ?`;
+										messageData = {
+											speech: text,
+											displayText: text
+											}
+										res.send(messageData);
 										}
-
-							}
-							console.log(messageData);
-							//res.sendStatus(200);
-							res.send(messageData);
-						});
+									});
+								}
+							});
+						}
 					}
-				}
-				break;
+					break;
 
-		default:
+
+ 		 case 'productsOrderFries': {
+ 					console.log('In action products order Fries');
+ 					if(isDefined(actionName) && parameters !== ''){
+ 						var text = '';
+						qsr.addProductsToCart(access_token, result.cartId, email, 8932, storeName, (error,result)=> {
+						 if(error){
+							console.log(error);
+							}else {
+								text= `Okay, I've added a medium fries to your order. Anything else ?`;
+								messageData = {
+									speech: text,
+									displayText: text
+										}
+								    res.send(messageData);
+									}
+								   });
+								}
+							 }
+ 					     break;
+			
+		
+		case 'productsOrderConfirmedCart': {
+ 					console.log('In action productsOrderConfirmedCart');
+ 					if(isDefined(actionName)){
+ 						qsr.fetchCartService (access_token, cartId, email, (error,result)=> {
+						 if(error){
+							console.log(error);
+							}else {
+								console.log(result.totalPrice);
+								qsr.gettingSavedCardDetailsService(access_token, email, (error, cardResult)=>{
+									if(error){
+										console.log(error);
+									}else {
+									  text= `The total will be ${result.totalPrice}. Would you like to use your default card on file ending with ${cardResult.cardNumber}?`;
+									  cardId= cardResult.cardId;
+								          messageData = {
+									   speech: text,
+									   displayText: text
+										}
+								              res.send(messageData);
+									   }
+								       });
+								     }
+								   });
+								}
+							    }
+ 					         break;
+			
+		case 'OrderConfirmed': {
+ 					console.log('In action OrderConfirmed');
+ 					if(isDefined(actionName)){
+ 						var text = '';
+						qsr.settingDeliveryModeService(access_token, cartId, email, (error,result)=> {
+						 if(error){
+							console.log(error);
+							}else {
+								console.log(result);
+								qsr.addCardPaymentService(access_token, cartId, email, cardId (error, result)=>{
+									if(error){
+										console.log(error);
+									}else {
+										console.log('Payment details added');
+										qsr.placeOrderService(access_token, cartId, email, storeId, (error, result) =>{
+											if(error){
+											}else{
+												text= `Your order has been submitted. Your order code is ${result.code}. Please provide this code when you get to the restaurant and they'll get your order started. I will also text it to you for reference. Thank you for your order!`;
+								         			 messageData = {
+									   				speech: text,
+									   				displayText: text
+														}
+								             			 res.send(messageData);
+												}								
+										           });
+									  	         }
+								                      });
+								                    }
+								  		 });
+									    }
+							        }
+ 					             break;
+		
+		 default:
 			//unhandled action, just send back the text
 			break;
 	}
