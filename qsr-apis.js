@@ -309,7 +309,8 @@ var placeOrderService = (authToken, cartId, email, storeId, callback) => {
               cardNumber: body.payments[0].cardNumber,
               cardId: body.payments[0].billingAddress.id
                });
-           });
+          }
+         });
 };
 
 
