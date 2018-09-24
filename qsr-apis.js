@@ -1,12 +1,11 @@
 const request= require('request');
 
 
-var getAuthTokenService = (callback) =>{
+var getAuthTokenService = (username, password, callback) =>{
 
 //   var username= 'gwengraman@gmail.com';
 //   var password= 'Gwen@123';
-  var username= 'a.b@gmail.com';
-  var password= 'a.b@gmail.com';
+
   console.log('Auth token API hit');
   request({
     url: 'https://34.195.45.172:9002/authorizationserver/oauth/token' ,
