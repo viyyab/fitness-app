@@ -304,11 +304,10 @@ var placeOrderService = (authToken, cartId, email, storeId, callback) => {
             callback('Unable to place an order');
           }
           else if(response.statusCode == 200){
-            console.log("API hit:", response.statusCode);
+            console.log("Place order API hit:", response.statusCode);
             callback(undefined, {
-              cardNumber: body.payments[0].cardNumber,
-              cardId: body.payments[0].billingAddress.id
-               });
+              code: body.code
+              });
           }
          });
 };
