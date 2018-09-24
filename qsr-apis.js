@@ -223,6 +223,7 @@ var settingDeliveryModeService = (authToken, cartId, email, callback) => {
     }
     else if(response.statusCode == 200){
       console.log("API hit:", response.statusCode);
+      callback('Delivery Mode set');
     }
   });
 
@@ -252,7 +253,7 @@ var gettingSavedCardDetailsService = (authToken, email, callback) => {
         console.log("API hit:", response.statusCode);
         callback(undefined, {
           cardNumber: body.payments[0].cardNumber,
-          cardId: body.payments[0].billingAddress.id
+          cardId: body.payments[0].id
           });
         }
     });
