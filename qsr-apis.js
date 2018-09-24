@@ -306,10 +306,10 @@ var placeOrderService = (authToken, cartId, email, storeId, callback) => {
           else if(response.statusCode == 200){
             console.log("API hit:", response.statusCode);
             callback(undefined, {
-              //cardNumber: body.payments[0].cardNumber,
-              //cardId: body.payments[0].billingAddress.id
+              cardNumber: body.payments[0].cardNumber,
+              cardId: body.payments[0].billingAddress.id
+               });
            });
-        });
 };
 
 
