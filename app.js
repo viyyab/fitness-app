@@ -119,6 +119,13 @@ app.post('/webhook/', (req, res) => {
 												console.log(error);
 											}else {
 												console.log(durationResult.duration);
+												qsr.createCartService(access_token, email, (error,cartResult) =>{
+												if(error){
+													console.log(error);
+												}else {
+													cartId=cartResult.cartId;
+													}
+												});
 												text= `Thank you for your permission ! I can place an order for you at the nearest ${storeResult.name} at ${storeResult.address}, which is a ${durationResult.duration} walk from your place. What would you like to order ?`;
 												messageData = {
 														speech: text,
@@ -146,12 +153,12 @@ app.post('/webhook/', (req, res) => {
 					if(isDefined(actionName)){
 						console.log("Access Token  generated-  "+access_token+"for- "+productName);
 						//var text='';
-						qsr.createCartService(access_token, email, (error,cartResult) =>{
-							if(error){
-								console.log(error);
-							}else {
-								//console.log('Cart is created '+cartResult.cartId+' Storename- '+storeName+' token '+access_token);
-								cartId=cartResult.cartId;
+// 						qsr.createCartService(access_token, email, (error,cartResult) =>{
+// 							if(error){
+// 								console.log(error);
+// 							}else {
+// 								//console.log('Cart is created '+cartResult.cartId+' Storename- '+storeName+' token '+access_token);
+// 								cartId=cartResult.cartId;
 								qsr.addProductsToCart(access_token, cartResult.cartId, email, 5, storeName, (error,productResult)=> {
 									if(error){
 										console.log(error);
@@ -164,8 +171,8 @@ app.post('/webhook/', (req, res) => {
 										res.send(messageData);
 										}
 									});
-								};
-							});
+								//};
+							//});
 							}else{
 								text= 'I am sorry ! I cannot process your order.';
 								messageData = {
