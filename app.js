@@ -101,10 +101,10 @@ app.post('/webhook/', (req, res) => {
 								if(req.body){
 								//var uLat=req.body.originalRequest.data.device.location.coordinates.latitude;
 								//var uLng=req.body.originalRequest.data.device.location.coordinates.longitude;
-								//var uLat = 12.9666400;
-								//var uLng = 77.7232870;
-								var uLat = 41.8834;
-								var uLng = -87.6537;
+								var uLat = 12.9666400;
+								var uLng = 77.7232870;
+								//var uLat = 41.8834;
+								//var uLng = -87.6537;
 
 								qsr.nearestStoreService(uLat, uLng, (error, storeResult) =>{
 									if(error){
