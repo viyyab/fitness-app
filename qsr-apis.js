@@ -138,14 +138,13 @@ var addProductsToCart = (authToken, cartId, email, productCode, storeName, callb
 
   console.log('Add products API entered');
   //console.log(productCode);
-  console.log(authToken+','+cartId+','+email+','+productCode+','+storeName);
-  
-  request({
+ // console.log(authToken+','+cartId+','+email+','+productCode+','+storeName);
+   request({
     url: `https://34.195.45.172:9002/qsrcommercewebservices/v2/qsr/users/${email}/carts/${cartId}/entries`,
     form: {
-        'code' : productCode,
-        'qty': '1',
-        'pickupStore': storeName
+        code : productCode,
+        qty: '1',
+        pickupStore: storeName
     },
     method: 'POST',
     headers: {
