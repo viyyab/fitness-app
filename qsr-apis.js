@@ -136,12 +136,13 @@ var createCartService = (authToken, email,callback) => {
 
 var addProductsToCart = (authToken, cartId, email, productCode, storeName, callback) => {
 
-  console.log('Add products API hit');
+  console.log('Add products API entered');
+  console.log(productCode);
   request({
     url: `https://34.195.45.172:9002/qsrcommercewebservices/v2/qsr/users/${email}/carts/${cartId}/entries`,
     form: {
         'code' : productCode,
-        'qty': 1,
+        'qty': '1',
         'pickupStore': storeName
     },
     method: 'POST',
