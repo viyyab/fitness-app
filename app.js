@@ -142,7 +142,7 @@ app.post('/webhook/', (req, res) => {
 				 		break;
 		 case 'productsOrderMac': {
 					console.log('In action products order Mac');
-					var productName = req.body.result.contexts[0].parameters.Product-Names.original;
+					//var productName = req.body.result.contexts[0].parameters.Product-Names.original;
 					if(isDefined(actionName)){
 						console.log("Access Token  generated-  "+access_token+"for- "+productName);
 						var text='';
@@ -156,7 +156,7 @@ app.post('/webhook/', (req, res) => {
 									if(error){
 										console.log(error);
 									}else {
-										text= `Okay ! I've ordered you a ${productName}, would you also like to order fries ?`;
+										text= `Okay ! I've ordered you a big mac, would you also like to order fries ?`;
 										messageData = {
 											speech: text,
 											displayText: text
