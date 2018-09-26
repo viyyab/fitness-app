@@ -80,7 +80,7 @@ app.post('/webhook/', (req, res) => {
 													"data": {
 															"@type": "type.googleapis.com/google.actions.v2.PermissionValueSpec",
 															"optContext": "To process your order, ",
-															"permissions": ["DEVICE_COARSE_LOCATION"]
+															"permissions": ["DEVICE_PRECISE_LOCATION"]
 																	}
 																}
 															}
@@ -139,7 +139,7 @@ app.post('/webhook/', (req, res) => {
 				 		break;
 		 case 'productsOrderMac': {
 					console.log('In action products order Mac');
-					var productName = req.body.parameters;
+					//var productName = req.body.parameters;
 					if(isDefined(actionName) && parameters !== ''){
 						var text = '';
 						qsr.createCartService(access_token, email, (error,result) =>{
