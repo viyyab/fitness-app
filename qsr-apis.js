@@ -66,6 +66,7 @@ var nearestStoreService = (ulat, ulng, callback) =>{
         address: body.pointOfServices[0].address.line2,
         storeId : body.pointOfServices[0].address.id,
         name: body.pointOfServices[0].displayName,
+        storeName: body.pointOfServices[0].name,
         distance : body.pointOfServices[0].formattedDistance,
         sLat : body.pointOfServices[0].geoPoint.latitude,
         sLng : body.pointOfServices[0].geoPoint.longitude
