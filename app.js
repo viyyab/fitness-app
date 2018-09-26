@@ -53,7 +53,7 @@ app.get('/', function (req, res) {
 app.post('/webhook/', (req, res) => {
 
 	console.log(access_token);
-	console.log(JSON.stringify(req.body));
+	//console.log(JSON.stringify(req.body));
 	var data = req.body;
 	var sessionId = req.body.sessionId;
 	var actionName = req.body.result.action;
@@ -96,8 +96,8 @@ app.post('/webhook/', (req, res) => {
 			case 'check_permission': {
 							 console.log('In check_permission');
 							 if(isDefined(actionName)){
-								console.log("After entering check permission", JSON.stringify(req.body));
-								console.log(req.body.originalRequest.data.inputs[0].arguments[0].boolValue);
+								console.log("After entering check permission");
+								//console.log(req.body.originalRequest.data.inputs[0].arguments[0].boolValue);
 								if(req.body){
 								//var uLat=req.body.originalRequest.data.device.location.coordinates.latitude;
 								//var uLng=req.body.originalRequest.data.device.location.coordinates.longitude;
