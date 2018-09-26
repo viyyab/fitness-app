@@ -109,6 +109,8 @@ app.post('/webhook/', (req, res) => {
 										console.log(error);
 									}else {
 										console.log(storeResult);
+										storeId=storeResult.storeId;
+										storeName=storeResult.storeName;
 										qsr.calculateDistanceService(uLat, uLng, storeResult.sLat, storeResult.sLng, (error, durationResult) =>{
 											if(error){
 												console.log(error);
