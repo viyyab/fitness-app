@@ -52,14 +52,6 @@ app.get('/', function (req, res) {
 
 app.post('/webhook/', (req, res) => {
 
-	qsr.getAuthTokenService(email, password, (error, result) => {
-		if(error){
-			console.log("Token cannot be generated");
-		} else {
-			access_token = result.token;
-			refresh_token = result.refresh_token;
-		}
-	});
 	console.log(access_token);
 	console.log(JSON.stringify(req.body));
 	var data = req.body;
@@ -88,10 +80,18 @@ app.post('/webhook/', (req, res) => {
 															}
 														}
 													}
-												}
+								qsr.getAuthTokenService(email, password, (error, result) => {
+								if(error){
+									console.log("Token cannot be generated");
+								} else {
+									access_token = result.token;
+									refresh_token = result.refresh_token;
+									}
+								});
+								}
 												res.send(messageData);
-		 								}
-		 							break;
+		 					}
+		 				break;
 
 			case 'check_permission': {
 							 console.log('In check_permission');
