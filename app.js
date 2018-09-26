@@ -49,7 +49,10 @@ app.get('/', function (req, res) {
 	res.send('Hello world, I am a chat bot')
 })
 
-qsr.getAuthTokenService(email, password, (error, result) => {
+
+app.post('/webhook/', (req, res) => {
+
+	qsr.getAuthTokenService(email, password, (error, result) => {
 		if(error){
 			console.log("Token cannot be generated");
 		} else {
@@ -57,9 +60,6 @@ qsr.getAuthTokenService(email, password, (error, result) => {
 			refresh_token = result.refresh_token;
 		}
 	});
-
-app.post('/webhook/', (req, res) => {
-
 	console.log(access_token);
 	console.log(JSON.stringify(req.body));
 	var data = req.body;
@@ -110,10 +110,10 @@ app.post('/webhook/', (req, res) => {
 									if(error){
 										console.log(error);
 									}else {
-										console.log(storeResult);
+										//console.log(storeResult);
 										storeId=storeResult.storeId;
 										storeName=storeResult.storeName;
-										console.log(storeName+'-----------------'+storeId);
+										//console.log(storeName+'-----------------'+storeId);
 										qsr.calculateDistanceService(uLat, uLng, storeResult.sLat, storeResult.sLng, (error, durationResult) =>{
 											if(error){
 												console.log(error);
@@ -150,7 +150,7 @@ app.post('/webhook/', (req, res) => {
 							if(error){
 								console.log(error);
 							}else {
-								console.log('Cart is created '+result.cartId+' Storename- '+storeName+' token '+access_token);
+								//console.log('Cart is created '+result.cartId+' Storename- '+storeName+' token '+access_token);
 								cartId=result.cartId;
 								qsr.addProductsToCart(access_token, cartId, email, 5, storeName, (error,result)=> {
 									if(error){
