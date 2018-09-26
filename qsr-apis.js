@@ -12,7 +12,7 @@ var getAuthTokenService = (username, password, callback) =>{
     form: {
     client_id:'webshop_client',
     client_secret: 'secret',
-    grant_type: 'client_credentials',
+    grant_type: 'password',
     username: username,
     password: password
     },
