@@ -31,7 +31,7 @@ var getAuthTokenService = (username, password, callback) =>{
       callback('Unable to get the token');
     }
     else if(response.statusCode == 200){
-      console.log('API hit:', response.statusCode)
+      console.log('getAuthTokenService API hit:', response.statusCode)
 
       callback(undefined, {
         token: body.access_token,
@@ -61,7 +61,7 @@ var nearestStoreService = (ulat, ulng, callback) =>{
       callback('Unable to get the result');
     }
     else if(response.statusCode == 200){
-      console.log('API hit:', response.statusCode);
+      console.log('nearestStoreService API hit:', response.statusCode);
       callback (undefined, {
         address: body.pointOfServices[0].address.line2,
         storeId : body.pointOfServices[0].address.id,
@@ -124,7 +124,7 @@ var createCartService = (authToken, email,callback) => {
       callback('Unable to create the cart');
     }
     else if(response.statusCode == 201){
-      console.log('API hit:', response.statusCode)
+      console.log('createCartService API hit:', response.statusCode)
 
       callback(undefined, {
         cartId: body.code
@@ -188,7 +188,7 @@ var fetchCartService = (authToken, cartId, email, callback) => {
       callback('Unable to fetch cart');
     }
     else if(response.statusCode == 200){
-      console.log('API hit:', response.statusCode)
+      console.log('fetchCartService API hit:', response.statusCode)
       callback(undefined, {
         totalItems: body.totalItems ,
         totalPrice: body.totalPriceWithTax.value
@@ -219,7 +219,7 @@ var settingDeliveryModeService = (authToken, cartId, email, callback) => {
       callback('Unable to set delivery mode for the cart');
     }
     else if(response.statusCode == 200){
-      console.log("API hit:", response.statusCode);
+      console.log("settingDeliveryModeService API hit:", response.statusCode);
       callback('Delivery Mode set');
     }
   });
@@ -247,7 +247,7 @@ var gettingSavedCardDetailsService = (authToken, email, callback) => {
         callback('Unable to get saved card details for the user');
       }
       else if(response.statusCode == 200){
-        console.log("API hit:", response.statusCode);
+        console.log("gettingSavedCardDetailsService API hit:", response.statusCode);
         callback(undefined, {
           cardNumber: body.payments[0].cardNumber,
           cardId: body.payments[0].id
@@ -277,7 +277,7 @@ var addCardPaymentService = (authToken, cartId, email, cardId, callback) => {
           callback('Unable to add payment_method for the cart');
         }
         else if(response.statusCode == 200){
-          console.log("API hit:", response.statusCode);
+          console.log("addCardPaymentService API hit:", response.statusCode);
          }
       });
 };
