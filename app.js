@@ -145,18 +145,18 @@ app.post('/webhook/', (req, res) => {
 					var productName = req.body.result.contexts[0].parameters.productName.original;
 					if(isDefined(actionName)){
 						console.log("Access Token  generated-  "+access_token+"for- "+productName);
-						var text='';
-						qsr.createCartService(access_token, email, (error,result) =>{
+						//var text='';
+						qsr.createCartService(access_token, email, (error,cartResult) =>{
 							if(error){
 								console.log(error);
 							}else {
-								//console.log('Cart is created '+result.cartId+' Storename- '+storeName+' token '+access_token);
-								cartId=result.cartId;
-								qsr.addProductsToCart(access_token, cartId, email, 5, storeName, (error,result)=> {
+								//console.log('Cart is created '+cartResult.cartId+' Storename- '+storeName+' token '+access_token);
+								cartId=cartResult.cartId;
+								qsr.addProductsToCart(access_token, cartResult.cartId, email, 5, storeName, (error,productResult)=> {
 									if(error){
 										console.log(error);
 									}else {
-										text= `Okay ! I've ordered you a big mac, would you also like to order fries ?`;
+										text= "Okay ! I have ordered you a big mac, would you also like to order fries?";
 										messageData = {
 											speech: text,
 											displayText: text
@@ -164,9 +164,16 @@ app.post('/webhook/', (req, res) => {
 										res.send(messageData);
 										}
 									});
-								}
+								};
 							});
-						}
+							}else{
+								text= 'I am sorry ! I cannot process your order.';
+								messageData = {
+										speech: text,
+										displayText: text
+										}
+								res.send(messageData);
+						   }
 					}
 					break;
 
