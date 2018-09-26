@@ -141,7 +141,8 @@ app.post('/webhook/', (req, res) => {
 					console.log('In action products order Mac');
 					//var productName = req.body.parameters;
 					if(isDefined(actionName)){
-						var text = '';
+						console.log("Access Token  generated-  "+access_token);
+						var text='';
 						qsr.createCartService(access_token, email, (error,result) =>{
 							if(error){
 								console.log(error);
