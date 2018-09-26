@@ -134,18 +134,19 @@ var createCartService = (authToken, email,callback) => {
 
 };
 
-var addProductsToCart = (authToken, cartId, email, productCode, storeName, callback) => {
+var addProductsToCart = (authToken, cartId, email, code, pickupStore, callback) => {
 
   console.log('Add products API entered');
-  var quantity = 1;
+  var qty = 1;
  // console.log(authToken+','+cartId+','+email+','+productCode+','+storeName);
    request({
     url: `https://34.195.45.172:9002/qsrcommercewebservices/v2/qsr/users/${email}/carts/${cartId}/entries`,
     form: {
-        code : productCode,
-        qty: quantity,
-        pickupStore: storeName
+        code : code,
+        qty: qty,
+        pickupStore: pickupStore
     },
+    timeout: 40000,
     method: 'POST',
     headers: {
         "content-type": "application/x-www-form-urlencoded",
@@ -156,15 +157,14 @@ var addProductsToCart = (authToken, cartId, email, productCode, storeName, callb
   }, (error, response, body) => {
 
     if(error){
-      callback('There was an error connecting to the server');
+      console.log('There was an error connecting to the server');
     }
     else if(response.statusCode == 401){
-      callback('Unable to add products');
+      console.log('Unable to add products');
     }
     else if(response.statusCode == 200){
       console.log('Add products API hit:', response.statusCode)
-      callback('Products added to the cart', body.statusCode);
-      }
+     }
   });
 
 };
