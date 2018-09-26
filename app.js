@@ -140,7 +140,7 @@ app.post('/webhook/', (req, res) => {
 		 case 'productsOrderMac': {
 					console.log('In action products order Mac');
 					//var productName = req.body.parameters;
-					if(isDefined(actionName) && parameters !== ''){
+					if(isDefined(actionName)){
 						var text = '';
 						qsr.createCartService(access_token, email, (error,result) =>{
 							if(error){
@@ -169,7 +169,7 @@ app.post('/webhook/', (req, res) => {
 
  		 case 'productsOrderFries': {
  					console.log('In action products order Fries');
- 					if(isDefined(actionName) && parameters !== ''){
+ 					if(isDefined(actionName)){
  						var text = '';
 						qsr.addProductsToCart(access_token, result.cartId, email, 8932, storeName, (error,result)=> {
 						 if(error){
