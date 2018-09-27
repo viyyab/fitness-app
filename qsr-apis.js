@@ -260,7 +260,7 @@ var gettingSavedCardDetailsService = (authToken, email, callback) => {
 
 var addCardPaymentService = (authToken, cartId, email, cardId, callback) => {
 
-      console.log('Adding payment API hit');
+      console.log('Adding payment API hit with card Id:', cardId);
       request({
         url: `https://34.195.45.172:9002/qsrcommercewebservices/v2/qsr/users/${email}/carts/${cartId}/paymentdetails?paymentDetailsId=${cardId}`,
         method: 'PUT',
