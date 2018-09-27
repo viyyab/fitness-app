@@ -210,6 +210,7 @@ var settingDeliveryModeService = (authToken, cartId, email, callback) => {
         "content-type": "application/x-www-form-urlencoded",
         "authorization": `bearer ${authToken}`
       },
+    timeout: 40000,
     rejectUnauthorized: false,
     json: true
   }, (error, response, body) => {
@@ -268,6 +269,7 @@ var addCardPaymentService = (authToken, cartId, email, cardId, callback) => {
         "content-type": "application/x-www-form-urlencoded",
         "authorization": `bearer ${authToken}`
          },
+        timeout: 40000,
         rejectUnauthorized: false,
         json: true
          }, (error, response, body) => {
@@ -294,6 +296,7 @@ var placeOrderService = (authToken, cartId, email, storeId, callback) => {
            "content-type": "application/x-www-form-urlencoded",
            "authorization": `bearer ${authToken}`
            },
+          timeout: 40000,
           rejectUnauthorized: false,
           json: true
           }, (error, response, body) => {
