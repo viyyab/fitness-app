@@ -163,7 +163,7 @@ var addProductsToCart = (authToken, cartId, email, code, pickupStore, callback) 
      callback('Unable to add products');
     }
     else if(response.statusCode == 200){
-      callback('Add products API hit:', response.statusCode)
+      console.log('Add products API hit:', response.statusCode)
      }
   });
 
