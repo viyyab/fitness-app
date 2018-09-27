@@ -226,33 +226,27 @@ app.post('/webhook/', (req, res) => {
 									   speech: text,
 									   displayText: text
 										}
-								             // res.send(messageData);
+								              res.send(messageData);
 									   }
 								       });
 								     }
 								   });
 								}
-								res.send(messageData);
-							    }
+							   }
  					         break;
 			
 		case 'OrderConfirmed': {
  					console.log('In action OrderConfirmed');
  					if(isDefined(actionName)){
- 						//var text = '';
-//  						qsr.settingDeliveryModeService(access_token, cartId, email, (error,result)=> {
-//  						 if(error){
-//  							console.log(error);
-//  							}else {
- 								//console.log(result);    
-								console.log(cartId+'   '+cardId);
-								qsr.addCardPaymentService(access_token, cartId, email, cardId, (error, paymentResult)=>{
+ 					console.log(cartId+'   '+cardId);
+							qsr.addCardPaymentService(access_token, cartId, email, cardId, (error, paymentResult)=>{
 									if(error){
 										console.log(error);
 									}else {
-										//console.log('Payment details added');
+										console.log('Payment details added with storeId: ',storeId);
 										qsr.placeOrderService(access_token, cartId, email, storeId, (error, orderResult) =>{
-											if(error){
+										if(error){
+											console.log(error);
 											}else{
 												console.log(orderResult.code);
 												}
@@ -261,16 +255,13 @@ app.post('/webhook/', (req, res) => {
 									   				speech: text,
 									   				displayText: text
 														}
-								             			// res.send(messageData);
+								             			 res.send(messageData);
 										           });
 									  	         }
 								                     });
-								                    //}
-								  		 //});
-									    }
-								res.send(messageData);
-							        }
- 					             break;
+								                 }
+							        	}
+ 					            	 break;
 		
 		 default:
 			//unhandled action, just send back the text
