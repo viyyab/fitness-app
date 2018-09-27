@@ -212,7 +212,7 @@ app.post('/webhook/', (req, res) => {
 									if(error){
 										console.log(error);
 									}else {
-									  defCardNumber=cardResult.cardNumber;
+									  var defCardNumber=cardResult.cardNumber;
 									  text= `The total will be ${result.totalPrice}. Would you like to use your default card on file ending with ${defCardNumber.substr(12,4)}?`;
 									  cardId= cardResult.cardId;
 								          messageData = {
