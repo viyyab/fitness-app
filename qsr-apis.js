@@ -157,13 +157,13 @@ var addProductsToCart = (authToken, cartId, email, code, pickupStore, callback) 
   }, (error, response, body) => {
 
     if(error){
-      console.log('There was an error connecting to the server');
+      callback('There was an error connecting to the server');
     }
     else if(response.statusCode == 401){
-      console.log('Unable to add products');
+     callback('Unable to add products');
     }
     else if(response.statusCode == 200){
-      console.log('Add products API hit:', response.statusCode)
+      callback('Add products API hit:', response.statusCode)
      }
   });
 
