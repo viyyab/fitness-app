@@ -157,7 +157,7 @@ app.post('/webhook/', (req, res) => {
 									if(error){
 										console.log(error);
 									}else {
-										console.log('Products added');
+										console.log('Mac added '+productResult);
 										}
 									});
 								text= `Okay ! I have ordered you a ${productName}, would you also like to order fries?`;
@@ -181,19 +181,20 @@ app.post('/webhook/', (req, res) => {
  		 case 'productsOrderFries': {
  					console.log('In action products order Fries');
  					if(isDefined(actionName)){
- 						var text = '';
-						qsr.addProductsToCart(access_token, result.cartId, email, 8932, storeName, (error,result)=> {
+ 						console.log(cartId);
+						qsr.addProductsToCart(access_token, cartId, email, 8932, storeName, (error,result)=> {
 						 if(error){
 							console.log(error);
 							}else {
+								console.log('Fries added');
+									}
+								   });
 								text= `Okay, I've added a medium fries to your order. Anything else ?`;
 								messageData = {
 									speech: text,
 									displayText: text
 										}
 								    res.send(messageData);
-									}
-								   });
 								}
 							 }
  					     break;
