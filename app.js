@@ -10,7 +10,7 @@ const DialogflowApp = require('actions-on-google').DialogflowApp;
 const app = express();
 var access_token;
 var refresh_token;
-var displayText = '';
+var text = '';
 var cardId;
 var cartId;
 var storeName;
