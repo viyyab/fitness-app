@@ -212,6 +212,13 @@ app.post('/webhook/', (req, res) => {
 									if(error){
 										console.log(error);
 									}else {
+										qsr.settingDeliveryModeService(access_token, cartId, email, (error,result)=> {
+ 						 				if(error){
+ 											console.log(error);
+ 										}else {
+											console.log(result);
+										}
+									});	
 									  var defCardNumber=cardResult.cardNumber;
 									  text= `The total will be ${result.totalPrice}. Would you like to use your default card on file ending with ${defCardNumber.substr(12,4)}?`;
 									  cardId= cardResult.cardId;
@@ -219,12 +226,13 @@ app.post('/webhook/', (req, res) => {
 									   speech: text,
 									   displayText: text
 										}
-								              res.send(messageData);
+								             // res.send(messageData);
 									   }
 								       });
 								     }
 								   });
 								}
+								res.send(messageData);
 							    }
  					         break;
 			
@@ -232,12 +240,12 @@ app.post('/webhook/', (req, res) => {
  					console.log('In action OrderConfirmed');
  					if(isDefined(actionName)){
  						//var text = '';
- 						qsr.settingDeliveryModeService(access_token, cartId, email, (error,result)=> {
- 						 if(error){
- 							console.log(error);
- 							}else {
+//  						qsr.settingDeliveryModeService(access_token, cartId, email, (error,result)=> {
+//  						 if(error){
+//  							console.log(error);
+//  							}else {
  								//console.log(result);    
-								//console.log(cartId+'   '+cardId);
+								console.log(cartId+'   '+cardId);
 								qsr.addCardPaymentService(access_token, cartId, email, cardId, (error, paymentResult)=>{
 									if(error){
 										console.log(error);
@@ -253,13 +261,14 @@ app.post('/webhook/', (req, res) => {
 									   				speech: text,
 									   				displayText: text
 														}
-								             			 res.send(messageData);
+								             			// res.send(messageData);
 										           });
 									  	         }
 								                     });
-								                    }
-								  		 });
+								                    //}
+								  		 //});
 									    }
+								res.send(messageData);
 							        }
  					             break;
 		
