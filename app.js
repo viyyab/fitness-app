@@ -149,30 +149,23 @@ app.post('/webhook/', (req, res) => {
 				 		break;
 		 case 'productsOrderMac': {
 					console.log('In action products order Mac');
-					var productName = req.body.result.contexts[0].parameters.productName.original;
+					var productName = req.body.result.contexts[0].parameters.productName;
 					if(isDefined(actionName)){
 						console.log("Access Token  generated-  "+access_token+"for- "+productName);
-						//var text='';
-// 						qsr.createCartService(access_token, email, (error,cartResult) =>{
-// 							if(error){
-// 								console.log(error);
-// 							}else {
-// 								//console.log('Cart is created '+cartResult.cartId+' Storename- '+storeName+' token '+access_token);
- 								console.log(cartId);
+						console.log(cartId);
 								qsr.addProductsToCart(access_token, cartId, email, 5, storeName, (error,productResult)=> {
 									if(error){
 										console.log(error);
 									}else {
-										text= "Okay ! I have ordered you a big mac, would you also like to order fries?";
+										console.log('Products added');
+										}
+									});
+								text= `Okay ! I have ordered you a ${productName}, would you also like to order fries?`;
 										messageData = {
 											speech: text,
 											displayText: text
 											}
 										res.send(messageData);
-										}
-									});
-								//};
-							//});
 							}else{
 								text= 'I am sorry ! I cannot process your order.';
 								messageData = {
