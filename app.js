@@ -245,7 +245,7 @@ app.post('/webhook/', (req, res) => {
 										qsr.placeOrderService(access_token, cartId, email, storeId, (error, orderResult) =>{
 											if(error){
 											}else{
-												text= `Your order has been submitted. Your order code is ${result.code}. Please provide this code when you get to the restaurant and they'll get your order started. I will also text it to you for reference. Thank you for your order!`;
+												text= `Your order has been submitted. Your order code is ${orderResult.code}. Please provide this code when you get to the restaurant and they'll get your order started. I will also text it to you for reference. Thank you for your order!`;
 								         			 messageData = {
 									   				speech: text,
 									   				displayText: text
