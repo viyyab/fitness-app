@@ -232,11 +232,14 @@ app.post('/webhook/', (req, res) => {
  					console.log('In action OrderConfirmed');
  					if(isDefined(actionName)){
  						//var text = '';
-						qsr.settingDeliveryModeService(access_token, cartId, email, (error,result)=> {
-						 if(error){
-							console.log(error);
-							}else {
-								console.log(result);
+ 						qsr.settingDeliveryModeService(access_token, cartId, email, (error,result)=> {
+ 						 if(error){
+ 							console.log(error);
+ 							}else {
+ 								console.log(result);
+								}
+							});
+								console.log(cartId+'   '+cardId);
 								qsr.addCardPaymentService(access_token, cartId, email, cardId, (error, paymentResult)=>{
 									if(error){
 										console.log(error);
@@ -255,8 +258,8 @@ app.post('/webhook/', (req, res) => {
 										           });
 									  	         }
 								                      });
-								                    }
-								  		 });
+								                   // }
+								  		// });
 									    }
 							        }
  					             break;
