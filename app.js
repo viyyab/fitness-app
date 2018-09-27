@@ -52,7 +52,7 @@ app.get('/', function (req, res) {
 
 app.post('/webhook/', (req, res) => {
 
-	console.log(access_token);
+	//console.log(access_token);
 	//console.log(JSON.stringify(req.body));
 	var data = req.body;
 	var sessionId = req.body.sessionId;
