@@ -111,7 +111,7 @@ app.post('/webhook/', (req, res) => {
 									if(error){
 										console.log(error);
 									}else {
-										//console.log(storeResult);
+										
 										storeId=storeResult.storeId;
 										storeName=storeResult.storeName;
 										//console.log(storeName+'-----------------'+storeId);
