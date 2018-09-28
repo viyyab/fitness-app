@@ -221,13 +221,13 @@ app.post('/webhook/', (req, res) => {
 										console.log(error);
 									}else {
 									cardId= cardResult.cardId;
-									qsr.addCardPaymentService(access_token, cartId, email, cardId, (error, paymentResult)=>{
-									if(error){
-										console.log(error);
-									 }else {
-										console.log('Payment details added with storeId: ',storeId);
-									   }
-									 });
+// 									qsr.addCardPaymentService(access_token, cartId, email, cardId, (error, paymentResult)=>{
+// 									if(error){
+// 										console.log(error);
+// 									 }else {
+// 										console.log('Payment details added with storeId: ',storeId);
+// 									   }
+// 									 });
 									  var defCardNumber=cardResult.cardNumber;
 									  text= `The total will be ${result.totalPrice}. Would you like to use your default card on file ending with ${defCardNumber.substr(12,4)}?`;
 									  messageData = {
@@ -255,15 +255,22 @@ app.post('/webhook/', (req, res) => {
 										}
 								res.send(messageData);	
 					}
-					qsr.placeOrderService(access_token, cartId, email, storeId, (error, orderResult) =>{
+					qsr.addCardPaymentService(access_token, cartId, email, cardId, (error, paymentResult)=>{
+ 									if(error){
+ 										console.log(error);
+ 									 }else {
+ 										console.log('Payment details added with storeId: ',storeId);
+ 					qsr.placeOrderService(access_token, cartId, email, storeId, (error, orderResult) =>{
 						if(error){
 							console.log(error);
 							}else{
 								console.log(orderResult.code);
 								orderCode=orderResult.code;
-								setTimeout(myFunc(orderCode), 5000, "Order Placed");
+								setTimeout(myFunc(orderCode), 5000);
 								}
-							    });					
+							    });	
+							 }
+						});
 						         }else{
 							       text= 'I am sorry, I was not able to place an order for you.';
 								 messageData = {
