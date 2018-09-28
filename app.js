@@ -6,7 +6,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const qsr= require('./qsr-apis.js');
 const request= require('request');
-const series = require('async-series');
+//const series = require('async-series');
 const DialogflowApp = require('actions-on-google').DialogflowApp;
 const app = express();
 var access_token;
