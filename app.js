@@ -256,9 +256,9 @@ app.post('/webhook/', (req, res) => {
 								res.send(messageData);	
 					}
 					qsr.addCardPaymentService(access_token, cartId, email, cardId, (error, paymentResult)=>{
-//  						if(error){
-//  							console.log(error);
-//  							}else {
+  						if(error){
+  							console.log(error);
+  							}else {
  						qsr.placeOrderService(access_token, cartId, email, storeId, (error, orderResult) =>{
 							if(error){
 							console.log(error);
