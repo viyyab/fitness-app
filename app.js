@@ -316,9 +316,10 @@ app.post('/webhook/', (req, res) => {
 							}
  					 	break;
 		
-// 		 default:
-// 			//unhandled action, just send back the text
-// 			break;
+ 		 default:
+			console.log(error);
+ 			//unhandled action, just send back the text
+ 			break;
 	}
 });
 
