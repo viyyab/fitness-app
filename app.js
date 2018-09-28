@@ -259,6 +259,8 @@ app.post('/webhook/', (req, res) => {
   						if(error){
   							console.log(error);
   							}else {
+							console.log('Payment added');
+							}
  						qsr.placeOrderService(access_token, cartId, email, storeId, (error, orderResult) =>{
 							if(error){
 							console.log(error);
@@ -268,7 +270,7 @@ app.post('/webhook/', (req, res) => {
 								setTimeout(myFunc(orderCode), 5000);
 								}
 							    });	
-							   }
+							   
 							});
 						         }else{
 							       text= 'I am sorry, I was not able to place an order for you.';
