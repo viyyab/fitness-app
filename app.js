@@ -253,14 +253,15 @@ app.post('/webhook/', (req, res) => {
 							}else{
 								console.log(orderResult.code);
 								orderCode=orderResult.code;
-								setTimeout(myFunc() {
+								setTimeout(myFunc =>(
+								{
 								 text= `Your order has been submitted. Your order code is ${orderCode}. Please provide this code when you get to the restaurant and they'll get your order started. I will also text it to you for reference. Thank you for your order!`;
 								 messageData = {
 										speech: text,
 										displayText: text
 										}
 								res.send(messageData);	
-								}, 500, "Order Placed");
+								}), 500, "Order Placed");
 								}
 							    });					
 						         }else{
