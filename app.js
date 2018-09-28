@@ -246,29 +246,22 @@ app.post('/webhook/', (req, res) => {
  					console.log('In action OrderConfirmed');
  					if(isDefined(actionName)){
  					console.log(cartId+'   '+cardId);
-// 							qsr.addCardPaymentService(access_token, cartId, email, cardId, (error, paymentResult)=>{
-// 									if(error){
-// 										console.log(error);
-// 									}else {
-// 										console.log('Payment details added with storeId: ',storeId);
-										qsr.placeOrderService(access_token, cartId, email, storeId, (error, orderResult) =>{
-										if(error){
-											console.log(error);
-											}else{
-												console.log(orderResult.code);
-												}
-												text= `Your order has been submitted. Your order code is ${orderResult.code}. Please provide this code when you get to the restaurant and they'll get your order started. I will also text it to you for reference. Thank you for your order!`;
-								         			 messageData = {
-									   				speech: text,
-									   				displayText: text
-														}
-								             			 res.send(messageData);
-										           });
-									  	         //}
-								                     //});
-								                 }
-							        	}
- 					            	 break;
+					qsr.placeOrderService(access_token, cartId, email, storeId, (error, orderResult) =>{
+						if(error){
+							console.log(error);
+							}else{
+								console.log(orderResult.code);
+								}
+						        });
+						  text= `Your order has been submitted. Your order code is ${orderResult.code}. Please provide this code when you get to the restaurant and they'll get your order started. I will also text it to you for reference. Thank you for your order!`;
+								 messageData = {
+										speech: text,
+										displayText: text
+										}
+								   res.send(messageData);
+					 	             }
+						        }
+ 					 break;
 		
 		 default:
 			//unhandled action, just send back the text
