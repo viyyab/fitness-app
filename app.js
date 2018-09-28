@@ -124,6 +124,13 @@ app.post('/webhook/', (req, res) => {
 													console.log(error);
 												}else {
 													cartId=cartResult.cartId;
+													qsr.settingDeliveryModeService(access_token, cartId, email, (error,result)=> {
+ 						 							if(error){
+ 													console.log(error);
+ 													}else {
+													console.log(result);
+														}
+													});	
 													}
 												});
 												text= `Thank you for your permission ! I can place an order for you at the nearest ${storeResult.name} at ${storeResult.address}, which is a ${durationResult.duration} walk from your place. What would you like to order ?`;
@@ -212,13 +219,13 @@ app.post('/webhook/', (req, res) => {
 									if(error){
 										console.log(error);
 									}else {
-										qsr.settingDeliveryModeService(access_token, cartId, email, (error,result)=> {
- 						 				if(error){
- 											console.log(error);
- 										}else {
-											console.log(result);
-										}
-									});	
+									qsr.addCardPaymentService(access_token, cartId, email, cardId, (error, paymentResult)=>{
+									if(error){
+										console.log(error);
+									 }else {
+										console.log('Payment details added with storeId: ',storeId);
+									   }
+									 });
 									  var defCardNumber=cardResult.cardNumber;
 									  text= `The total will be ${result.totalPrice}. Would you like to use your default card on file ending with ${defCardNumber.substr(12,4)}?`;
 									  cardId= cardResult.cardId;
@@ -228,14 +235,7 @@ app.post('/webhook/', (req, res) => {
 										}
 								              res.send(messageData);
 									   }
-									qsr.addCardPaymentService(access_token, cartId, email, cardId, (error, paymentResult)=>{
-									if(error){
-										console.log(error);
-									}else {
-										console.log('Payment details added with storeId: ',storeId);
-									}
-									});
-								       });
+								        });
 								     }
 								   });
 								}
