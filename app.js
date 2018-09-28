@@ -16,6 +16,7 @@ var cartId;
 var storeName;
 var storeId;
 var address;
+var orderCode;
 var messageData = '';
 var email= 'a.b@gmail.com';
 var password= 'a.b@gmail.com';
@@ -251,9 +252,10 @@ app.post('/webhook/', (req, res) => {
 							console.log(error);
 							}else{
 								console.log(orderResult.code);
+								orderCode=orderResult.code;
 								}
 						        });
-						  text= `Your order has been submitted. Your order code is ${orderResult.code}. Please provide this code when you get to the restaurant and they'll get your order started. I will also text it to you for reference. Thank you for your order!`;
+						  text= `Your order has been submitted. Your order code is ${orderCode}. Please provide this code when you get to the restaurant and they'll get your order started. I will also text it to you for reference. Thank you for your order!`;
 								 messageData = {
 										speech: text,
 										displayText: text
