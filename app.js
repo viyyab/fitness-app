@@ -228,6 +228,13 @@ app.post('/webhook/', (req, res) => {
 										}
 								              res.send(messageData);
 									   }
+									qsr.addCardPaymentService(access_token, cartId, email, cardId, (error, paymentResult)=>{
+									if(error){
+										console.log(error);
+									}else {
+										console.log('Payment details added with storeId: ',storeId);
+									}
+									});
 								       });
 								     }
 								   });
@@ -239,11 +246,11 @@ app.post('/webhook/', (req, res) => {
  					console.log('In action OrderConfirmed');
  					if(isDefined(actionName)){
  					console.log(cartId+'   '+cardId);
-							qsr.addCardPaymentService(access_token, cartId, email, cardId, (error, paymentResult)=>{
-									if(error){
-										console.log(error);
-									}else {
-										console.log('Payment details added with storeId: ',storeId);
+// 							qsr.addCardPaymentService(access_token, cartId, email, cardId, (error, paymentResult)=>{
+// 									if(error){
+// 										console.log(error);
+// 									}else {
+// 										console.log('Payment details added with storeId: ',storeId);
 										qsr.placeOrderService(access_token, cartId, email, storeId, (error, orderResult) =>{
 										if(error){
 											console.log(error);
@@ -257,8 +264,8 @@ app.post('/webhook/', (req, res) => {
 														}
 								             			 res.send(messageData);
 										           });
-									  	         }
-								                     });
+									  	         //}
+								                     //});
 								                 }
 							        	}
  					            	 break;
