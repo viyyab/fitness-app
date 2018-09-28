@@ -66,33 +66,33 @@ app.post('/webhook/', (req, res) => {
 			case 'require_permission': {
 		 					console.log('In require_permission');
 		 					if(isDefined(actionName)){
-							console.log('Coversation');
-							messageData = {
-								"data": {
+								console.log('Coversation');
+								messageData = {
+									"data": {
 										"google": {
 											"expectUserResponse": true,
 											"systemIntent": {
 													"intent": "actions.intent.PERMISSION",
 													"data": {
-															"@type": "type.googleapis.com/google.actions.v2.PermissionValueSpec",
-															"optContext": "To process your order, ",
-															"permissions": ["DEVICE_PRECISE_LOCATION"]
-																	}
-																}
-															}
+														"@type": "type.googleapis.com/google.actions.v2.PermissionValueSpec",
+														"optContext": "To process your order, ",
+														"permissions": ["DEVICE_PRECISE_LOCATION"]
 														}
 													}
+											    }
+										 }
+							 	   		}
 								qsr.getAuthTokenService(email, password, (error, result) => {
-								if(error){
-									console.log("Token cannot be generated");
-								} else {
-									access_token = result.token;
-									refresh_token = result.refresh_token;
+									if(error){
+										console.log("Token cannot be generated");
+									} else {
+										access_token = result.token;
+										refresh_token = result.refresh_token;
 									}
 								});
-								}
-												res.send(messageData);
-		 					}
+							}
+							res.send(messageData);
+						}
 		 				break;
 
 			case 'check_permission': {
@@ -213,35 +213,35 @@ app.post('/webhook/', (req, res) => {
  					console.log('In action productsOrderConfirmedCart');
  					if(isDefined(actionName)){
  						qsr.fetchCartService (access_token, cartId, email, (error,result)=> {
-						 if(error){
-							console.log(error);
+						 	if(error){
+								console.log(error);
 							}else {
 								console.log(result.totalPrice);
 								qsr.gettingSavedCardDetailsService(access_token, email, (error, cardResult)=>{
 									if(error){
 										console.log(error);
 									}else {
-									cardId= cardResult.cardId;
- 									qsr.addCardPaymentService(access_token, cartId, email, cardId, (error, paymentResult)=>{
- 									if(error){
- 										console.log(error);
- 									 }else {
- 										console.log('Payment details added with storeId: ',storeId);
- 									   }
- 									 });
-									  var defCardNumber=cardResult.cardNumber;
-									  text= `The total will be ${result.totalPrice}. Would you like to use your default card on file ending with ${defCardNumber.substr(12,4)}?`;
-									  messageData = {
-									   speech: text,
-									   displayText: text
-										}
+										cardId= cardResult.cardId;
+ 										qsr.addCardPaymentService(access_token, cartId, email, cardId, (error, paymentResult)=>{
+ 											if(error){
+ 												console.log(error);
+ 											 }else {
+ 												console.log('Payment details added with storeId: ',storeId);
+ 									 	 	 }
+ 										 });
+									 	 var defCardNumber=cardResult.cardNumber;
+									 	 text= `The total will be ${result.totalPrice}. Would you like to use your default card on file ending with ${defCardNumber.substr(12,4)}?`;
+									  	messageData = {
+									   		speech: text,
+									  		 displayText: text
+											}
 								              res.send(messageData);
-									   }
-								        });
-								     }
-								   });
-								}
-							   }
+									 }
+								  });
+						 	 }
+						   });
+						}
+					 }
  					         break;
 			
 		case 'OrderConfirmed': {
