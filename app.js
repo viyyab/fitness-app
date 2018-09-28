@@ -247,21 +247,21 @@ app.post('/webhook/', (req, res) => {
  					console.log('In action OrderConfirmed');
  					if(isDefined(actionName)){
  					console.log(cartId+'   '+cardId);
+					function myFunc(orderCode) {
+						text= `Your order has been submitted. Your order code is ${orderCode}. Please provide this code when you get to the restaurant and they'll get your order started. I will also text it to you for reference. Thank you for your order!`
+								 messageData = {
+										speech: text,
+										displayText: text
+										}
+								res.send(messageData);	
+					}
 					qsr.placeOrderService(access_token, cartId, email, storeId, (error, orderResult) =>{
 						if(error){
 							console.log(error);
 							}else{
 								console.log(orderResult.code);
 								orderCode=orderResult.code;
-								setTimeout(myFunc =>(
-								{
-								 text= `Your order has been submitted. Your order code is ${orderCode}. Please provide this code when you get to the restaurant and they'll get your order started. I will also text it to you for reference. Thank you for your order!`
-								 messageData = {
-										speech: text,
-										displayText: text
-										}
-								res.send(messageData);	
-								}), 500, "Order Placed");
+								setTimeout(myFunc(orderCode), 500, "Order Placed");
 								}
 							    });					
 						         }else{
