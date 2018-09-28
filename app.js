@@ -8,7 +8,7 @@ const qsr= require('./qsr-apis.js');
 const request= require('request');
 const DialogflowApp = require('actions-on-google').DialogflowApp;
 const app = express();
-var async = require('async');
+const async = require('async');
 var access_token;
 var refresh_token;
 var text = '';
