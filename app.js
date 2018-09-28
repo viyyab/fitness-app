@@ -8,7 +8,7 @@ const qsr= require('./qsr-apis.js');
 const request= require('request');
 const DialogflowApp = require('actions-on-google').DialogflowApp;
 const app = express();
-const async = require('async');
+//const async = require('async');
 var access_token;
 var refresh_token;
 var text = '';
@@ -256,74 +256,73 @@ app.post('/webhook/', (req, res) => {
 										}
 								res.send(messageData);	
 						}
-						exports.asyncSeries = function (req, res, callback) { 
-						async.series([
-							//console.log('Inside series call');
-  				        	   function(callback) {
-   							qsr.addCardPaymentService(access_token, cartId, email, cardId, (error, paymentResult)=>{
-  								if(error){
-  									console.log(error);
-  								}else {
-									console.log(paymentResult);
-								}
-							});
-  							callback();
- 					   	    },
-  					   	   function(callback) {
-    							qsr.placeOrderService(access_token, cartId, email, storeId, (error, orderResult) =>{
-								if(error){
-									console.log(error);
-								}else{
-									console.log(orderResult.code);
-									orderCode=orderResult.code;
-									setTimeout(myFunc(orderCode), 5000);
-								}
-							 });	
-   							callback(new Error('another thing'));
- 					  	  }
-						], function(err) {
- 							 //console.log(err.message) // "another thing"
-							if(err)
-							{
-							 text= 'I am sorry, I was not able to place an order for you.';
-								 messageData = {
-										speech: text,
-										displayText: text
-										}
-								 res.send(messageData);
-							}
-							callback();
-						   }
-						)
-						}
-						
-// 					qsr.addCardPaymentService(access_token, cartId, email, cardId, (error, paymentResult)=>{
-//   						if(error){
-//   							console.log(error);
-//   							}else {
-// 							console.log(paymentResult);
-//  						qsr.placeOrderService(access_token, cartId, email, storeId, (error, orderResult) =>{
-// 							if(error){
-// 							console.log(error);
-// 							}else{
-// 								console.log(orderResult.code);
-// 								orderCode=orderResult.code;
-// 								setTimeout(myFunc(orderCode), 5000);
+// 						exports.asyncSeries = function (req, res, callback) { 
+// 						async.series([
+// 							//console.log('Inside series call');
+//   				        	   function(callback) {
+//    							qsr.addCardPaymentService(access_token, cartId, email, cardId, (error, paymentResult)=>{
+//   								if(error){
+//   									console.log(error);
+//   								}else {
+// 									console.log(paymentResult);
 // 								}
-// 							    });	
-// 							  }
 // 							});
-// 						         }else{
-// 							       text= 'I am sorry, I was not able to place an order for you.';
+//   							callback();
+//  					   	    },
+//   					   	   function(callback) {
+//     							qsr.placeOrderService(access_token, cartId, email, storeId, (error, orderResult) =>{
+// 								if(error){
+// 									console.log(error);
+// 								}else{
+// 									console.log(orderResult.code);
+// 									orderCode=orderResult.code;
+// 									setTimeout(myFunc(orderCode), 5000);
+// 								}
+// 							 });	
+//    							callback(new Error('another thing'));
+//  					  	  }
+// 						], function(err) {
+//  							 //console.log(err.message) // "another thing"
+// 							if(err)
+// 							{
+// 							 text= 'I am sorry, I was not able to place an order for you.';
 // 								 messageData = {
 // 										speech: text,
 // 										displayText: text
 // 										}
 // 								 res.send(messageData);
-// 								 }
-							}
-		}
- 					 	break;
+// 							}
+// 							callback();
+// 						   }
+// 						)
+// 						}
+						
+ 					qsr.addCardPaymentService(access_token, cartId, email, cardId, (error, paymentResult)=>{
+   						if(error){
+   							console.log(error);
+   							}else {
+								console.log(paymentResult);
+								qsr.placeOrderService(access_token, cartId, email, storeId, (error, orderResult) =>{
+									if(error){
+										console.log(error);
+									}else{
+										console.log(orderResult.code);
+										orderCode=orderResult.code;
+										setTimeout(myFunc(orderCode), 5000);
+									}
+								});	
+ 							 }
+ 					  });
+ 					}else{
+ 						text= 'I am sorry, I was not able to place an order for you.';
+							 messageData = {
+									speech: text,
+									displayText: text
+									}
+							 res.send(messageData);
+					 }
+					}
+ 					break;
 		
  		 default:
 			console.log(error);
