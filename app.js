@@ -256,7 +256,7 @@ app.post('/webhook/', (req, res) => {
 										}
 								res.send(messageData);	
 						}
-						series([
+						function series([
   				        	   function(done) {
    							qsr.addCardPaymentService(access_token, cartId, email, cardId, (error, paymentResult)=>{
   								if(error){
