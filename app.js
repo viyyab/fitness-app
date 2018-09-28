@@ -258,7 +258,7 @@ app.post('/webhook/', (req, res) => {
 						}
 						exports.asyncSeries = function (req, res, callback) { 
 						async.series([
-							console.log('Inside series call');
+							//console.log('Inside series call');
   				        	   function(callback) {
    							qsr.addCardPaymentService(access_token, cartId, email, cardId, (error, paymentResult)=>{
   								if(error){
