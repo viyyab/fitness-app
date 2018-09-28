@@ -301,7 +301,7 @@ app.post('/webhook/', (req, res) => {
 							}else{
 								console.log(orderResult.code);
 								orderCode=orderResult.code;
-								setTimeout(function(){myFunc(orderCode)}, 6000);
+								setTimeout(function(){myFunc(orderCode)}, 5000);
 							}
 						});	
  					}else{
