@@ -223,7 +223,6 @@ var settingDeliveryModeService = (authToken, cartId, email, callback) => {
     }
     else if(response.statusCode == 200){
       console.log("settingDeliveryModeService API hit:", response.statusCode);
-      callback('Delivery Mode set');
     }
   });
 

@@ -8,7 +8,7 @@ const qsr= require('./qsr-apis.js');
 const request= require('request');
 const DialogflowApp = require('actions-on-google').DialogflowApp;
 const app = express();
-const request= require('axios');
+const axios= require('axios');
 //const async = require('async');
 var access_token;
 var refresh_token;
@@ -223,13 +223,13 @@ app.post('/webhook/', (req, res) => {
 										console.log(error);
 									}else {
 										cardId= cardResult.cardId;
- 										// qsr.addCardPaymentService(access_token, cartId, email, cardId, (error, paymentResult)=>{
- 										// 	if(error){
- 										// 		console.log(error);
- 										// 	 }else {
- 										// 		console.log('Payment details added with storeId: ',storeId);
- 									 	//  	 }
- 										//  });
+ 										qsr.addCardPaymentService(access_token, cartId, email, cardId, (error, paymentResult)=>{
+ 											if(error){
+ 												console.log(error);
+ 											 }else {
+ 												console.log('Payment details added with storeId: ',storeId);
+ 									 	 	 }
+ 										 });
 									 	 var defCardNumber=cardResult.cardNumber;
 									 	 text= `The total will be ${result.totalPrice} $. Would you like to use your default card on file ending with ${defCardNumber.substr(12,4)}?`;
 									  	messageData = {
@@ -257,52 +257,16 @@ app.post('/webhook/', (req, res) => {
 										}
 								res.send(messageData);
 						};
-						// qsr.placeOrderService(access_token, cartId, email, storeId, (error, orderResult) =>{
-						// 	if(error){
-						// 		console.log(error);
-						// 	}else{
-						// 		console.log(orderResult.code);
-						// 		orderCode=orderResult.code;
-						// 		setTimeout(() => myFunc(orderCode), 5000)
-						// 	}
-						// });
-						axios({
-					    url: `https://34.195.45.172:9002/qsrcommercewebservices/v2/qsr/users/${email}/carts/${cartId}/paymentdetails?paymentDetailsId=${cardId}`,
-					    method: 'PUT',
-					    headers: {
-					          "content-type": "application/x-www-form-urlencoded",
-					          "authorization": `bearer ${access_token}`
-					           },
-					    timeout: 40000,
-					    rejectUnauthorized: false,
-					    json: true
-					    }).then((response) => {
-					    if(response.statusCode == 401 || response.statusCode == 400){
-					      throw new Error('Unable to add payment');
-					    } else if(response.data.statusCode == 200){
-					      console.log("addCardPaymentService API hit:", response.statusCode);
-					    }
-					    return axios({
-					            url: `https://34.195.45.172:9002/qsrcommercewebservices/v2/qsr/users/${email}/orders?cartId=${cartId}&storeCode=${storeId}&deliveryCode=pickup`,
-					            method: 'POST',
-					            headers: {
-					             "content-type": "application/x-www-form-urlencoded",
-					             "authorization": `bearer ${access_token}`
-					             },
-					            timeout: 40000,
-					            rejectUnauthorized: false,
-					            json: true
-					      });
-					  }).then((response) => {
-					    console.log(orderResult.code);
-					  	orderCode=orderResult.code;
-							setTimeout(() => myFunc(orderCode), 5000)
-					  }).catch((error) =>{
-					    if(error){
-					      console.log('Unable to place an order');
-					    }
-					  });
- 					}else{
+						qsr.placeOrderService(access_token, cartId, email, storeId, (error, orderResult) =>{
+							if(error){
+								console.log(error);
+							}else{
+								console.log(orderResult.code);
+								orderCode=orderResult.code;
+								setTimeout(() => myFunc(orderCode), 5000)
+							}
+						});
+						}else{
  						text= 'I am sorry, I was not able to place an order for you.';
 							 messageData = {
 									speech: text,
