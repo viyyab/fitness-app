@@ -248,7 +248,7 @@ app.post('/webhook/', (req, res) => {
  					console.log('In action OrderConfirmed');
  					if(isDefined(actionName)){
  						console.log(cartId+'   '+cardId);
-						var myFunc = (orderCode) => {
+						function myFunc(orderCode) {
 							text= `Your order has been submitted. Your order code is ${orderCode}. Please provide this code when you get to the restaurant and they'll get your order started. I will also text it to you for reference. Thank you for your order!`
 								 messageData = {
 										speech: text,
@@ -301,7 +301,7 @@ app.post('/webhook/', (req, res) => {
 							}else{
 								console.log(orderResult.code);
 								orderCode=orderResult.code;
-								setTimeout(myFunc(orderCode), 5000);
+								setTimeout(() => myFunc(orderCode), 5000)
 							}
 						});	
  					}else{
