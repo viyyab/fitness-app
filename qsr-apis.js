@@ -327,5 +327,5 @@ module.exports = {
     settingDeliveryModeService,
     gettingSavedCardDetailsService,
     addCardPaymentService,
-    placeOrderService,
+    placeOrderService
 };
