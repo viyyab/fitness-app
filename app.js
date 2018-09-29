@@ -294,8 +294,8 @@ app.post('/webhook/', (req, res) => {
 					            json: true
 					      });
 					  }).then((response) => {
-					    console.log(orderResult.code);
-					  	orderCode=orderResult.code;
+					    console.log(response.body.code);
+					  	orderCode=response.body.code;
 							setTimeout(() => myFunc(orderCode), 5000)
 					  }).catch((error) =>{
 					    if(error){
