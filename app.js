@@ -141,36 +141,20 @@ app.post('/webhook/', (req, res) => {
 								console.log('Coversation');
 								messageData = {
 									"data": {
-										"google": {
-											  "conversationToken": "{\"state\":null,\"data\":{}}",
-											  "expectUserResponse": true,
-											  "expectedInputs": [
-											    {
-											      "inputPrompt": {
-												"initialPrompts": [
-												  {
-												    "textToSpeech": "PLACEHOLDER_FOR_PERMISSION"
-												  }
-												],
-												"noInputPrompts": []
-											      },
-											      "possibleIntents": [
-												{
-												  "intent": "actions.intent.PERMISSION",
-												  "data": {
-												    "@type": "type.googleapis.com/google.actions.v2.PermissionValueSpec",
-												    "optContext": "To process your order",
-												    "permissions": [
-												      "DEVICE_PRECISE_LOCATION"
-												    ]
-												  }
-												}
-											      ]
-											    }
-											  ]
-											}				  
-										     }
-							 	   		}
+				  						"google": {
+											"expectUserResponse": true,
+											"systemIntent": {
+													"intent": "actions.intent.PERMISSION",
+													"data": {
+															"@type": "type.googleapis.com/google.actions.v2.PermissionValueSpec",
+															"optContext": "To process your order, ",
+															"permissions": ["DEVICE_COARSE_LOCATION"]
+																	}
+																}
+															}
+														}
+										                        }
+							 	   				}
 								qsr.getAuthTokenService(email, password, (error, result) => {
 									if(error){
 										console.log("Token cannot be generated");
