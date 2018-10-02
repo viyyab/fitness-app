@@ -154,7 +154,7 @@ app.post('/webhook/', (req, res) => {
 															}
 														}
 										                        }
-							 	   				}
+							 	   				
 								qsr.getAuthTokenService(email, password, (error, result) => {
 									if(error){
 										console.log("Token cannot be generated");
