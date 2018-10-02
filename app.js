@@ -20,8 +20,8 @@ var storeId;
 var address;
 var orderCode;
 var messageData = '';
-var email= 'a.b@gmail.com';
-var password= 'a.b@gmail.com';
+var email= 'pratikb365@gmail.com';
+var password= 'pratikb365@gmail.com';
 debugger;
 
 
