@@ -63,7 +63,78 @@ app.post('/webhook/', (req, res) => {
  	var parameters = req.body.result.parameters;
  	var message = req.body.result.resolvedQuery;
 	switch (actionName) {
-
+			
+// 			case 'require_sign_in': {
+// 		 					console.log('In require_permission');
+// 		 					if(isDefined(actionName)){
+// 								console.log('Coversation');
+// 								messageData = {
+// 									"data": {
+// 										"google": {
+// 												 "conversationToken": "{\"state\":null,\"data\":{}}",
+//   												  "expectUserResponse": true,
+//   													"expectedInputs": [
+//     														{
+// 														 "inputPrompt": {
+// 														"initialPrompts": [
+// 														  {
+// 														    "textToSpeech": "PLACEHOLDER_FOR_SIGN_IN"
+// 														  }
+// 														],
+// 														"noInputPrompts": []
+// 													      },
+// 													      "possibleIntents": [
+// 														{
+// 														  "intent": "actions.intent.SIGN_IN",
+// 														  "inputValueData": {}
+// 														}
+// 													      ]
+// 													    }
+// 													  ]
+																					
+// 											    }
+// 										 	}
+// 							 	   		    }
+// 										}
+// 								res.send(messageData);
+// 							}
+// 		 				break;
+			
+			
+// 			case 'check_sign_in': {
+// 		 				console.log('In check_sign_in');
+// 		 					if(isDefined(actionName)){
+// 								if(req.body){
+// 								messageData = {
+// 									"data": {
+// 										"google": {
+// 											"expectUserResponse": true,
+// 											"systemIntent": {
+// 													"intent": "actions.intent.PERMISSION",
+// 													"data": {
+// 														"@type": "type.googleapis.com/google.actions.v2.PermissionValueSpec",
+// 														"optContext": "To process your order, ",
+// 														"permissions": ["DEVICE_PRECISE_LOCATION"]
+// 														}
+// 													}
+// 											    }
+// 										 }
+// 							 	   		}
+// 								qsr.getAuthTokenService(email, password, (error, result) => {
+// 									if(error){
+// 										console.log("Token cannot be generated");
+// 									} else {
+// 										access_token = result.token;
+// 										refresh_token = result.refresh_token;
+// 									}
+// 								});
+// 							    }
+// 							}
+// 							res.send(messageData);
+// 						}
+// 		 				break;
+			
+			
 			case 'require_permission': {
 		 					console.log('In require_permission');
 		 					if(isDefined(actionName)){
@@ -71,17 +142,34 @@ app.post('/webhook/', (req, res) => {
 								messageData = {
 									"data": {
 										"google": {
-											"expectUserResponse": true,
-											"systemIntent": {
-													"intent": "actions.intent.PERMISSION",
-													"data": {
-														"@type": "type.googleapis.com/google.actions.v2.PermissionValueSpec",
-														"optContext": "To process your order, ",
-														"permissions": ["DEVICE_PRECISE_LOCATION"]
-														}
-													}
+											  "conversationToken": "{\"state\":null,\"data\":{}}",
+											  "expectUserResponse": true,
+											  "expectedInputs": [
+											    {
+											      "inputPrompt": {
+												"initialPrompts": [
+												  {
+												    "textToSpeech": "PLACEHOLDER_FOR_PERMISSION"
+												  }
+												],
+												"noInputPrompts": []
+											      },
+											      "possibleIntents": [
+												{
+												  "intent": "actions.intent.PERMISSION",
+												  "inputValueData": {
+												    "@type": "type.googleapis.com/google.actions.v2.PermissionValueSpec",
+												    "optContext": "To process your order",
+												    "permissions": [
+												      "DEVICE_PRECISE_LOCATION"
+												    ]
+												  }
+												}
+											      ]
 											    }
-										 }
+											  ]
+											}				  
+										     }
 							 	   		}
 								qsr.getAuthTokenService(email, password, (error, result) => {
 									if(error){
