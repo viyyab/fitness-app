@@ -157,7 +157,7 @@ app.post('/webhook/', (req, res) => {
 											      "possibleIntents": [
 												{
 												  "intent": "actions.intent.PERMISSION",
-												  "inputValueData": {
+												  "data": {
 												    "@type": "type.googleapis.com/google.actions.v2.PermissionValueSpec",
 												    "optContext": "To process your order",
 												    "permissions": [
