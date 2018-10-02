@@ -148,7 +148,7 @@ app.post('/webhook/', (req, res) => {
 													"data": {
 															"@type": "type.googleapis.com/google.actions.v2.PermissionValueSpec",
 															"optContext": "To process your order, ",
-															"permissions": ["DEVICE_COARSE_LOCATION"]
+															"permissions": ["DEVICE_PRECISE_LOCATION"]
 																	}
 																}
 															}
