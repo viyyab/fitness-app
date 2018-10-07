@@ -9,7 +9,6 @@ const request= require('request');
 const DialogflowApp = require('actions-on-google').DialogflowApp;
 const app = express();
 const axios= require('axios');
-var recommendedName;
 var access_token;
 var refresh_token;
 var text = '';
@@ -231,6 +230,7 @@ app.post('/webhook/', (req, res) => {
 				 		break;
 		 case 'productsOrderMac': {
 					console.log('In action products order Mac');
+					//var recommendedName;
 					var productName = req.body.result.contexts[0].parameters.productName;
 					if(isDefined(actionName)){
 						console.log("Access Token  generated-  "+access_token+"for- "+productName);
@@ -239,7 +239,7 @@ app.post('/webhook/', (req, res) => {
 							if(error){
 								console.log(error);
 							} else {
-								recommendedName=result.name;
+								var recommendedName=result.name;
 								console.log(result.name + "   " +recommendedName)
 							qsr.getProductCodeByNameService(productName, (error, prodResult) =>{
 							if(error){
