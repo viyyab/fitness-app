@@ -257,7 +257,8 @@ app.post('/webhook/', (req, res) => {
 								});
 							}
 						});
-							text= `Okay ! I have ordered you a ${productName}, would you also like to order ${recommendedName} and ${result.name}?`;
+						var pdname=recommendedName;
+							text= `Okay ! I have ordered you a ${productName}, would you also like to order ${recommendedName} and ${pdname}?`;
 										messageData = {
 											speech: text,
 											displayText: text
