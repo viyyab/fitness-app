@@ -9,7 +9,6 @@ const request= require('request');
 const DialogflowApp = require('actions-on-google').DialogflowApp;
 const app = express();
 const axios= require('axios');
-//const async = require('async');
 var recommendedName;
 var access_token;
 var refresh_token;
@@ -241,9 +240,8 @@ app.post('/webhook/', (req, res) => {
 								console.log(error);
 							} else {
 								recommendedName=result.name;
-							}
-						});
-						qsr.getProductCodeByNameService(productName, (error, prodResult) =>{
+								console.log(result.name + "   " +recommendedName)
+							qsr.getProductCodeByNameService(productName, (error, prodResult) =>{
 							if(error){
 								console.log(error);
 							}else {
@@ -257,6 +255,8 @@ app.post('/webhook/', (req, res) => {
 										});
 									}
 								});
+							}
+						});
 								text= `Okay ! I have ordered you a ${productName}, would you also like to order ${recommendedName}?`;
 										messageData = {
 											speech: text,
@@ -279,10 +279,11 @@ app.post('/webhook/', (req, res) => {
  					console.log('In action products order Fries');
  					if(isDefined(actionName)){
  						console.log(cartId);
-						qsr.getProductCodeByNameService(productName, (error, prodResult) => {
+						qsr.getProductCodeByNameService(recommendedName, (error, prodResult) => {
 							if(error){
  							console.log(error);
  							}else {
+								console.log('code for product ',prodResult.productCode);
  								qsr.addProductsToCart(access_token, cartId, email, prodResult.productCode, storeName, (error,result)=> {
 								 if(error){
 									console.log(error);
