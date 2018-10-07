@@ -240,6 +240,7 @@ app.post('/webhook/', (req, res) => {
 								console.log(error);
 							} else {
 								console.log(result.name + "   " +recommendedName)
+								recommendedName=result.name;
 							qsr.getProductCodeByNameService(productName, (error, prodResult) =>{
 							if(error){
 								console.log(error);
@@ -250,8 +251,7 @@ app.post('/webhook/', (req, res) => {
 										console.log(error);
 									}else {
 										console.log('Mac added '+productResult);
-										recommendedName=result.name;
-													}
+												}
 										});
 									}
 								});
