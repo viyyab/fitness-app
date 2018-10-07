@@ -5,10 +5,9 @@ const config = require('./config');
 const express = require('express');
 const bodyParser = require('body-parser');
 const qsr= require('./qsr-apis.js');
-const request= require('request');
-const DialogflowApp = require('actions-on-google').DialogflowApp;
+const {dialogflow, Image} = require('actions-on-google');
+const aiapp = dialogflow();
 const app = express();
-const axios= require('axios');
 var recommendedName;
 var access_token;
 var refresh_token;
@@ -56,7 +55,7 @@ app.get('/', function (req, res) {
 app.post('/webhook/', (req, res) => {
 
 	//console.log(access_token);
-	//console.log(JSON.stringify(req.body));
+	console.log(JSON.stringify(req.body));
 	var data = req.body;
 	var sessionId = req.body.sessionId;
 	var actionName = req.body.result.action;
