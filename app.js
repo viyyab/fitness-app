@@ -230,7 +230,7 @@ app.post('/webhook/', (req, res) => {
 				 		break;
 		 case 'productsOrderMac': {
 					console.log('In action products order Mac');
-					//var recommendedName;
+					var recommendedName;
 					var productName = req.body.result.contexts[0].parameters.productName;
 					if(isDefined(actionName)){
 						console.log("Access Token  generated-  "+access_token+"for- "+productName);
@@ -239,7 +239,7 @@ app.post('/webhook/', (req, res) => {
 							if(error){
 								console.log(error);
 							} else {
-								var recommendedName=result.name;
+								recommendedName=result.name;
 								console.log(result.name + "   " +recommendedName)
 							qsr.getProductCodeByNameService(productName, (error, prodResult) =>{
 							if(error){
@@ -251,13 +251,14 @@ app.post('/webhook/', (req, res) => {
 										console.log(error);
 									}else {
 										console.log('Mac added '+productResult);
+										text= `Okay ! I have ordered you a ${productName}, would you also like to order ${recommendedName}?`;
 											}
 										});
 									}
 								});
 							}
 						});
-								text= `Okay ! I have ordered you a ${productName}, would you also like to order ${recommendedName}?`;
+
 										messageData = {
 											speech: text,
 											displayText: text
