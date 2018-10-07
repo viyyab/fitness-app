@@ -10,6 +10,7 @@ const DialogflowApp = require('actions-on-google').DialogflowApp;
 const app = express();
 const axios= require('axios');
 //const async = require('async');
+var recommendedName;
 var access_token;
 var refresh_token;
 var text = '';
@@ -20,8 +21,8 @@ var storeId;
 var address;
 var orderCode;
 var messageData = '';
-var email= 'pratikb365@gmail.com';
-var password= 'pratikb365@gmail.com';
+var email= 'mickeyd.mcd321@gmail.com';
+var password= 'mickeyd.mcd321@gmail.com';
 debugger;
 
 
@@ -63,7 +64,7 @@ app.post('/webhook/', (req, res) => {
  	var parameters = req.body.result.parameters;
  	var message = req.body.result.resolvedQuery;
 	switch (actionName) {
-			
+
 // 			case 'require_sign_in': {
 // 		 					console.log('In require_permission');
 // 		 					if(isDefined(actionName)){
@@ -91,7 +92,7 @@ app.post('/webhook/', (req, res) => {
 // 													      ]
 // 													    }
 // 													  ]
-																					
+
 // 											    }
 // 										 	}
 // 							 	   		    }
@@ -99,8 +100,8 @@ app.post('/webhook/', (req, res) => {
 // 								res.send(messageData);
 // 							}
 // 		 				break;
-			
-			
+
+
 // 			case 'check_sign_in': {
 // 		 				console.log('In check_sign_in');
 // 		 					if(isDefined(actionName)){
@@ -133,8 +134,8 @@ app.post('/webhook/', (req, res) => {
 // 							res.send(messageData);
 // 						}
 // 		 				break;
-			
-			
+
+
 			case 'require_permission': {
 		 					console.log('In require_permission');
 		 					if(isDefined(actionName)){
@@ -153,8 +154,8 @@ app.post('/webhook/', (req, res) => {
 																}
 															}
 														}
-										                        }
-							 	   				
+										      }
+
 								qsr.getAuthTokenService(email, password, (error, result) => {
 									if(error){
 										console.log("Token cannot be generated");
@@ -235,14 +236,28 @@ app.post('/webhook/', (req, res) => {
 					if(isDefined(actionName)){
 						console.log("Access Token  generated-  "+access_token+"for- "+productName);
 						console.log(cartId);
-								qsr.addProductsToCart(access_token, cartId, email, 5, storeName, (error,productResult)=> {
+						qsr.getRecommendedProductService(productName, (error, result) => {
+							if(error){
+								console.log(error);
+							} else {
+								recommendedName=result.name;
+							}
+						});
+						qsr.getProductCodeByNameService(productName, (error, prodResult) =>{
+							if(error){
+								console.log(error);
+							}else {
+								console.log('code for product ',prodResult.productCode);
+								qsr.addProductsToCart(access_token, cartId, email, prodResult.productCode, storeName, (error,productResult)=> {
 									if(error){
 										console.log(error);
 									}else {
 										console.log('Mac added '+productResult);
-										}
-									});
-								text= `Okay ! I have ordered you a ${productName}, would you also like to order fries?`;
+											}
+										});
+									}
+								});
+								text= `Okay ! I have ordered you a ${productName}, would you also like to order ${recommendedName}?`;
 										messageData = {
 											speech: text,
 											displayText: text
@@ -264,14 +279,21 @@ app.post('/webhook/', (req, res) => {
  					console.log('In action products order Fries');
  					if(isDefined(actionName)){
  						console.log(cartId);
-						qsr.addProductsToCart(access_token, cartId, email, 8932, storeName, (error,result)=> {
-						 if(error){
-							console.log(error);
-							}else {
-								console.log('Fries added');
-									}
-								   });
-								text= `Okay, I've added a medium fries to your order. Anything else ?`;
+						qsr.getProductCodeByNameService(productName, (error, prodResult) => {
+							if(error){
+ 							console.log(error);
+ 							}else {
+ 								qsr.addProductsToCart(access_token, cartId, email, prodResult.productCode, storeName, (error,result)=> {
+								 if(error){
+									console.log(error);
+									}else {
+										console.log('Fries added');
+											}
+										   });
+ 									}
+						});
+
+								text= `Okay, I've added a ${recommendedName} to your order. Anything else ?`;
 								messageData = {
 									speech: text,
 									displayText: text
@@ -335,7 +357,7 @@ app.post('/webhook/', (req, res) => {
 							}else{
 								console.log(orderResult.code);
 								orderCode=orderResult.code;
-								setTimeout(() => myFunc(orderCode), 7000)
+								setTimeout(() => myFunc(orderCode), 5000)
 							}
 						});
 						}else{

@@ -3,9 +3,6 @@ const request= require('request');
 
 var getAuthTokenService = (username, password, callback) =>{
 
-//   var username= 'gwengraman@gmail.com';
-//   var password= 'Gwen@123';
-
   console.log('Auth token API hit');
   request({
     url: 'https://34.195.45.172:9002/authorizationserver/oauth/token' ,
@@ -316,6 +313,65 @@ var placeOrderService = (authToken, cartId, email, storeId, callback) => {
 };
 
 
+var getProductCodeByNameService = (productName, callback) => {
+
+        console.log('Getting product by name API hit');
+        request({
+          url: `https://34.195.45.172:9002/qsrcommercewebservices/v2/qsr/products/productByName?name=${productName}`,
+          method: 'GET',
+          headers: {
+           "content-type": "application/x-www-form-urlencoded"
+                  },
+          timeout: 40000,
+          rejectUnauthorized: false,
+          json: true
+          }, (error, response, body) => {
+
+          if(error){
+            callback('There was an error connecting to the server');
+          }
+          else if(response.statusCode == 400){
+            callback('Unable to get the code');
+          }
+          else if(response.statusCode == 200){
+            console.log("Product by name API hit:", response.statusCode);
+            callback(undefined, {
+              productCode: body.products[0].code
+              });
+            }
+         });
+};
+
+
+var getRecommendedProductService = (productName, callback) => {
+
+        console.log('Recommended product API hit');
+        request({
+          url: `https://34.195.45.172:9002/qsrcommercewebservices/v2/qsr/products/recommendedProductName?name=${productName}`,
+          method: 'GET',
+          headers: {
+           "content-type": "application/x-www-form-urlencoded"
+                    },
+          timeout: 40000,
+          rejectUnauthorized: false,
+          json: true
+          }, (error, response, body) => {
+
+          if(error){
+            callback('There was an error connecting to the server');
+          }
+          else if(response.statusCode == 400){
+            callback('Unable to get recommended products');
+          }
+          else if(response.statusCode == 200){
+            console.log("Get recommended product API hit:", response.statusCode);
+            callback(undefined, {
+              name: body.products[0].recommendProduct
+              });
+          }
+         });
+};
+
 module.exports = {
     getAuthTokenService,
     nearestStoreService,
@@ -326,5 +382,7 @@ module.exports = {
     settingDeliveryModeService,
     gettingSavedCardDetailsService,
     addCardPaymentService,
-    placeOrderService
+    placeOrderService,
+    getProductCodeByNameService,
+    getRecommendedProductService
 };
