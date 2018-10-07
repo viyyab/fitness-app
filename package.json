@@ -13,7 +13,7 @@
   "author": "Pratik Bhardwaj",
   "license": "ISC",
   "dependencies": {
-    "actions-on-google": "^2.2.0",
+    "actions-on-google": "^2.4.1",
     "apiai": "^2.0.5",
     "axios": "^0.18.0",
     "body-parser": "^1.15.1",
