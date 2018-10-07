@@ -235,12 +235,21 @@ app.post('/webhook/', (req, res) => {
 					if(isDefined(actionName)){
 						console.log("Access Token  generated-  "+access_token+"for- "+productName);
 						console.log(cartId);
+						function myNewFunc(productName, recommendedName) {
+							text= `Okay ! I have ordered you a ${productName}, would you also like to order ${recommendedName}?`;
+										messageData = {
+											speech: text,
+											displayText: text
+											}
+										res.send(messageData);
+						};
 						qsr.getRecommendedProductService(productName, (error, result) => {
 							if(error){
 								console.log(error);
 							} else {
 								console.log(result.name + "   " +recommendedName)
 								recommendedName=result.name;
+								setTimeout(() => myNewFunc(productName, recommendedName), 4000)
 							qsr.getProductCodeByNameService(productName, (error, prodResult) =>{
 							if(error){
 								console.log(error);
@@ -257,13 +266,7 @@ app.post('/webhook/', (req, res) => {
 								});
 							}
 						});
-						var pdname=recommendedName;
-							text= `Okay ! I have ordered you a ${productName}, would you also like to order ${recommendedName} and ${pdname}?`;
-										messageData = {
-											speech: text,
-											displayText: text
-											}
-										res.send(messageData);
+
 							}else{
 								text= 'I am sorry ! I cannot process your order.';
 								messageData = {
@@ -359,7 +362,7 @@ app.post('/webhook/', (req, res) => {
 							}else{
 								console.log(orderResult.code);
 								orderCode=orderResult.code;
-								setTimeout(() => myFunc(orderCode), 5000)
+								setTimeout(() => myFunc(orderCode), 7000)
 							}
 						});
 						}else{
