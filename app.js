@@ -239,7 +239,6 @@ app.post('/webhook/', (req, res) => {
 							if(error){
 								console.log(error);
 							} else {
-								recommendedName=result.name;
 								console.log(result.name + "   " +recommendedName)
 							qsr.getProductCodeByNameService(productName, (error, prodResult) =>{
 							if(error){
@@ -251,14 +250,14 @@ app.post('/webhook/', (req, res) => {
 										console.log(error);
 									}else {
 										console.log('Mac added '+productResult);
-										text= `Okay ! I have ordered you a ${productName}, would you also like to order ${recommendedName}?`;
-											}
+										recommendedName=result.name;
+													}
 										});
 									}
 								});
 							}
 						});
-
+							text= `Okay ! I have ordered you a ${productName}, would you also like to order ${recommendedName}?`;
 										messageData = {
 											speech: text,
 											displayText: text
