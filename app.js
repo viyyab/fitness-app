@@ -174,9 +174,10 @@ app.post('/webhook/', (req, res) => {
 								console.log("After entering check permission");
 								console.log(req.body.originalRequest.data.inputs[0].arguments[0].boolValue);
 								if(req.body.originalRequest.data.inputs[0].arguments[0].boolValue){
-								var zip=req.body.originalRequest.data.device.location.zipCode;
+								//var zip=req.body.originalRequest.data.device.location.zipCode;
 								//var uLat = 12.9666400;
 								//var uLng = 77.7232870;
+								var zip= 560037;
 								var uLat; // = 41.8834;
 								var uLng; // = -87.6537;
 								//console.log(JSON.stringify(req.body));
@@ -369,7 +370,7 @@ app.post('/webhook/', (req, res) => {
 							}else{
 								console.log(orderResult.code);
 								orderCode=orderResult.code;
-								setTimeout(() => myFunc(orderCode), 4000)
+								setTimeout(() => myFunc(orderCode), 5000)
 							}
 						});
 						}else{
