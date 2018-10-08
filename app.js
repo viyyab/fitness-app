@@ -5,7 +5,7 @@ const config = require('./config');
 const express = require('express');
 const bodyParser = require('body-parser');
 const qsr= require('./qsr-apis.js');
-const {dialogflow, Image} = require('actions-on-google');
+const {dialogflow, Permission} = require('actions-on-google');
 const aiapp = dialogflow();
 const app = express();
 var recommendedName;
@@ -153,7 +153,7 @@ app.post('/webhook/', (req, res) => {
 // 															}
 // 														}
 // 										      }
-								app.intent('order-restaurant', (conv) => {
+								aiapp.intent('order-restaurant', (conv) => {
 									  // If the request comes from a phone, we can't use coarse location.
 									  conv.data.requestedPermission =
 									    conv.surface.capabilities.has('actions.capability.SCREEN_OUTPUT')
@@ -185,7 +185,7 @@ app.post('/webhook/', (req, res) => {
 							 console.log('In check_permission');
 							 if(isDefined(actionName)){
 								console.log("After entering check permission");
-								 app.intent('actions.intent.PERMISSION', (conv, params, permissionGranted) => {
+								 aiapp.intent('actions.intent.PERMISSION', (conv, params, permissionGranted) => {
                                                                           if (!permissionGranted) {
                                                                             throw new Error('Permission not granted');
                                                                           }
