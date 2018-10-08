@@ -38,6 +38,33 @@ var getAuthTokenService = (username, password, callback) =>{
   });
 };
 
+
+var getGpsFromZipService = (zipcode, callback) =>{
+  console.log(zipcode);
+  console.log('getGpsFromZip API hit');
+  request({
+    url: `https://maps.googleapis.com/maps/api/geocode/json?address=${zipcode}&key=AIzaSyBvrztXIMHaa-fWqtaXrpvyQ66nEH6ulzo`,
+    method: 'GET',
+    rejectUnauthorized: false,
+    json: true
+    }, (error, response, body) => {
+    if(error){
+      callback('There was an error connecting to the server');
+    }
+    else if(response.statusCode == 401){
+      callback('Unable to get the result');
+    }
+    else if(response.statusCode == 200){
+      console.log('get coordinates API hit:', response.statusCode);
+      callback (undefined, {
+        sLat : body.geometry.location.lat,
+        sLng : body.geometry.location.lng
+      });
+    }
+  });
+
+};
+
 var nearestStoreService = (ulat, ulng, callback) =>{
   console.log(ulat);
   console.log(ulng);
@@ -374,6 +401,7 @@ var getRecommendedProductService = (productName, callback) => {
 
 module.exports = {
     getAuthTokenService,
+    getGpsFromZipService,
     nearestStoreService,
     calculateDistanceService,
     createCartService,
