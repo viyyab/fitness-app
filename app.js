@@ -138,21 +138,35 @@ app.post('/webhook/', (req, res) => {
 		 					console.log('In require_permission');
 		 					if(isDefined(actionName)){
 								console.log('Coversation');
-								messageData = {
-									"data": {
-				  						"google": {
-											"expectUserResponse": true,
-											"systemIntent": {
-													"intent": "actions.intent.PERMISSION",
-													"data": {
-															"@type": "type.googleapis.com/google.actions.v2.PermissionValueSpec",
-															"optContext": "To process your order, ",
-															"permissions": ["DEVICE_PRECISE_LOCATION"]
-																	}
-																}
-															}
-														}
-										      }
+// 								messageData = {
+// 									"data": {
+// 				  						"google": {
+// 											"expectUserResponse": true,
+// 											"systemIntent": {
+// 													"intent": "actions.intent.PERMISSION",
+// 													"data": {
+// 															"@type": "type.googleapis.com/google.actions.v2.PermissionValueSpec",
+// 															"optContext": "To process your order, ",
+// 															"permissions": ["DEVICE_PRECISE_LOCATION"]
+// 																	}
+// 																}
+// 															}
+// 														}
+// 										      }
+								app.intent('order-restaurant', (conv) => {
+									  // If the request comes from a phone, we can't use coarse location.
+									  conv.data.requestedPermission =
+									    conv.surface.capabilities.has('actions.capability.SCREEN_OUTPUT')
+									    ? 'DEVICE_PRECISE_LOCATION'
+									    : 'DEVICE_COARSE_LOCATION';
+									  if (!conv.user.storage.location) {
+									    return conv.ask(new Permission({
+									      context:  "To process your order, ",
+									      permissions: conv.data.requestedPermission,
+									    }));
+									  }
+									});
+
 
 								qsr.getAuthTokenService(email, password, (error, result) => {
 									if(error){
@@ -171,6 +185,25 @@ app.post('/webhook/', (req, res) => {
 							 console.log('In check_permission');
 							 if(isDefined(actionName)){
 								console.log("After entering check permission");
+								 app.intent('actions.intent.PERMISSION', (conv, params, permissionGranted) => {
+                                                                          if (!permissionGranted) {
+                                                                            throw new Error('Permission not granted');
+                                                                          }
+
+                                                                          const {requestedPermission} = conv.data;
+                                                                          if (requestedPermission === 'DEVICE_COARSE_LOCATION') {
+                                                                            // If we requested coarse location, it means that we're on a speaker device.
+                                                                            var formattedAddress = conv.device.location.formattedAddress;
+                                                                            }
+
+                                                                          if (requestedPermission === 'DEVICE_PRECISE_LOCATION') {
+                                                                            // If we requested precise location, it means that we're on a phone.
+                                                                            // Because we will get only latitude and longitude, we need to
+                                                                            // reverse geocode to get the city.
+                                                                            const {coordinates} = conv.device.location;
+                                                                          }
+                                                                          throw new Error('Unrecognized permission');
+                                                                        });
 								//console.log(req.body.originalRequest.data.inputs[0].arguments[0].boolValue);
 								if(req.body){
 								//var uLat=req.body.originalRequest.data.device.location.coordinates.latitude;
