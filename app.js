@@ -55,7 +55,7 @@ app.get('/', function (req, res) {
 app.post('/webhook/', (req, res) => {
 
 	//console.log(access_token);
-	console.log(JSON.stringify(req.body));
+	//console.log(JSON.stringify(req.body));
 	var data = req.body;
 	var sessionId = req.body.sessionId;
 	var actionName = req.body.result.action;
@@ -155,21 +155,7 @@ app.post('/webhook/', (req, res) => {
 										    }
 										  }
 										 }
-// 								aiapp.intent('order-restaurant', (conv) => {
-// 									  // If the request comes from a phone, we can't use coarse location.
-// 									  conv.data.requestedPermission =
-// 									    conv.surface.capabilities.has('actions.capability.SCREEN_OUTPUT')
-// 									    ? 'DEVICE_PRECISE_LOCATION'
-// 									    : 'DEVICE_COARSE_LOCATION';
-// 									  if (!conv.user.storage.location) {
-// 									    return conv.ask(new Permission({
-// 									      context:  "To process your order, ",
-// 									      permissions: conv.data.requestedPermission,
-// 									    }));
-// 									  }
-// 									});
-
-								qsr.getAuthTokenService(email, password, (error, result) => {
+ 								qsr.getAuthTokenService(email, password, (error, result) => {
 									if(error){
 										console.log("Token cannot be generated");
 									} else {
@@ -186,42 +172,27 @@ app.post('/webhook/', (req, res) => {
 							 console.log('In check_permission');
 							 if(isDefined(actionName)){
 								console.log("After entering check permission");
-// 								 aiapp.intent('actions.intent.PERMISSION', (conv, params, permissionGranted) => {
-//                                                                           if (!permissionGranted) {
-//                                                                             throw new Error('Permission not granted');
-//                                                                           }
-
-//                                                                           const {requestedPermission} = conv.data;
-//                                                                           if (requestedPermission === 'DEVICE_COARSE_LOCATION') {
-//                                                                             // If we requested coarse location, it means that we're on a speaker device.
-//                                                                             var formattedAddress = conv.device.location.formattedAddress;
-//                                                                             }
-
-//                                                                           if (requestedPermission === 'DEVICE_PRECISE_LOCATION') {
-//                                                                             // If we requested precise location, it means that we're on a phone.
-//                                                                             // Because we will get only latitude and longitude, we need to
-//                                                                             // reverse geocode to get the city.
-//                                                                             const {coordinates} = conv.device.location;
-//                                                                           }
-//                                                                           throw new Error('Unrecognized permission');
-//                                                                         });
-								//console.log(req.body.originalRequest.data.inputs[0].arguments[0].boolValue);
-								if(req.body){
-								//var uLat=req.body.originalRequest.data.device.location.coordinates.latitude;
-								//var uLng=req.body.originalRequest.data.device.location.coordinates.longitude;
+								console.log(req.body.originalRequest.data.inputs[0].arguments[0].boolValue);
+								if(req.body.originalRequest.data.inputs[0].arguments[0].boolValue){
+								var zip=req.body.originalRequest.data.device.location.zipCode;
 								//var uLat = 12.9666400;
 								//var uLng = 77.7232870;
-								var uLat = 41.8834;
-								var uLng = -87.6537;
-								console.log(JSON.stringify(req.body));
-								qsr.nearestStoreService(uLat, uLng, (error, storeResult) =>{
+								var uLat; // = 41.8834;
+								var uLng; // = -87.6537;
+								//console.log(JSON.stringify(req.body));
+								qsr.getGpsFromZipService(zip, (error, zipResult) => {
+									if(error){
+										console.log(error);
+									} else {
+										uLat=zipResult.sLat;
+										uLng=zipResult.sLng;
+										qsr.nearestStoreService(uLat, uLng, (error, storeResult) =>{
 									if(error){
 										console.log(error);
 									}else {
 
 										storeId=storeResult.storeId;
 										storeName=storeResult.storeName;
-										//console.log(storeName+'-----------------'+storeId);
 										qsr.calculateDistanceService(uLat, uLng, storeResult.sLat, storeResult.sLng, (error, durationResult) =>{
 											if(error){
 												console.log(error);
@@ -250,6 +221,9 @@ app.post('/webhook/', (req, res) => {
 											}
 										});
 									};
+								});
+						
+								}
 								});
 								}else{
 								text= 'I am sorry ! I cannot process your order without your permission';
