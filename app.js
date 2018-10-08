@@ -149,7 +149,7 @@ app.post('/webhook/', (req, res) => {
 											  "optContext": "To process your order, ",
 											  "permissions": [
 											    "DEVICE_COARSE_LOCATION"
-// 											    	  ]
+     								    	                      ]
 											}
 										      }
 										    }
