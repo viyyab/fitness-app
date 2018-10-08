@@ -57,8 +57,8 @@ var getGpsFromZipService = (zipcode, callback) =>{
     else if(response.statusCode == 200){
       console.log('get coordinates API hit:', response.statusCode);
       callback (undefined, {
-        sLat : body.geometry.location.lat,
-        sLng : body.geometry.location.lng
+        sLat : body.results[0].geometry.location.lat,
+        sLng : body.results[0].geometry.location.lng
       });
     }
   });
