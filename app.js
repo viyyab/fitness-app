@@ -253,22 +253,30 @@ app.post('/webhook/', (req, res) => {
 						qsr.getRecommendedProductService(productName, (error, result) => {
 							if(error){
 								console.log(error);
-							} else if(result == null) {
-								console.log('Recommended products API null');
-								text= 'I am sorry ! This item does not exists! What would you like to order?';
-								messageData = {
-										speech: text,
-										displayText: text
-										}
-								res.send(messageData);
-							} else {
+// 							} else if(result == ' ') {
+// 								console.log('Recommended products API null');
+// 								text= 'I am sorry ! This item does not exists! What would you like to order?';
+// 								messageData = {
+// 										speech: text,
+// 										displayText: text
+// 										}
+// 								res.send(messageData);
+// 							} else {
 								console.log(result.name + "   " +recommendedName)
 								recommendedName=result.name;
 								setTimeout(() => myNewFunc(productName, recommendedName), 4000)
 								qsr.getProductCodeByNameService(productName, (error, prodResult) =>{
 									if(error){
 										console.log(error);
-									}else {
+									}else if(prodResult == ' ') {
+										console.log('Recommended products API null');
+										text= 'I am sorry ! This item does not exists! What would you like to order?';
+										messageData = {
+											speech: text,
+											displayText: text
+											}
+										res.send(messageData);
+									} else{
 										console.log('code for product ',prodResult.productCode);
 										qsr.addProductsToCart(access_token, cartId, email, prodResult.productCode, storeName, (error,productResult)=> {
 											if(error){
@@ -321,6 +329,21 @@ app.post('/webhook/', (req, res) => {
 								}
 							 }
  					     break;
+		
+			
+		case 'orderProductsFollowUp': {
+ 					console.log('In action order products anything else');
+ 					if(isDefined(actionName)){
+ 						text= `What else would you like to have ?`;
+								messageData = {
+									speech: text,
+									displayText: text
+										}
+								    res.send(messageData);
+								}
+							 }
+ 					     break;
+
 
 
 		case 'productsOrderConfirmedCart': {
