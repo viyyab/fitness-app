@@ -106,7 +106,7 @@ app.post('/webhook/', (req, res) => {
 							 permissions.push(surface.name);
 							});
 							console.log(permissions)
-							if(permissions.indexOf('actions.capability.SCREEN_OUTPUT')){
+							if(permissions.includes('actions.capability.SCREEN_OUTPUT', 0)){
 								permission= 'DEVICE_PRECISE_LOCATION'
 							}else {
 								permission= 'DEVICE_COARSE_LOCATION'
