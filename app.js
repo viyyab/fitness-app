@@ -172,7 +172,7 @@ app.post('/webhook/', (req, res) => {
 							 console.log('In check_permission');
 							 if(isDefined(actionName)){
 								console.log("After entering check permission");
-								console.log(req.body);
+								console.log(JSON.stringify(req.body));
 								if(req.body.originalRequest.data.inputs[0].arguments[0].boolValue){
 								var zip=req.body.originalRequest.data.device.location.zipCode;
 								//var uLat = 12.9666400;
