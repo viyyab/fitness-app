@@ -101,7 +101,7 @@ app.post('/webhook/', (req, res) => {
 						var surfaces=req.body.originalRequest.data.availableSurfaces[0].capabilities;
 						console.log(surfaces);
 						 surfaces.forEach(function(surface) {
-							 if(surface.name == 'actions.capability.SCREEN_OUTPUT')
+							 if(surface.name)
  								{
 									console.log(surface.name)
  									messageData = {
