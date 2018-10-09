@@ -20,8 +20,8 @@ var storeId;
 var address;
 var orderCode;
 var messageData = '';
-var email= 'mickeyd.mcd321@gmail.com';
-var password= 'mickeyd.mcd321@gmail.com';
+var email; //= 'mickeyd.mcd321@gmail.com';
+var password; //= 'mickeyd.mcd321@gmail.com';
 debugger;
 
 
@@ -87,14 +87,22 @@ app.post('/webhook/', (req, res) => {
 
 
 			case 'check_sign_in': {
+
+				if(isDefined(actionName)){
 						console.log(JSON.stringify(req.body));
 						var token=req.body.originalRequest.data.user.idToken;
 						var decoded = jwtdecode(token);
-						console.log(JSON.stringify(decoded));
-		 				console.log('In require_permission for location');
-		 					if(isDefined(actionName)){
-								console.log('Coversation');
- 								messageData = {
+						//console.log(JSON.stringify(decoded));
+						if(decoded.iss == 'https://accounts.google.com'){
+						email=decoded.email;
+						password=decoded.email;
+						console.log(email+'   '+password)
+						}
+						var surface=req.body.data.surface.capabilities;
+						for(var i=0;i=surface.length;i++){
+							if(surface[0].name == 'actions.capability.SCREEN_OUTPUT')
+								{
+									messageData = {
  									 "data": {
 										    "google": {
 										      "expectUserResponse": true,
@@ -106,11 +114,31 @@ app.post('/webhook/', (req, res) => {
 											  "permissions": [
 											    "DEVICE_PRECISE_LOCATION"
      								    	                      ]
-											}
+																}
 										      }
 										    }
 										  }
-										 }
+										}
+								}
+						}
+		 				console.log('In require_permission for location');
+		 					messageData = {
+								 "data": {
+											"google": {
+												"expectUserResponse": true,
+												"systemIntent": {
+										"intent": "actions.intent.PERMISSION",
+										"data": {
+											"@type": "type.googleapis.com/google.actions.v2.PermissionValueSpec",
+											"optContext": "To process your order, ",
+											"permissions": [
+												"DEVICE_COARSE_LOCATION"
+																			]
+															}
+												}
+											}
+										}
+									}
  								qsr.getAuthTokenService(email, password, (error, result) => {
 									if(error){
 										console.log("Token cannot be generated");
@@ -127,23 +155,28 @@ app.post('/webhook/', (req, res) => {
 			case 'check_permission': {
 							 console.log('In check_permission');
 							 if(isDefined(actionName)){
-								console.log("After entering check permission");
-								console.log(JSON.stringify(req.body));
+								 var uLat;
+								 var uLng;
+								//console.log(JSON.stringify(req.body));
 								if(req.body.originalRequest.data.inputs[0].arguments[0].boolValue){
-								//var zip=req.body.originalRequest.data.device.location.zipCode;
-								var zip= 560037;
+									if(req.body.originalRequest.data.user.permissions[0] == 'DEVICE_COARSE_LOCATION'){
+										var zip=req.body.originalRequest.data.device.location.zipCode;
+										qsr.getGpsFromZipService(zip, (error, zipResult) => {
+											if(error){
+												console.log(error);
+											} else {
+												uLat=zipResult.sLat;
+												uLng=zipResult.sLng;
+											});
+									} else {
+
+										  uLat=req.body.originalRequest.data.device.location.coordinates.latitude; // = 41.8834;
+										  uLng=req.body.originalRequest.data.device.location.coordinates.longitude; // = -87.6537;
+									}
+								//var zip= 560037;
 								//var uLat = 12.9666400;
 								//var uLng = 77.7232870;
-								var uLat; //=req.body.originalRequest.data.device.location.coordinates.latitude; // = 41.8834;
-								var uLng; //=req.body.originalRequest.data.device.location.coordinates.longitude; // = -87.6537;
-								//console.log(JSON.stringify(req.body));
-								qsr.getGpsFromZipService(zip, (error, zipResult) => {
-									if(error){
-										console.log(error);
-									} else {
-										uLat=zipResult.sLat;
-										uLng=zipResult.sLng;
-										qsr.nearestStoreService(uLat, uLng, (error, storeResult) =>{
+							qsr.nearestStoreService(uLat, uLng, (error, storeResult) =>{
 									if(error){
 										console.log(error);
 									}else {
@@ -180,8 +213,6 @@ app.post('/webhook/', (req, res) => {
 									};
 								});
 
-								}
-								});
 								}else{
 								text= 'I am sorry ! I cannot process your order without your permission';
 								messageData = {
@@ -193,6 +224,7 @@ app.post('/webhook/', (req, res) => {
 							}
 				 		}
 				 		break;
+
 		 case 'productsOrderMac': {
 					console.log('In action products order Mac');
 					var productName = req.body.result.contexts[0].parameters.productName;
