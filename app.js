@@ -255,7 +255,7 @@ app.post('/webhook/', (req, res) => {
 								console.log(error);
 							} else if(result == null) {
 								console.log('Recommended products API null');
-								text= 'I am sorry ! This item does not exists!';
+								text= 'I am sorry ! This item does not exists! What would you like to order?';
 								messageData = {
 										speech: text,
 										displayText: text
