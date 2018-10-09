@@ -253,35 +253,42 @@ app.post('/webhook/', (req, res) => {
 						qsr.getRecommendedProductService(productName, (error, result) => {
 							if(error){
 								console.log(error);
-							} else {
-								console.log(result.name + "   " +recommendedName)
-								recommendedName=result.name;
-								setTimeout(() => myNewFunc(productName, recommendedName), 4000)
-							qsr.getProductCodeByNameService(productName, (error, prodResult) =>{
-							if(error){
-								console.log(error);
-							}else {
-								console.log('code for product ',prodResult.productCode);
-								qsr.addProductsToCart(access_token, cartId, email, prodResult.productCode, storeName, (error,productResult)=> {
-									if(error){
-										console.log(error);
-									}else {
-										console.log('Mac added '+productResult);
-												}
-										});
-									}
-								});
-							}
-						});
-
-							}else{
-								text= 'I am sorry ! I cannot process your order.';
+							} else if(result == null) {
+								console.log('Recommended products API null');
+								text= 'I am sorry ! This item does not exists!';
 								messageData = {
 										speech: text,
 										displayText: text
 										}
 								res.send(messageData);
-						   }
+							} else {
+								console.log(result.name + "   " +recommendedName)
+								recommendedName=result.name;
+								setTimeout(() => myNewFunc(productName, recommendedName), 4000)
+								qsr.getProductCodeByNameService(productName, (error, prodResult) =>{
+									if(error){
+										console.log(error);
+									}else {
+										console.log('code for product ',prodResult.productCode);
+										qsr.addProductsToCart(access_token, cartId, email, prodResult.productCode, storeName, (error,productResult)=> {
+											if(error){
+												console.log(error);
+											}else {
+												console.log('Mac added '+productResult);
+											}
+										});
+									}
+								});
+							}
+						});
+						}else{
+							text= 'I am sorry ! I cannot process your order.';
+							messageData = {
+									speech: text,
+									displayText: text
+									}
+							res.send(messageData);
+					   	}
 					}
 					break;
 
