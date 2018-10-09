@@ -92,6 +92,7 @@ app.post('/webhook/', (req, res) => {
 						console.log(JSON.stringify(req.body));
 						var token=req.body.originalRequest.data.user.idToken;
 						var decoded = jwtdecode(token);
+						var permissions = [];
 						var permission;
 						//console.log(JSON.stringify(decoded));
 						if(decoded.iss == 'https://accounts.google.com'){
@@ -102,15 +103,14 @@ app.post('/webhook/', (req, res) => {
 						var surfaces=req.body.originalRequest.data.availableSurfaces[0].capabilities;
 						console.log(surfaces);
 						 surfaces.forEach(function(surface) {
-							 if(surface.name == 'actions.capability.SCREEN_OUTPUT')
- 								{
-									console.log(surface.name)
-									permission= 'DEVICE_PRECISE_LOCATION'
- 								} else {
-									console.log(surface.name)
-									permission= 'DEVICE_COARSE_LOCATION'
-								}
+							 permissions.push(surface.name);
 							});
+							console.log(permissions)
+							if(permissions.indexOf('actions.capability.SCREEN_OUTPUT')){
+								permission= 'DEVICE_PRECISE_LOCATION'
+							}else {
+								permission= 'DEVICE_COARSE_LOCATION'
+							}
 									messageData = {
 										 "data": {
 													"google": {
