@@ -174,13 +174,13 @@ app.post('/webhook/', (req, res) => {
 								console.log("After entering check permission");
 								console.log(JSON.stringify(req.body));
 								if(req.body.originalRequest.data.inputs[0].arguments[0].boolValue){
-								//var zip=req.body.originalRequest.data.device.location.zipCode;
+								var zip=req.body.originalRequest.data.device.location.zipCode;
 								//var uLat = 12.9666400;
 								//var uLng = 77.7232870;
 								var uLat; // = 41.8834;
 								var uLng; // = -87.6537;
 								//console.log(JSON.stringify(req.body));
-								qsr.getGpsFromZipService(560037, (error, zipResult) => {
+								qsr.getGpsFromZipService(zip, (error, zipResult) => {
 									if(error){
 										console.log(error);
 									} else {
