@@ -92,6 +92,7 @@ app.post('/webhook/', (req, res) => {
 						console.log(JSON.stringify(req.body));
 						var token=req.body.originalRequest.data.user.idToken;
 						var decoded = jwtdecode(token);
+						var permission;
 						//console.log(JSON.stringify(decoded));
 						if(decoded.iss == 'https://accounts.google.com'){
 						email=decoded.email;
@@ -101,27 +102,15 @@ app.post('/webhook/', (req, res) => {
 						var surfaces=req.body.originalRequest.data.availableSurfaces[0].capabilities;
 						console.log(surfaces);
 						 surfaces.forEach(function(surface) {
-							 if(surface.name)
+							 if(surface.name == 'actions.capability.SCREEN_OUTPUT')
  								{
 									console.log(surface.name)
- 									messageData = {
-  									 "data": {
- 										    "google": {
- 										      "expectUserResponse": true,
- 										      "systemIntent": {
- 											"intent": "actions.intent.PERMISSION",
- 											"data": {
- 											  "@type": "type.googleapis.com/google.actions.v2.PermissionValueSpec",
- 											  "optContext": "To process your order, ",
- 											  "permissions": [
- 											    "DEVICE_PRECISE_LOCATION"
-      								    	            ]
- 																}
- 										      }
- 										    }
- 										  }
- 										}
+									permission= 'DEVICE_PRECISE_LOCATION'
  								} else {
+									console.log(surface.name)
+									permission= 'DEVICE_COARSE_LOCATION'
+								}
+							});
 									messageData = {
 										 "data": {
 													"google": {
@@ -132,17 +121,15 @@ app.post('/webhook/', (req, res) => {
 													"@type": "type.googleapis.com/google.actions.v2.PermissionValueSpec",
 													"optContext": "To process your order, ",
 													"permissions": [
-														"DEVICE_COARSE_LOCATION"
+																	permission
 																					]
 																	}
 														}
 													}
 												}
 										}
-								}
-						 });
 
-						console.log('In require_permission for location');
+						 	console.log('In require_permission for location');
 		 					qsr.getAuthTokenService(email, password, (error, result) => {
 									if(error){
 										console.log("Token cannot be generated");
