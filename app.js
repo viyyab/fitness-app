@@ -167,6 +167,7 @@ app.post('/webhook/', (req, res) => {
 											} else {
 												uLat=zipResult.sLat;
 												uLng=zipResult.sLng;
+											}
 											});
 									} else {
 
