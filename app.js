@@ -98,7 +98,7 @@ app.post('/webhook/', (req, res) => {
 						password=decoded.email;
 						console.log(email+'   '+password)
 						}
-						var surface=req.body.data.availableSurfaces[0].capabilities;
+						var surface=req.body.originalRequest.data.availableSurfaces[0].capabilities;
 						for(var i=0;i=surface.length;i++){
 							if(surface[0].name == 'actions.capability.SCREEN_OUTPUT')
 								{
