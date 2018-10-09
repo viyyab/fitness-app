@@ -98,29 +98,29 @@ app.post('/webhook/', (req, res) => {
 						password=decoded.email;
 						console.log(email+'   '+password)
 						}
-						var surface=req.body.originalRequest.data.availableSurfaces[0].capabilities;
-						for(var i=0;i=surface.length;i++){
-							if(surface[i].name == 'actions.capability.SCREEN_OUTPUT')
-								{
-									messageData = {
- 									 "data": {
-										    "google": {
-										      "expectUserResponse": true,
-										      "systemIntent": {
-											"intent": "actions.intent.PERMISSION",
-											"data": {
-											  "@type": "type.googleapis.com/google.actions.v2.PermissionValueSpec",
-											  "optContext": "To process your order, ",
-											  "permissions": [
-											    "DEVICE_PRECISE_LOCATION"
-     								    	                      ]
-																}
-										      }
-										    }
-										  }
-										}
-								}
-						}
+						// var surface=req.body.originalRequest.data.availableSurfaces[0].capabilities;
+						// for(var i=0;i=surface.length;i++){
+						// 	if(surface[i].name == 'actions.capability.SCREEN_OUTPUT')
+						// 		{
+						// 			messageData = {
+ 						// 			 "data": {
+						// 				    "google": {
+						// 				      "expectUserResponse": true,
+						// 				      "systemIntent": {
+						// 					"intent": "actions.intent.PERMISSION",
+						// 					"data": {
+						// 					  "@type": "type.googleapis.com/google.actions.v2.PermissionValueSpec",
+						// 					  "optContext": "To process your order, ",
+						// 					  "permissions": [
+						// 					    "DEVICE_PRECISE_LOCATION"
+     				// 				    	                      ]
+						// 										}
+						// 				      }
+						// 				    }
+						// 				  }
+						// 				}
+						// 		}
+						// }
 		 				console.log('In require_permission for location');
 		 					messageData = {
 								 "data": {
@@ -375,21 +375,27 @@ app.post('/webhook/', (req, res) => {
  					console.log('In action OrderConfirmed');
  					if(isDefined(actionName)){
  						console.log(cartId+'   '+cardId);
-						function myFunc(orderCode) {
-							text= `Your order has been submitted. Your order code is ${orderCode.substr(4,4)}. Please provide this code when you get to the restaurant and they'll get your order started. I will also text it to you for reference. Thank you for your order!`
-								 messageData = {
-										speech: text,
-										displayText: text
-										}
-								res.send(messageData);
-						};
+						// function myFunc(orderCode) {
+						// 	text= `Your order has been submitted. Your order code is ${orderCode.substr(4,4)}. Please provide this code when you get to the restaurant and they'll get your order started. I will also text it to you for reference. Thank you for your order!`
+						// 		 messageData = {
+						// 				speech: text,
+						// 				displayText: text
+						// 				}
+						// 		res.send(messageData);
+						// };
 						qsr.placeOrderService(access_token, cartId, email, storeId, (error, orderResult) =>{
 							if(error){
 								console.log(error);
 							}else{
 								console.log(orderResult.code);
 								orderCode=orderResult.code;
-								setTimeout(() => myFunc(orderCode), 4000)
+								text= `Your order has been submitted. Your order code is ${orderCode.substr(4,4)}. Please provide this code when you get to the restaurant and they'll get your order started. I will also text it to you for reference. Thank you for your order!`
+									 messageData = {
+											speech: text,
+											displayText: text
+											}
+									res.send(messageData);
+								//setTimeout(() => myFunc(orderCode), 4000)
 							}
 						});
 						}else{
