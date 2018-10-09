@@ -98,48 +98,51 @@ app.post('/webhook/', (req, res) => {
 						password=decoded.email;
 						console.log(email+'   '+password)
 						}
-						// var surface=req.body.originalRequest.data.availableSurfaces[0].capabilities;
-						// for(var i=0;i=surface.length;i++){
-						// 	if(surface[i].name == 'actions.capability.SCREEN_OUTPUT')
-						// 		{
-						// 			messageData = {
- 						// 			 "data": {
-						// 				    "google": {
-						// 				      "expectUserResponse": true,
-						// 				      "systemIntent": {
-						// 					"intent": "actions.intent.PERMISSION",
-						// 					"data": {
-						// 					  "@type": "type.googleapis.com/google.actions.v2.PermissionValueSpec",
-						// 					  "optContext": "To process your order, ",
-						// 					  "permissions": [
-						// 					    "DEVICE_PRECISE_LOCATION"
-     				// 				    	                      ]
-						// 										}
-						// 				      }
-						// 				    }
-						// 				  }
-						// 				}
-						// 		}
-						// }
-		 				console.log('In require_permission for location');
-		 					messageData = {
-								 "data": {
-											"google": {
-												"expectUserResponse": true,
-												"systemIntent": {
-										"intent": "actions.intent.PERMISSION",
-										"data": {
-											"@type": "type.googleapis.com/google.actions.v2.PermissionValueSpec",
-											"optContext": "To process your order, ",
-											"permissions": [
-												"DEVICE_COARSE_LOCATION"
-																			]
-															}
+						var surfaces=req.body.originalRequest.data.availableSurfaces[0].capabilities;
+						console.log(surfaces);
+						 surfaces.forEach(function(surface) {
+							 if(surface.name == 'actions.capability.SCREEN_OUTPUT')
+ 								{
+ 									messageData = {
+  									 "data": {
+ 										    "google": {
+ 										      "expectUserResponse": true,
+ 										      "systemIntent": {
+ 											"intent": "actions.intent.PERMISSION",
+ 											"data": {
+ 											  "@type": "type.googleapis.com/google.actions.v2.PermissionValueSpec",
+ 											  "optContext": "To process your order, ",
+ 											  "permissions": [
+ 											    "DEVICE_PRECISE_LOCATION"
+      								    	            ]
+ 																}
+ 										      }
+ 										    }
+ 										  }
+ 										}
+ 								} else {
+									messageData = {
+										 "data": {
+													"google": {
+														"expectUserResponse": true,
+														"systemIntent": {
+												"intent": "actions.intent.PERMISSION",
+												"data": {
+													"@type": "type.googleapis.com/google.actions.v2.PermissionValueSpec",
+													"optContext": "To process your order, ",
+													"permissions": [
+														"DEVICE_COARSE_LOCATION"
+																					]
+																	}
+														}
+													}
 												}
-											}
 										}
-									}
- 								qsr.getAuthTokenService(email, password, (error, result) => {
+								}
+						 });
+
+						console.log('In require_permission for location');
+		 					qsr.getAuthTokenService(email, password, (error, result) => {
 									if(error){
 										console.log("Token cannot be generated");
 									} else {
