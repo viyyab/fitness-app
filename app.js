@@ -103,6 +103,7 @@ app.post('/webhook/', (req, res) => {
 						 surfaces.forEach(function(surface) {
 							 if(surface.name == 'actions.capability.SCREEN_OUTPUT')
  								{
+									console.log(surface.name)
  									messageData = {
   									 "data": {
  										    "google": {
