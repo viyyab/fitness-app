@@ -130,8 +130,8 @@ app.post('/webhook/', (req, res) => {
 								var zip= 560037;
 								//var uLat = 12.9666400;
 								//var uLng = 77.7232870;
-								//var uLat=req.body.originalRequest.data.device.location.coordinates.latitude; // = 41.8834;
-								//var uLng=req.body.originalRequest.data.device.location.coordinates.longitude; // = -87.6537;
+								var uLat; //=req.body.originalRequest.data.device.location.coordinates.latitude; // = 41.8834;
+								var uLng; //=req.body.originalRequest.data.device.location.coordinates.longitude; // = -87.6537;
 								//console.log(JSON.stringify(req.body));
 								qsr.getGpsFromZipService(zip, (error, zipResult) => {
 									if(error){
