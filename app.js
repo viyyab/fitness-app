@@ -63,79 +63,31 @@ app.post('/webhook/', (req, res) => {
  	var message = req.body.result.resolvedQuery;
 	switch (actionName) {
 
-// 			case 'require_sign_in': {
-// 		 					console.log('In require_permission');
-// 		 					if(isDefined(actionName)){
-// 								console.log('Coversation');
-// 								messageData = {
-// 									"data": {
-// 										"google": {
-// 												 "conversationToken": "{\"state\":null,\"data\":{}}",
-//   												  "expectUserResponse": true,
-//   													"expectedInputs": [
-//     														{
-// 														 "inputPrompt": {
-// 														"initialPrompts": [
-// 														  {
-// 														    "textToSpeech": "PLACEHOLDER_FOR_SIGN_IN"
-// 														  }
-// 														],
-// 														"noInputPrompts": []
-// 													      },
-// 													      "possibleIntents": [
-// 														{
-// 														  "intent": "actions.intent.SIGN_IN",
-// 														  "inputValueData": {}
-// 														}
-// 													      ]
-// 													    }
-// 													  ]
-
-// 											    }
-// 										 	}
-// 							 	   		    }
-// 										}
-// 								res.send(messageData);
-// 							}
-// 		 				break;
-
-
-// 			case 'check_sign_in': {
-// 		 				console.log('In check_sign_in');
-// 		 					if(isDefined(actionName)){
-// 								if(req.body){
-// 								messageData = {
-// 									"data": {
-// 										"google": {
-// 											"expectUserResponse": true,
-// 											"systemIntent": {
-// 													"intent": "actions.intent.PERMISSION",
-// 													"data": {
-// 														"@type": "type.googleapis.com/google.actions.v2.PermissionValueSpec",
-// 														"optContext": "To process your order, ",
-// 														"permissions": ["DEVICE_PRECISE_LOCATION"]
-// 														}
-// 													}
-// 											    }
-// 										 }
-// 							 	   		}
-// 								qsr.getAuthTokenService(email, password, (error, result) => {
-// 									if(error){
-// 										console.log("Token cannot be generated");
-// 									} else {
-// 										access_token = result.token;
-// 										refresh_token = result.refresh_token;
-// 									}
-// 								});
-// 							    }
-// 							}
-// 							res.send(messageData);
-// 						}
-// 		 				break;
-
-
 			case 'require_permission': {
-		 					console.log('In require_permission');
+		 					console.log('In user sign in');
+		 					if(isDefined(actionName)){
+								console.log('Coversation');
+								messageData = {
+									"data": {
+										"google": {
+										"expectUserResponse": true,
+										"systemIntent": {
+										"intent": "actions.intent.SIGN_IN",
+										"data": {}
+										         }
+										       }
+										 }
+									}
+								res.send(messageData);
+							     }
+							}
+		 				break;
+
+
+			
+			case 'check_sign_in': {
+						console.log(JSON.stringify(req.body));
+		 				console.log('In require_permission for location');
 		 					if(isDefined(actionName)){
 								console.log('Coversation');
  								messageData = {
@@ -148,7 +100,7 @@ app.post('/webhook/', (req, res) => {
 											  "@type": "type.googleapis.com/google.actions.v2.PermissionValueSpec",
 											  "optContext": "To process your order, ",
 											  "permissions": [
-											    "DEVICE_COARSE_LOCATION"
+											    "DEVICE_PRECISE_LOCATION"
      								    	                      ]
 											}
 										      }
@@ -174,11 +126,12 @@ app.post('/webhook/', (req, res) => {
 								console.log("After entering check permission");
 								console.log(JSON.stringify(req.body));
 								if(req.body.originalRequest.data.inputs[0].arguments[0].boolValue){
-								var zip=req.body.originalRequest.data.device.location.zipCode;
+								//var zip=req.body.originalRequest.data.device.location.zipCode;
+								var zip= 560037;
 								//var uLat = 12.9666400;
 								//var uLng = 77.7232870;
-								var uLat; // = 41.8834;
-								var uLng; // = -87.6537;
+								//var uLat=req.body.originalRequest.data.device.location.coordinates.latitude; // = 41.8834;
+								//var uLng=req.body.originalRequest.data.device.location.coordinates.longitude; // = -87.6537;
 								//console.log(JSON.stringify(req.body));
 								qsr.getGpsFromZipService(zip, (error, zipResult) => {
 									if(error){
