@@ -100,7 +100,7 @@ app.post('/webhook/', (req, res) => {
 						}
 						var surface=req.body.originalRequest.data.availableSurfaces[0].capabilities;
 						for(var i=0;i=surface.length;i++){
-							if(surface[0].name == 'actions.capability.SCREEN_OUTPUT')
+							if(surface[i].name == 'actions.capability.SCREEN_OUTPUT')
 								{
 									messageData = {
  									 "data": {
