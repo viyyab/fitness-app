@@ -5,6 +5,7 @@ const config = require('./config');
 const express = require('express');
 const bodyParser = require('body-parser');
 const qsr= require('./qsr-apis.js');
+const jwt-decode = require('jwt-decode');
 const {dialogflow, Permission} = require('actions-on-google');
 const aiapp = dialogflow();
 const app = express();
@@ -84,9 +85,12 @@ app.post('/webhook/', (req, res) => {
 		 				break;
 
 
-			
+
 			case 'check_sign_in': {
 						console.log(JSON.stringify(req.body));
+						var token=req.body.originalRequest.data.user.idToken;
+						var decoded = jwt_decode(token);
+						console.log(JSON.stringify(decoded));
 		 				console.log('In require_permission for location');
 		 					if(isDefined(actionName)){
 								console.log('Coversation');
@@ -175,7 +179,7 @@ app.post('/webhook/', (req, res) => {
 										});
 									};
 								});
-						
+
 								}
 								});
 								}else{
@@ -282,8 +286,8 @@ app.post('/webhook/', (req, res) => {
 								}
 							 }
  					     break;
-		
-			
+
+
 		case 'orderProductsFollowUp': {
  					console.log('In action order products anything else');
  					if(isDefined(actionName)){

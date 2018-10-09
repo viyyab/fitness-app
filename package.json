@@ -18,6 +18,7 @@
     "axios": "^0.18.0",
     "body-parser": "^1.15.1",
     "express": "^4.13.4",
+    "jwt-decode": "^2.2.0",
     "request": "^2.87.0",
     "uuid": "^2.0.3"
   }
