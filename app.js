@@ -288,8 +288,8 @@ app.post('/webhook/', (req, res) => {
  					     break;
 
 
-		case 'orderProductsFollowUp': {
- 					console.log('In action order products anything else');
+		case 'ordermoreProductsFollowUp': {
+ 					console.log('In action order more products anything else');
  					if(isDefined(actionName)){
  						text= `What else would you like to have ?`;
 								messageData = {
