@@ -243,8 +243,8 @@ app.post('/webhook/', (req, res) => {
 										}
 								res.send(messageData);
 							} else {
-								console.log(result.name + "   " +recommendedName)
 								recommendedName=result.name;
+								console.log(result.name + "   " +recommendedName)
 								setTimeout(() => myNewFunc(productName, recommendedName), 4000)
 								qsr.getProductCodeByNameService(productName, (error, prodResult) =>{
 									if(error){
