@@ -392,9 +392,15 @@ var getRecommendedProductService = (productName, callback) => {
           }
           else if(response.statusCode == 200){
             console.log("Get recommended product API hit:", response.statusCode);
+            if((body.products[0].recommendProduct)){
             callback(undefined, {
               name: body.products[0].recommendProduct
               });
+            }else {
+              callback(undefined, {
+              name: 'no product'
+              });
+            }
           }
          });
 };
