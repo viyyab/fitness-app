@@ -234,7 +234,7 @@ app.post('/webhook/', (req, res) => {
 						qsr.getRecommendedProductService(productName, (error, result) => {
 							if(error){
 								console.log(error);
-							} else if(!(result.name)) {
+							} else if(result.name == 'no product') {
 								console.log('Recommended products API null');
 								text= 'Would you like to order anything else ?';
 								messageData = {
@@ -289,7 +289,15 @@ app.post('/webhook/', (req, res) => {
 						qsr.getProductCodeByNameService(recommendedName, (error, prodResult) => {
 							if(error){
  							console.log(error);
- 							}else {
+ 							} else if(!(prodResult.productCode)) {
+								console.log('Product is not there');
+								text= 'I am sorry ! This item does not exist! What would you like to order?';
+								messageData = {
+									speech: text,
+									displayText: text
+									}
+								res.send(messageData);
+							}else {
 								console.log('code for product ',prodResult.productCode);
  								qsr.addProductsToCart(access_token, cartId, email, prodResult.productCode, storeName, (error,result)=> {
 								 if(error){
