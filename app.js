@@ -263,12 +263,6 @@ app.post('/webhook/', (req, res) => {
 												console.log(error);
 											}else {
 												console.log('Mac added ');
-												text= `Okay ! I have ordered you a ${productName}, would you also like to order ${recommendedName}?`;
-															messageData = {
-																speech: text,
-																displayText: text
-																}
-															res.send(messageData);
 												// setTimeout(() => myNewFunc(productName, recommendedName), 3000);
 											}
 										});
@@ -276,6 +270,12 @@ app.post('/webhook/', (req, res) => {
 								});
 							}
 						});
+						text= `Okay ! I have ordered you a ${productName}, would you also like to order ${recommendedName}?`;
+									messageData = {
+										speech: text,
+										displayText: text
+										}
+									res.send(messageData);
 						}else{
 							text= 'I am sorry ! I cannot process your order.';
 							messageData = {
