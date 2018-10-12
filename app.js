@@ -245,7 +245,6 @@ app.post('/webhook/', (req, res) => {
 							} else {
 								recommendedName=result.name;
 								console.log(result.name + "   " +recommendedName)
-								setTimeout(() => myNewFunc(productName, recommendedName), 4000)
 								qsr.getProductCodeByNameService(productName, (error, prodResult) =>{
 									if(error){
 										console.log(error);
@@ -264,6 +263,7 @@ app.post('/webhook/', (req, res) => {
 												console.log(error);
 											}else {
 												console.log('Mac added '+productResult);
+												setTimeout(() => myNewFunc(productName, recommendedName), 4000);
 											}
 										});
 									}
