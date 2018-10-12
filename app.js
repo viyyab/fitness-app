@@ -262,7 +262,7 @@ app.post('/webhook/', (req, res) => {
 											if(error){
 												console.log(error);
 											}else {
-												console.log('Mac added '+productResult);
+												console.log('Mac added ');
 												text= `Okay ! I have ordered you a ${productName}, would you also like to order ${recommendedName}?`;
 															messageData = {
 																speech: text,
