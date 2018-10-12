@@ -409,6 +409,7 @@ var getRecommendedProductService = (productName, callback) => {
 var getShortCodeService = (orderCode, callback) => {
 
         console.log('Get short code API hit');
+        console.log(orderCode);
         request({
           url: `https://34.195.45.172:9002/qsrcommercewebservices/v2/qsr/shortCode?orderCode=${orderCode}`,
           method: 'GET',
@@ -424,7 +425,9 @@ var getShortCodeService = (orderCode, callback) => {
             callback('There was an error connecting to the server');
           }
           else if(response.statusCode == 400){
-            callback('Unable to get recommended products');
+            callback(undefined, {
+            shortCode: 'XY12'
+            });
           }
           else if(response.statusCode == 200){
             console.log("Get short code API hit:", response.statusCode);
