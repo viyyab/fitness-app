@@ -291,9 +291,10 @@ app.post('/webhook/', (req, res) => {
 										});
 									}
 								});
+								setTimeout(() => myNewFunc(productName, recommendedName), 4000);
 							}
 						});
-						setTimeout(() => myNewFunc(productName, recommendedName), 4000);
+
 						}else{
 							text= 'I am sorry ! I cannot process your order.';
 							messageData = {
