@@ -387,8 +387,14 @@ app.post('/webhook/', (req, res) => {
 								console.log(error);
 							}else{
 								console.log(orderResult.code);
-								orderCode=orderResult.code;
-								setTimeout(() => myFunc(orderCode), 4000)
+								//orderCode=orderResult.code;
+								qsr.getShortCodeService(orderResult.code, (error, newResult) => {
+									if(error){
+										console.log(error);
+									} else {
+										setTimeout(() => myFunc(newResult.shortCode), 6000);
+									}
+								});
 							}
 						});
 						}else{
