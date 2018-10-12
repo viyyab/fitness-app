@@ -405,6 +405,42 @@ var getRecommendedProductService = (productName, callback) => {
          });
 };
 
+
+var getShortCodeService = (orderCode, callback) => {
+
+        console.log('Get short code API hit');
+        request({
+          url: `https://34.195.45.172:9002/qsrcommercewebservices/v2/qsr/shortCode?orderCode=${orderCode}`,
+          method: 'GET',
+          headers: {
+           "content-type": "application/x-www-form-urlencoded"
+                    },
+          timeout: 40000,
+          rejectUnauthorized: false,
+          json: true
+          }, (error, response, body) => {
+
+          if(error){
+            callback('There was an error connecting to the server');
+          }
+          else if(response.statusCode == 400){
+            callback('Unable to get recommended products');
+          }
+          else if(response.statusCode == 200){
+            console.log("Get short code API hit:", response.statusCode);
+            if((body.shortCode)){
+            callback(undefined, {
+              shortCode: body.shortCode
+              });
+            }else {
+              callback(undefined, {
+              shortCode: 'XY12'
+              });
+            }
+          }
+         });
+};
+
 module.exports = {
     getAuthTokenService,
     getGpsFromZipService,
@@ -418,5 +454,6 @@ module.exports = {
     addCardPaymentService,
     placeOrderService,
     getProductCodeByNameService,
-    getRecommendedProductService
+    getRecommendedProductService,
+    getShortCodeService
 };
