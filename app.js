@@ -223,14 +223,14 @@ app.post('/webhook/', (req, res) => {
 					if(isDefined(actionName)){
 						console.log("Access Token  generated-  "+access_token+"for- "+productName);
 						console.log(cartId);
-						function myNewFunc(productName, recommendedName) {
-							text= `Okay ! I have ordered you a ${productName}, would you also like to order ${recommendedName}?`;
-										messageData = {
-											speech: text,
-											displayText: text
-											}
-										res.send(messageData);
-						};
+						// function myNewFunc(productName, recommendedName) {
+						// 	text= `Okay ! I have ordered you a ${productName}, would you also like to order ${recommendedName}?`;
+						// 				messageData = {
+						// 					speech: text,
+						// 					displayText: text
+						// 					}
+						// 				res.send(messageData);
+						// };
 						qsr.getRecommendedProductService(productName, (error, result) => {
 							if(error){
 								console.log(error);
@@ -263,7 +263,13 @@ app.post('/webhook/', (req, res) => {
 												console.log(error);
 											}else {
 												console.log('Mac added '+productResult);
-												setTimeout(() => myNewFunc(productName, recommendedName), 3000);
+												text= `Okay ! I have ordered you a ${productName}, would you also like to order ${recommendedName}?`;
+															messageData = {
+																speech: text,
+																displayText: text
+																}
+															res.send(messageData);
+												// setTimeout(() => myNewFunc(productName, recommendedName), 3000);
 											}
 										});
 									}
