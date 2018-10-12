@@ -374,6 +374,7 @@ app.post('/webhook/', (req, res) => {
 
 		case 'OrderConfirmed': {
  					console.log('In action OrderConfirmed');
+					var shortCode;
  					if(isDefined(actionName)){
  						console.log(cartId+'   '+cardId);
 						function myFunc(orderCode) {
@@ -394,11 +395,14 @@ app.post('/webhook/', (req, res) => {
 									if(error){
 										console.log(error);
 									} else {
-										setTimeout(() => myFunc(newResult.shortCode), 6000);
+										console.log(newResult.shortCode);
+										shortCode=newResult.shortCode;
+										// setTimeout(() => myFunc(newResult.shortCode), 6000);
 									}
 								});
 							}
 						});
+						setTimeout(() => myFunc(shortCode), 7000);
 						}else{
  						text= 'I am sorry, I was not able to place an order for you.';
 							 messageData = {
