@@ -263,7 +263,7 @@ app.post('/webhook/', (req, res) => {
 												console.log(error);
 											}else {
 												console.log('Mac added '+productResult);
-												setTimeout(() => myNewFunc(productName, recommendedName), 4000);
+												setTimeout(() => myNewFunc(productName, recommendedName), 3000);
 											}
 										});
 									}
