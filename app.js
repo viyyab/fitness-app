@@ -256,16 +256,17 @@ app.post('/webhook/', (req, res) => {
 												console.log(error);
 											}else {
 												console.log('Product added ');
+												text= 'Would you like to order anything else ?';
+													messageData = {
+															speech: text,
+															displayText: text
+															}
+													res.send(messageData);
 												}
 										});
 									}
 								});
-								text= 'Would you like to order anything else ?';
-								messageData = {
-										speech: text,
-										displayText: text
-										}
-								res.send(messageData);
+								
 							} else {
 								recommendedName=result.name;
 								console.log(result.name + "   " +recommendedName)
