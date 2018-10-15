@@ -241,7 +241,7 @@ app.post('/webhook/', (req, res) => {
 								qsr.getProductCodeByNameService(productName, (error, prodResult) =>{
 									if(error){
 										console.log(error);
-									}else if(!(prodResult.productCode)) {
+									}else if(prodResult.productCode == 'no product') {
 										console.log('Product is not there');
 										text= 'I am sorry ! This item does not exist! What would you like to order?';
 										messageData = {
