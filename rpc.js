@@ -1,7 +1,10 @@
 const xmlrpc = require('xmlrpc');
 const xml2js = require('xml2js');
 
-// Creates an XML-RPC server to listen to XML-RPC method calls
+
+var xmlRpcClientService = (callback) => {
+
+  // Creates an XML-RPC server to listen to XML-RPC method calls
 var server = xmlrpc.createServer({ host: 'localhost', port: 9090 })
 // Handle methods not found
 server.on('NotFound', function(method, params) {
@@ -33,14 +36,7 @@ setTimeout(function () {
 
 }, 1000)
 
-
-
-
-
-
-
-
-
+};
 
 
 
