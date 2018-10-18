@@ -5,6 +5,7 @@ const config = require('./config');
 const express = require('express');
 const xmlrpc = require('xmlrpc');
 const rpc = require('./rpc.js');
+const xml2js = require('xml2js');
 const bodyParser = require('body-parser');
 const qsr= require('./qsr-apis.js');
 const jwtdecode = require('jwt-decode');
@@ -53,6 +54,26 @@ const sessionIds = new Map();
 app.get('/', function (req, res) {
 	res.send('Hello world, I am a chat bot')
 })
+
+
+var postXMLtoRPCService = (callback) => {
+
+	rpc.xmlRpcClientService((error, result) => {
+		if(error) {
+			console.log('XML to RPC Client Hit Failed');
+		} else {
+			console.log('XML to RPC Client Hit');
+			qsr.settingORBIdService(result.orbId, orderCode, (error, orderIdResult) => {
+				if(error){
+					console.log(error);
+				}else {
+					console.log(orderIdResult);
+				}
+			});
+		}
+
+	});
+};
 
 
 app.post('/webhook/', (req, res) => {
@@ -414,19 +435,19 @@ app.post('/webhook/', (req, res) => {
 								console.log(error);
 							}else{
 								console.log(orderResult.code);
-								//orderCode=orderResult.code;
+								orderCode=orderResult.code;
 								qsr.getShortCodeService(orderResult.code, (error, newResult) => {
 									if(error){
 										console.log(error);
 									} else {
 										console.log(newResult.shortCode);
 										shortCode=newResult.shortCode;
-										// setTimeout(() => myFunc(newResult.shortCode), 6000);
+										setTimeout(() => myFunc(shortCode), 7000);
 									}
 								});
 							}
 						});
-						setTimeout(() => myFunc(shortCode), 7000);
+						// setTimeout(() => myFunc(shortCode), 7000);
 						}else{
  						text= 'I am sorry, I was not able to place an order for you.';
 							 messageData = {

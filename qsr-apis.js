@@ -444,6 +444,34 @@ var getShortCodeService = (orderCode, callback) => {
          });
 };
 
+
+var settingOrbIdToOrderService = (orbId, orderCode, callback) => {
+
+  console.log('Setting ORB ID API hit');
+  request({
+    url: `https://34.195.45.172:9002/qsrcommercewebservices/v2/qsr/orbId?orbId=${orbId}&orderCode=${orderCode}`,
+    method: 'PUT',
+    headers: {
+        "content-type": "application/x-www-form-urlencoded",
+      },
+    timeout: 40000,
+    rejectUnauthorized: false,
+    json: true
+  }, (error, response, body) => {
+
+    if(error){
+      callback('There was an error connecting to the server');
+    }
+    else if(response.statusCode == 401 || response.statusCode == 400){
+      callback('Unable to set ORB ID for the order');
+    }
+    else if(response.statusCode == 200){
+      callback("settingORBIdService API hit:", response.statusCode);
+    }
+  });
+
+};
+
 module.exports = {
     getAuthTokenService,
     getGpsFromZipService,
@@ -458,5 +486,6 @@ module.exports = {
     placeOrderService,
     getProductCodeByNameService,
     getRecommendedProductService,
-    getShortCodeService
+    getShortCodeService,
+    settingOrbIdToOrderService
 };
