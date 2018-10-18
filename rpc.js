@@ -33,14 +33,7 @@ var xmlRpcClientService = (callback) => {
 
 };
 
-
-
-
-
-
-
-
-
+};
 
 
 
