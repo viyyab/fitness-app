@@ -26,7 +26,7 @@ var xmlRpcClientService = (dataResult, callback) => {
   var client = xmlrpc.createClient({ host: '54.211.9.131', port: 8088, path: '/RPC2', rejectUnauthorized: false})
 
   // Sends a method call to the XML-RPC server
-  client.methodCall('DoFoeStoreFromFile', ['dataResult'], function (error, value) {
+  client.methodCall('DoFoeStoreFromFile', [dataResult], function (error, value) {
     console.log("Into RPC client method call")
     if(error){
       console.log(error);

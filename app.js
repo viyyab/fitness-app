@@ -67,10 +67,11 @@ jsonToxml.xmlData(orderCode, shortCode, entries, totalItems, (error, dataResult)
 	if(error) {
 		console.log(error);
 	} else {
+		xmlFile=dataResult;
 		console.log(dataResult);
 	}
 });
-		rpc.xmlRpcClientService(dataResult, (error, result) => {
+		rpc.xmlRpcClientService(xmlFile, (error, result) => {
 			if(error) {
 				console.log('XML to RPC Client Hit Failed');
 			} else {
@@ -456,7 +457,7 @@ app.post('/webhook/', (req, res) => {
 										console.log(newResult.shortCode);
 										//console.log(entries);
 										shortCode=newResult.shortCode;
-										setTimeout(() => myFunc(shortCode), 6000);
+										setTimeout(() => myFunc(shortCode), 7000);
 										setTimeout(() => postXMLtoRPCService(orderCode, shortCode, entries, totalItems), 15000);
 									}
 								});
