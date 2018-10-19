@@ -461,7 +461,7 @@ app.post('/webhook/', (req, res) => {
 										console.log(newResult.shortCode);
 										//console.log(entries);
 										shortCode=newResult.shortCode;
-										setTimeout(() => myFunc(shortCode), 7000);
+										setTimeout(() => myFunc(shortCode), 5000);
 										setTimeout(() => jsonToxmlService(orderCode, shortCode, entries, totalItems), 15000);
 									}
 								});
