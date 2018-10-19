@@ -42,7 +42,8 @@ var xmlData = (orderCode, shortCode, entries, totalItems, callback) => {
           "longCode":orderCode,
           "shortCode":shortCode
         },
-        "Item": {
+
+        "Item1": {
             "@": {
               "index": "1"
             },
