@@ -16,7 +16,7 @@ var xmlData = (orderCode, shortCode, entries, totalItems, callback) => {
           "multipleMenuType":"true",
           "paymentType":"1",
           "pod":"0",
-          "podName":"FOE0001"
+          "podName":"FOE0001",
           "remPod":"0",
           "storeId":"99993",
           "tableId":"",
