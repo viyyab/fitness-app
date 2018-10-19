@@ -5,8 +5,6 @@ var xmlData = (orderCode, shortCode, entries, totalItems, callback) => {
 
   var obj = {
 
-"methodCall" : {
-    "methodName": "DoFoeStoreFromFile",
     "Header": {
         "@": {
             "Version": "2",
@@ -80,7 +78,6 @@ var xmlData = (orderCode, shortCode, entries, totalItems, callback) => {
     "ExternalServices": {
       "Service": {}
     }
-  }
 };
 
 var xmlFile = js2xmlparser.parse("ProdInfo", obj);

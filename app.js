@@ -257,7 +257,7 @@ app.post('/webhook/', (req, res) => {
 				 		break;
 
 		 case 'productsOrderMac': {
-					console.log('In action products order Mac');
+					console.log('In action products order');
 					var productName = req.body.result.contexts[0].parameters.productName;
 					if(isDefined(actionName)){
 						console.log("Access Token  generated-  "+access_token+"for- "+productName);

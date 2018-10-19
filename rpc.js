@@ -29,7 +29,6 @@ var xmlRpcClientService = (dataResult, callback) => {
   client.methodCall('DoFoeStoreFromFile', [dataResult], function (error, value) {
     console.log("Into RPC client method call")
     if(error){
-      console.log(error);
       console.log('error:', error);
       console.log('req headers:', error.req && error.req._header);
       console.log('res code:', error.res && error.res.statusCode);
