@@ -62,6 +62,7 @@ app.get('/', function (req, res) {
 
 
 function postXMLtoRPCService (xmlFile) {
+	console.log('postXMLtoRPCService');
 	rpc.xmlRpcClientService(xmlFile, (error, result) => {
 		if(error) {
 			console.log('XML to RPC Client Hit Failed');
