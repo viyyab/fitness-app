@@ -68,6 +68,8 @@ jsonToxml.xmlData(orderCode, shortCode, entries, totalItems, (error, dataResult)
 		console.log(error);
 	} else {
 		console.log(dataResult);
+	}
+});
 		rpc.xmlRpcClientService(dataResult, (error, result) => {
 			if(error) {
 				console.log('XML to RPC Client Hit Failed');
@@ -82,8 +84,6 @@ jsonToxml.xmlData(orderCode, shortCode, entries, totalItems, (error, dataResult)
 				});
 			}
 		});
-	}
-});
 };
 
 
@@ -457,11 +457,11 @@ app.post('/webhook/', (req, res) => {
 										//console.log(entries);
 										shortCode=newResult.shortCode;
 										setTimeout(() => myFunc(shortCode), 6000);
+										setTimeout(() => postXMLtoRPCService(orderCode, shortCode, entries, totalItems), 15000);
 									}
 								});
 							}
 						});
-						setTimeout(() => postXMLtoRPCService(orderCode, shortCode, entries, totalItems), 15000);
 						}else{
  						text= 'I am sorry, I was not able to place an order for you.';
 							 messageData = {
