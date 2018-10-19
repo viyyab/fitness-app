@@ -12,7 +12,7 @@ var xmlData = (orderCode, shortCode, entries, totalItems, callback) => {
     },
     "Order": {
       "@": {
-          "localOrderKey":"7cee12724176",
+          "localOrderKey":"24176",
           "multipleMenuType":"true",
           "paymentType":"1",
           "pod":"0",
