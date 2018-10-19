@@ -114,7 +114,7 @@ var calculateDistanceService = (uLat, uLng, sLat, sLng, callback) => {
       callback('There was an error connecting to the duration server');
     }
     else if(response.statusCode == 200){
-      console.log(body);
+      //console.log(body);
       callback(undefined, {
          duration : body.rows[0].elements[0].duration.text
         //duration : body.rows[0]

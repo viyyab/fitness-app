@@ -61,30 +61,33 @@ app.get('/', function (req, res) {
 })
 
 
-function postXMLtoRPCService (orderCode, shortCode, entries, totalItems){
+function postXMLtoRPCService (xmlFile) {
+	rpc.xmlRpcClientService(xmlFile, (error, result) => {
+		if(error) {
+			console.log('XML to RPC Client Hit Failed');
+		} else {
+			console.log(result);
+			qsr.settingORBIdService(result.orbId, orderCode, (error, orderIdResult) => {
+				if(error){
+					console.log(error);
+				}else {
+					console.log(orderIdResult);
+				}
+			});
+		}
+	});
+}
+
+function jsonToxmlService (orderCode, shortCode, entries, totalItems){
 
 jsonToxml.xmlData(orderCode, shortCode, entries, totalItems, (error, dataResult) => {
 	if(error) {
 		console.log(error);
 	} else {
-		xmlFile=dataResult;
 		console.log(dataResult);
+		setTimeout(() => postXMLtoRPCService(dataResult), 5000);
 	}
 });
-		rpc.xmlRpcClientService(xmlFile, (error, result) => {
-			if(error) {
-				console.log('XML to RPC Client Hit Failed');
-			} else {
-				console.log(result);
-				qsr.settingORBIdService(result.orbId, orderCode, (error, orderIdResult) => {
-					if(error){
-						console.log(error);
-					}else {
-						console.log(orderIdResult);
-					}
-				});
-			}
-		});
 };
 
 
@@ -124,7 +127,7 @@ app.post('/webhook/', (req, res) => {
 			case 'check_sign_in': {
 
 				if(isDefined(actionName)){
-						console.log(JSON.stringify(req.body));
+						//console.log(JSON.stringify(req.body));
 						var token=req.body.originalRequest.data.user.idToken;
 						var decoded = jwtdecode(token);
 						var permissions = [];
@@ -458,7 +461,7 @@ app.post('/webhook/', (req, res) => {
 										//console.log(entries);
 										shortCode=newResult.shortCode;
 										setTimeout(() => myFunc(shortCode), 7000);
-										setTimeout(() => postXMLtoRPCService(orderCode, shortCode, entries, totalItems), 15000);
+										setTimeout(() => jsonToxmlService(orderCode, shortCode, entries, totalItems), 15000);
 									}
 								});
 							}
