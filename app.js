@@ -29,6 +29,7 @@ var password; //= 'mickeyd.mcd321@gmail.com';
 var shortCode;
 var totalItems;
 var entries;
+var xmlFile;
 debugger;
 
 
@@ -62,21 +63,28 @@ app.get('/', function (req, res) {
 
 function postXMLtoRPCService (orderCode, shortCode, entries, totalItems){
 
-	rpc.xmlRpcClientService((error, result) => {
-		if(error) {
-			console.log('XML to RPC Client Hit Failed');
-		} else {
-			console.log('XML to RPC Client Hit');
-			qsr.settingORBIdService(result.orbId, orderCode, (error, orderIdResult) => {
-				if(error){
-					console.log(error);
-				}else {
-					console.log(orderIdResult);
-				}
-			});
-		}
-
-	});
+jsonToxml.xmlData(orderCode, shortCode, entries, totalItems, (error, dataResult) => {
+	if(error) {
+		console.log(error);
+	} else {
+		console.log(dataResult);
+	}
+});
+	// rpc.xmlRpcClientService(xmlFile, (error, result) => {
+	// 	if(error) {
+	// 		console.log('XML to RPC Client Hit Failed');
+	// 	} else {
+	// 		console.log('XML to RPC Client Hit');
+	// 		qsr.settingORBIdService(result.orbId, orderCode, (error, orderIdResult) => {
+	// 			if(error){
+	// 				console.log(error);
+	// 			}else {
+	// 				console.log(orderIdResult);
+	// 			}
+	// 		});
+	// 	}
+	//
+	// });
 };
 
 
