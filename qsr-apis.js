@@ -333,7 +333,9 @@ var placeOrderService = (authToken, cartId, email, storeId, callback) => {
           else if(response.statusCode == 201){
             console.log("Place order API hit:", response.statusCode);
             callback(undefined, {
-              code: body.code
+              code: body.code,
+              totalItems: body.totalItems,
+              entries: body.entries[0]
               });
           }
          });
@@ -372,7 +374,7 @@ var getProductCodeByNameService = (productName, callback) => {
               });
             }
           }
-            
+
          });
 };
 

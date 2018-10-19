@@ -19,6 +19,7 @@
     "body-parser": "^1.15.1",
     "express": "^4.13.4",
     "fast-xml-parser": "^3.12.5",
+    "js2xmlparser": "^3.0.0",
     "jwt-decode": "^2.2.0",
     "request": "^2.87.0",
     "uuid": "^2.0.3",

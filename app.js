@@ -5,6 +5,7 @@ const config = require('./config');
 const express = require('express');
 const xmlrpc = require('xmlrpc');
 const rpc = require('./rpc.js');
+const jsonToxml = require('./jsonToXmlParser.js');
 const xml2js = require('xml2js');
 const bodyParser = require('body-parser');
 const qsr= require('./qsr-apis.js');
@@ -25,6 +26,9 @@ var orderCode;
 var messageData = '';
 var email; //= 'mickeyd.mcd321@gmail.com';
 var password; //= 'mickeyd.mcd321@gmail.com';
+var shortCode;
+var totalItems;
+var entries;
 debugger;
 
 
@@ -56,7 +60,7 @@ app.get('/', function (req, res) {
 })
 
 
-var postXMLtoRPCService = (callback) => {
+function postXMLtoRPCService (orderCode, shortCode, entries, totalItems){
 
 	rpc.xmlRpcClientService((error, result) => {
 		if(error) {
@@ -287,7 +291,7 @@ app.post('/webhook/', (req, res) => {
 										});
 									}
 								});
-								
+
 							} else {
 								recommendedName=result.name;
 								console.log(result.name + "   " +recommendedName)
@@ -420,8 +424,7 @@ app.post('/webhook/', (req, res) => {
 
 		case 'OrderConfirmed': {
  					console.log('In action OrderConfirmed');
-					var shortCode;
- 					if(isDefined(actionName)){
+					if(isDefined(actionName)){
  						console.log(cartId+'   '+cardId);
 						function myFunc(orderCode) {
 							text= `Your order has been submitted. Your order code is ${orderCode}. Please provide this code when you get to the restaurant and they'll get your order started. I will also text it to you for reference. Thank you for your order!`
@@ -437,18 +440,21 @@ app.post('/webhook/', (req, res) => {
 							}else{
 								console.log(orderResult.code);
 								orderCode=orderResult.code;
+								entries=orderResult.entries;
+								totalItems=orderResult.totalItems;
 								qsr.getShortCodeService(orderResult.code, (error, newResult) => {
 									if(error){
 										console.log(error);
 									} else {
 										console.log(newResult.shortCode);
+										console.log(entries);
 										shortCode=newResult.shortCode;
-										setTimeout(() => myFunc(shortCode), 7000);
+										setTimeout(() => myFunc(shortCode), 8000);
 									}
 								});
 							}
 						});
-						// setTimeout(() => myFunc(shortCode), 7000);
+						//setTimeout(() => postXMLtoRPCService(orderCode, shortCode, entries, totalItems), 10000);
 						}else{
  						text= 'I am sorry, I was not able to place an order for you.';
 							 messageData = {
