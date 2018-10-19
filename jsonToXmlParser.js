@@ -12,7 +12,7 @@ var xmlData = (orderCode, shortCode, entries, totalItems, callback) => {
     },
     "Order": {
       "@": {
-          "localOrderKey":"e70b1ab4-6446-11e8-8725-7cee12724176",
+          "localOrderKey":"7cee12724176",
           "multipleMenuType":"true",
           "paymentType":"1",
           "pod":"0",
@@ -25,9 +25,9 @@ var xmlData = (orderCode, shortCode, entries, totalItems, callback) => {
           "status":"64",
           "trackStatus":"0",
           "transactionKind":"0",
-          "saleDate":"20181016",
-          "saleTime":"152032",
-          "businessDate":"20181016",
+          "saleDate":"20181020",
+          "saleTime":"121056",
+          "businessDate":"20181020",
           "type":"0",
           "taxMode":"2",
           "crossedBoundary":"False",
@@ -50,7 +50,7 @@ var xmlData = (orderCode, shortCode, entries, totalItems, callback) => {
           },
           "product":{
             "@":{
-              "code":"",
+              "code":"3",
               "qty":"1",
               "name":"Cheeseburger",
               "deliverEarlyQuantity":"0",
@@ -64,11 +64,11 @@ var xmlData = (orderCode, shortCode, entries, totalItems, callback) => {
           },
           "product":{
             "@":{
-              "code":"",
+              "code":"5599",
               "qty":"1",
-              "name":"Fries",
+              "name":"M French Fries",
               "deliverEarlyQuantity":"0",
-              "unitPrice":"0.01"
+              "unitPrice":"0.00"
             }
           }
         }

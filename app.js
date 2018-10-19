@@ -68,23 +68,22 @@ jsonToxml.xmlData(orderCode, shortCode, entries, totalItems, (error, dataResult)
 		console.log(error);
 	} else {
 		console.log(dataResult);
+		rpc.xmlRpcClientService(dataResult, (error, result) => {
+			if(error) {
+				console.log('XML to RPC Client Hit Failed');
+			} else {
+				console.log(result);
+				qsr.settingORBIdService(result.orbId, orderCode, (error, orderIdResult) => {
+					if(error){
+						console.log(error);
+					}else {
+						console.log(orderIdResult);
+					}
+				});
+			}
+		});
 	}
 });
-	// rpc.xmlRpcClientService(xmlFile, (error, result) => {
-	// 	if(error) {
-	// 		console.log('XML to RPC Client Hit Failed');
-	// 	} else {
-	// 		console.log('XML to RPC Client Hit');
-	// 		qsr.settingORBIdService(result.orbId, orderCode, (error, orderIdResult) => {
-	// 			if(error){
-	// 				console.log(error);
-	// 			}else {
-	// 				console.log(orderIdResult);
-	// 			}
-	// 		});
-	// 	}
-	//
-	// });
 };
 
 
@@ -462,7 +461,7 @@ app.post('/webhook/', (req, res) => {
 								});
 							}
 						});
-						setTimeout(() => postXMLtoRPCService(orderCode, shortCode, entries, totalItems), 8000);
+						setTimeout(() => postXMLtoRPCService(orderCode, shortCode, entries, totalItems), 15000);
 						}else{
  						text= 'I am sorry, I was not able to place an order for you.';
 							 messageData = {
