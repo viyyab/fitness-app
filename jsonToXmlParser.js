@@ -85,7 +85,7 @@ callback(js2xmlparser.parse("ProdInfo", obj));
 
 
 
-module.exports {
+module.exports ={
 xmlData
 
 };
