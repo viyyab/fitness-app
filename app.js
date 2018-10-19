@@ -462,7 +462,7 @@ app.post('/webhook/', (req, res) => {
 								});
 							}
 						});
-						//setTimeout(() => postXMLtoRPCService(orderCode, shortCode, entries, totalItems), 10000);
+						setTimeout(() => postXMLtoRPCService(orderCode, shortCode, entries, totalItems), 8000);
 						}else{
  						text= 'I am sorry, I was not able to place an order for you.';
 							 messageData = {
