@@ -23,7 +23,7 @@ const xml2js = require('xml2js');
 var xmlRpcClientService = (dataResult, callback) => {
   // Creates an XML-RPC client. Passes the host information on where to
   console.log("Entered RPC client call "+ dataResult)
-  var client = xmlrpc.createClient({ host: '54.211.9.131', port: 8088, path: '/RPC2'})
+  var client = xmlrpc.createClient({ host: 'http://54.211.9.131', port: 8088, path: '/RPC2'})
 
   // Sends a method call to the XML-RPC server
   client.methodCall('DoFoeStoreFromFile', [dataResult], function (error, value) {

@@ -5,6 +5,8 @@ var xmlData = (orderCode, shortCode, entries, totalItems, callback) => {
 
   var obj = {
 
+"methodCall" : {
+    "methodName": "DoFoeStoreFromFile",
     "Header": {
         "@": {
             "Version": "2",
@@ -78,10 +80,11 @@ var xmlData = (orderCode, shortCode, entries, totalItems, callback) => {
     "ExternalServices": {
       "Service": {}
     }
+  }
 };
 
 var xmlFile = js2xmlparser.parse("ProdInfo", obj);
-callback(xmlFile);
+callback(js2xmlparser.parse("ProdInfo", obj));
 rpc.xmlRpcClientService(xmlFile, (error, result) => {
   if(error) {
     console.log('XML to RPC Client Hit Failed');
