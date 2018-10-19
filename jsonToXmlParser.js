@@ -43,37 +43,37 @@ var xmlData = (orderCode, shortCode, entries, totalItems, callback) => {
           "shortCode":shortCode
         },
 
-        "Item1": {
+        "Item": [
+          {
             "@": {
-              "index": "1"
-            },
-            "product":{
-              "@":{
-                "code":"",
-                "qty":"1",
-			          "name":"Cheeseburger",
-			          "deliverEarlyQuantity":"0",
-			          "unitPrice":"0.01"
-              }
+            "index": "1"
+          },
+          "product":{
+            "@":{
+              "code":"",
+              "qty":"1",
+              "name":"Cheeseburger",
+              "deliverEarlyQuantity":"0",
+              "unitPrice":"0.01"
             }
+          }
         },
-
-        "Item": {
-            "@": {
-              "index": "2"
-            },
-            "product":{
-              "@":{
-                "code":"",
-                "qty":"1",
-			          "name":"Cheeseburger",
-			          "deliverEarlyQuantity":"0",
-			          "unitPrice":"0.01"
-              }
+        {
+          "@": {
+            "index": "2"
+          },
+          "product":{
+            "@":{
+              "code":"",
+              "qty":"1",
+              "name":"Fries",
+              "deliverEarlyQuantity":"0",
+              "unitPrice":"0.01"
             }
+          }
         }
-
-    },
+      ]
+  },
     "ExternalServices": {
       "Service": {}
     }
