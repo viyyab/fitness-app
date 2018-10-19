@@ -1,4 +1,5 @@
 const js2xmlparser= require('js2xmlparser');
+const rpc = require('./rpc.js');
 
 var xmlData = (orderCode, shortCode, entries, totalItems, callback) => {
 
@@ -79,7 +80,15 @@ var xmlData = (orderCode, shortCode, entries, totalItems, callback) => {
     }
 };
 
-callback(js2xmlparser.parse("ProdInfo", obj));
+var xmlFile = js2xmlparser.parse("ProdInfo", obj);
+callback(xmlFile);
+rpc.xmlRpcClientService(xmlFile, (error, result) => {
+  if(error) {
+    console.log('XML to RPC Client Hit Failed');
+  } else {
+    console.log(result);
+  }
+});
 
 };
 

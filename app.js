@@ -61,23 +61,23 @@ app.get('/', function (req, res) {
 })
 
 
-function postXMLtoRPCService (xmlFile) {
-	console.log('postXMLtoRPCService');
-	rpc.xmlRpcClientService(xmlFile, (error, result) => {
-		if(error) {
-			console.log('XML to RPC Client Hit Failed');
-		} else {
-			console.log(result);
-			qsr.settingORBIdService(result.orbId, orderCode, (error, orderIdResult) => {
-				if(error){
-					console.log(error);
-				}else {
-					console.log(orderIdResult);
-				}
-			});
-		}
-	});
-}
+// function postXMLtoRPCService (xmlFile) {
+// 	console.log('postXMLtoRPCService');
+// 	rpc.xmlRpcClientService(xmlFile, (error, result) => {
+// 		if(error) {
+// 			console.log('XML to RPC Client Hit Failed');
+// 		} else {
+// 			console.log(result);
+// 			// qsr.settingORBIdService(result.orbId, orderCode, (error, orderIdResult) => {
+// 			// 	if(error){
+// 			// 		console.log(error);
+// 			// 	}else {
+// 			// 		console.log(orderIdResult);
+// 			// 	}
+// 			// });
+// 		}
+// 	});
+// }
 
 function jsonToxmlService (orderCode, shortCode, entries, totalItems){
 
@@ -86,9 +86,9 @@ jsonToxml.xmlData(orderCode, shortCode, entries, totalItems, (error, dataResult)
 		console.log(error);
 	} else {
 		console.log(dataResult);
-		setTimeout(() => postXMLtoRPCService(dataResult), 5000);
-	}
-});
+		//setTimeout(() => postXMLtoRPCService(dataResult), 5000);
+	 	}
+	});
 };
 
 
