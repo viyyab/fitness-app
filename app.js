@@ -449,7 +449,7 @@ app.post('/webhook/', (req, res) => {
 										console.log(newResult.shortCode);
 										console.log(entries);
 										shortCode=newResult.shortCode;
-										setTimeout(() => myFunc(shortCode), 8000);
+										setTimeout(() => myFunc(shortCode), 5000);
 									}
 								});
 							}

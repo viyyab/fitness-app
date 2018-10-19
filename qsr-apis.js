@@ -335,7 +335,7 @@ var placeOrderService = (authToken, cartId, email, storeId, callback) => {
             callback(undefined, {
               code: body.code,
               totalItems: body.totalItems,
-              entries: body.entries[0]
+              entries: body.entries
               });
           }
          });
