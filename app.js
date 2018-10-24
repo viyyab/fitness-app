@@ -454,7 +454,7 @@ app.post('/webhook/', (req, res) => {
 								orderCode=orderResult.code;
 								entries=orderResult.entries;
 								totalItems=orderResult.totalItems;
-								qsr.getShortCodeService(orderResult.code, storeId, (error, newResult) => {
+								qsr.getShortCodeService(orderResult.code, (error, newResult) => {
 									if(error){
 										console.log(error);
 									} else {
@@ -462,7 +462,7 @@ app.post('/webhook/', (req, res) => {
 										//console.log(entries);
 										shortCode=newResult.shortCode;
 										setTimeout(() => myFunc(shortCode), 6000);
-										//setTimeout(() => jsonToxmlService(orderCode, shortCode, entries, totalItems), 15000);
+										//setTimeout(() => jsonToxmlService(storeId, orderCode), 15000);
 // 										qsr.settingORBIdService(result.orbId, orderCode, (error, orderIdResult) => {
 // 											if(error){
 // 												console.log(error);
