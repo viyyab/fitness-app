@@ -61,23 +61,16 @@ app.get('/', function (req, res) {
 })
 
 
-// function postXMLtoRPCService (xmlFile) {
-// 	console.log('postXMLtoRPCService');
-// 	rpc.xmlRpcClientService(xmlFile, (error, result) => {
-// 		if(error) {
-// 			console.log('XML to RPC Client Hit Failed');
-// 		} else {
-// 			console.log(result);
-// 			// qsr.settingORBIdService(result.orbId, orderCode, (error, orderIdResult) => {
-// 			// 	if(error){
-// 			// 		console.log(error);
-// 			// 	}else {
-// 			// 		console.log(orderIdResult);
-// 			// 	}
-// 			// });
-// 		}
-// 	});
-// }
+function postXMLtoRPCService (storeId, orderCode) {
+	console.log('postXMLtoRPCService');
+			qsr.settingORBIdService(storeId, orderCode, (error, orbIdResult) => {
+				if(error){
+					console.log(error);
+				}else {
+					console.log(orderIdResult);
+				}
+			});
+	};
 
 function jsonToxmlService (orderCode, shortCode, entries, totalItems){
 
@@ -459,17 +452,9 @@ app.post('/webhook/', (req, res) => {
 										console.log(error);
 									} else {
 										console.log(newResult.shortCode);
-										//console.log(entries);
 										shortCode=newResult.shortCode;
 										setTimeout(() => myFunc(shortCode), 6000);
-										//setTimeout(() => jsonToxmlService(storeId, orderCode), 15000);
-// 										qsr.settingORBIdService(result.orbId, orderCode, (error, orderIdResult) => {
-// 											if(error){
-// 												console.log(error);
-// 											}else {
-// 												console.log(orderIdResult);
-// 											}
-// 										});
+										setTimeout(() => postXMLtoRPCService(storeId, orderCode), 15000);
 									}
 								});
 							}
