@@ -415,12 +415,12 @@ var getRecommendedProductService = (productName, callback) => {
 };
 
 
-var getShortCodeService = (orderCode, storeId, callback) => {
+var getShortCodeService = (orderCode, callback) => {
 
         console.log('Get short code API hit');
         console.log(orderCode);
         request({
-          url: `https://34.195.45.172:9002/qsrcommercewebservices/v2/qsr/shortCode?orderCode=${orderCode}&storeId=${storeId}`,
+          url: `https://34.195.45.172:9002/qsrcommercewebservices/v2/qsr/shortCode?orderCode=${orderCode}`,
           method: 'GET',
           headers: {
            "content-type": "application/x-www-form-urlencoded"
