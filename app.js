@@ -63,7 +63,7 @@ app.get('/', function (req, res) {
 
 function postXMLtoRPCService (storeId, orderCode) {
 	console.log('postXMLtoRPCService');
-			qsr.settingORBIdService(storeId, orderCode, (error, orbIdResult) => {
+			qsr.settingOrbIdToOrderService(storeId, orderCode, (error, orbIdResult) => {
 				if(error){
 					console.log(error);
 				}else {
@@ -337,6 +337,19 @@ app.post('/webhook/', (req, res) => {
 					   	}
 					}
 					break;
+			
+		case 'ordermoreProductsFollowUp': {
+ 					console.log('In action order more products anything else');
+ 					if(isDefined(actionName)){
+ 						text= `What else would you like to have ?`;
+								messageData = {
+									speech: text,
+									displayText: text
+										}
+								    res.send(messageData);
+								}
+							 }
+ 					     break;
 
 
  		 case 'productsOrderFries': {
@@ -375,21 +388,6 @@ app.post('/webhook/', (req, res) => {
 								}
 							 }
  					     break;
-
-
-		case 'ordermoreProductsFollowUp': {
- 					console.log('In action order more products anything else');
- 					if(isDefined(actionName)){
- 						text= `What else would you like to have ?`;
-								messageData = {
-									speech: text,
-									displayText: text
-										}
-								    res.send(messageData);
-								}
-							 }
- 					     break;
-
 
 
 		case 'productsOrderConfirmedCart': {
