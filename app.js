@@ -61,9 +61,9 @@ app.get('/', function (req, res) {
 })
 
 
-function postXMLtoRPCService (storeId, orderCode) {
+function postXMLtoRPCService (storeId, orderCode, shortCode) {
 	console.log('postXMLtoRPCService');
-			qsr.settingOrbIdToOrderService(storeId, orderCode, (error, orbIdResult) => {
+			qsr.settingOrbIdToOrderService(storeId, orderCode, shortCode, (error, orbIdResult) => {
 				if(error){
 					console.log(error);
 				}else {
@@ -452,7 +452,7 @@ app.post('/webhook/', (req, res) => {
 										console.log(newResult.shortCode);
 										shortCode=newResult.shortCode;
 										setTimeout(() => myFunc(shortCode), 6000);
-										setTimeout(() => postXMLtoRPCService(storeId, orderCode), 15000);
+										setTimeout(() => postXMLtoRPCService(storeId, orderCode, shortCode), 30000);
 									}
 								});
 							}
