@@ -67,7 +67,7 @@ function postXMLtoRPCService (storeId, orderCode) {
 				if(error){
 					console.log(error);
 				}else {
-					console.log(orderIdResult);
+					console.log(orbIdResult);
 				}
 			});
 	};
