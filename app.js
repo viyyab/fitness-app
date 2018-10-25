@@ -452,7 +452,7 @@ app.post('/webhook/', (req, res) => {
 										console.log(newResult.shortCode);
 										shortCode=newResult.shortCode;
 										setTimeout(() => myFunc(shortCode), 6000);
-										setTimeout(() => postXMLtoRPCService(storeId, orderCode), 20000);
+										setTimeout(() => postXMLtoRPCService(storeId, orderCode), 15000);
 									}
 								});
 							}
