@@ -364,7 +364,7 @@ var getProductCodeByNameService = (productName, callback) => {
           }
           else if(response.statusCode == 200){
             console.log("Product by name API hit:", response.statusCode);
-            if(isDefined(body.products[0])){
+            if(body.products[0]){
             callback(undefined, {
               productCode: body.products[0].code
               });
