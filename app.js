@@ -297,13 +297,12 @@ app.post('/webhook/', (req, res) => {
 											}else {
 												console.log(nextProductResult);
 												text= 'Would you like to order anything else ?';
-													messageData = {
-															speech: text,
-															displayText: text
-															}
-												
+												messageData = {
+														speech: text,
+														displayText: text
+														}
+												res.send(messageData);
 											}
-											res.send(messageData);
 										});
 									}
 								});
