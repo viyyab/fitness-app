@@ -263,6 +263,16 @@ app.post('/webhook/', (req, res) => {
 											}
 										res.send(messageData);
 						};
+						
+						function myNextFunc() {
+							text= 'Would you like to order anything else ?';
+							messageData = {
+									speech: text,
+									displayText: text
+									}
+							res.send(messageData);
+						
+						};
 						qsr.getRecommendedProductService(productName, (error, result) => {
 							if(error){
 								console.log(error);
@@ -281,18 +291,13 @@ app.post('/webhook/', (req, res) => {
 										res.send(messageData);
 									} else{
 										console.log('code for product ',prodResult.productCode);
-										qsr.addProductsToCart(access_token, cartId, email, prodResult.productCode, storeName, (error,productResult)=> {
+										qsr.addProductsToCart(access_token, cartId, email, prodResult.productCode, storeName, (error,nextProductResult)=> {
 											if(error){
 												console.log(error);
 											}else {
-												console.log('Product added ');
-												text= 'Would you like to order anything else ?';
-													messageData = {
-															speech: text,
-															displayText: text
-															}
-													res.send(messageData);
-												}
+												console.log(nextProductResult);
+												setTimeout(() => myNextFunc(), 3000);
+											}
 										});
 									}
 								});
