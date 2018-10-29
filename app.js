@@ -266,7 +266,7 @@ app.post('/webhook/', (req, res) => {
 						qsr.getRecommendedProductService(productName, (error, result) => {
 							if(error){
 								console.log(error);
-							} else if(result.name == 'no product') {
+							} else if(!isDefined(result.name)) {
 								console.log('Recommended products API null');
 								qsr.getProductCodeByNameService(productName, (error, prodResult) =>{
 									if(error){
