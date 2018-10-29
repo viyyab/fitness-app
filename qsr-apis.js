@@ -364,7 +364,7 @@ var getProductCodeByNameService = (productName, callback) => {
           }
           else if(response.statusCode == 200){
             console.log("Product by name API hit:", response.statusCode);
-            if((body.products[0])){
+            if(isDefined(body.products[0])){
             callback(undefined, {
               productCode: body.products[0].code
               });
@@ -401,7 +401,7 @@ var getRecommendedProductService = (productName, callback) => {
           }
           else if(response.statusCode == 200){
             console.log("Get recommended product API hit:", response.statusCode);
-            if((body.products[0])){
+            if(isDefined(body.products[0])){
               console.log("recommended product present");
             callback(undefined, {
               name: body.products[0].recommendProduct
@@ -482,6 +482,18 @@ var settingOrbIdToOrderService = (storeId, orderCode, shortCode, callback) => {
   });
 
 };
+
+function isDefined(obj) {
+	if (typeof obj == 'undefined') {
+		return false;
+	}
+
+	if (!obj) {
+		return false;
+	}
+
+	return obj != null;
+}
 
 module.exports = {
     getAuthTokenService,
