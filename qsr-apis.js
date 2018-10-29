@@ -401,7 +401,7 @@ var getRecommendedProductService = (productName, callback) => {
           }
           else if(response.statusCode == 200){
             console.log("Get recommended product API hit:", response.statusCode);
-            if(isDefined(body.products[0])){
+            if(isEmpty(body.products[0])){
               console.log("recommended product present");
             callback(undefined, {
               name: body.products[0].recommendProduct
@@ -483,16 +483,12 @@ var settingOrbIdToOrderService = (storeId, orderCode, shortCode, callback) => {
 
 };
 
-function isDefined(obj) {
-	if (typeof obj == 'undefined') {
-		return false;
-	}
-
-	if (!obj) {
-		return false;
-	}
-
-	return obj != null;
+function isEmpty(obj) {
+    for(var key in obj) {
+        if(obj.hasOwnProperty(key))
+            return false;
+    }
+    return true;
 }
 
 module.exports = {
