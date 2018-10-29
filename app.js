@@ -296,8 +296,14 @@ app.post('/webhook/', (req, res) => {
 												console.log(error);
 											}else {
 												console.log(nextProductResult);
-												setTimeout(() => myNextFunc(), 3000);
+												text= 'Would you like to order anything else ?';
+													messageData = {
+															speech: text,
+															displayText: text
+															}
+												
 											}
+											res.send(messageData);
 										});
 									}
 								});
