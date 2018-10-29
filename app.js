@@ -296,13 +296,13 @@ app.post('/webhook/', (req, res) => {
 												console.log(error);
 											}else {
 												console.log(nextProductResult);
-												text= 'Would you like to order anything else ?';
+											}
+											text= 'Would you like to order anything else ?';
 												messageData = {
 														speech: text,
 														displayText: text
 														}
 												res.send(messageData);
-											}
 										});
 									}
 								});
