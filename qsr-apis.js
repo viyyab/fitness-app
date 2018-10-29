@@ -402,15 +402,15 @@ var getRecommendedProductService = (productName, callback) => {
           else if(response.statusCode == 200){
             console.log("Get recommended product API hit:", response.statusCode);
             if(isEmpty(body.products[0])){
-              console.log("recommended product present");
-            callback(undefined, {
-              name: body.products[0].recommendProduct
-              });
-            }else {
               console.log("no recommended product");
               callback(undefined, {
               name: 'no product'
               });
+             }else {
+              console.log("recommended product present");
+              callback(undefined, {
+              name: body.products[0].recommendProduct
+              });              
             }
           }
          });
