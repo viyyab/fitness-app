@@ -457,12 +457,12 @@ var getShortCodeService = (orderCode, callback) => {
 };
 
 
-var settingOrbIdToOrderService = (storeId, orderCode, shortCode, callback) => {
+var gettingOrbIdFromOrderService = (storeId, orderCode, shortCode, callback) => {
 
   console.log('Setting ORB ID API hit');
   request({
     url: `https://34.195.45.172:9002/qsrcommercewebservices/v2/qsr/orbId?storeId=${storeId}&orderCode=${orderCode}&shortCode=${shortCode}`,
-    method: 'PUT',
+    method: 'GET',
     headers: {
         "content-type": "application/x-www-form-urlencoded",
       },
@@ -478,7 +478,9 @@ var settingOrbIdToOrderService = (storeId, orderCode, shortCode, callback) => {
       callback('Unable to set ORB ID for the order');
     }
     else if(response.statusCode == 200){
-      callback("settingORBIdService API hit:", response.statusCode);
+      callback(undefined, {
+        displayCode: body.displayCode
+      });
     }
   });
 
