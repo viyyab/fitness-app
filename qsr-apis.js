@@ -509,5 +509,5 @@ module.exports = {
     getProductCodeByNameService,
     getRecommendedProductService,
     getShortCodeService,
-    settingOrbIdToOrderService
+    gettingOrbIdFromOrderService
 };
