@@ -61,28 +61,28 @@ app.get('/', function (req, res) {
 })
 
 
-function postXMLtoRPCService (storeId, orderCode, shortCode) {
-	console.log('postXMLtoRPCService');
-			qsr.settingOrbIdToOrderService(storeId, orderCode, shortCode, (error, orbIdResult) => {
-				if(error){
-					console.log(error);
-				}else {
-					console.log(orbIdResult);
-				}
-			});
-	};
+// function postXMLtoRPCService (storeId, orderCode, shortCode) {
+// 	console.log('postXMLtoRPCService');
+// 			qsr.settingOrbIdToOrderService(storeId, orderCode, shortCode, (error, orbIdResult) => {
+// 				if(error){
+// 					console.log(error);
+// 				}else {
+// 					console.log(orbIdResult);
+// 				}
+// 			});
+// 	};
 
-function jsonToxmlService (orderCode, shortCode, entries, totalItems){
+// function jsonToxmlService (orderCode, shortCode, entries, totalItems){
 
-jsonToxml.xmlData(orderCode, shortCode, entries, totalItems, (error, dataResult) => {
-	if(error) {
-		console.log(error);
-	} else {
-		console.log(dataResult);
-		//setTimeout(() => postXMLtoRPCService(dataResult), 5000);
-	 	}
-	});
-};
+// jsonToxml.xmlData(orderCode, shortCode, entries, totalItems, (error, dataResult) => {
+// 	if(error) {
+// 		console.log(error);
+// 	} else {
+// 		console.log(dataResult);
+// 		//setTimeout(() => postXMLtoRPCService(dataResult), 5000);
+// 	 	}
+// 	});
+// };
 
 
 app.post('/webhook/', (req, res) => {
@@ -453,16 +453,20 @@ app.post('/webhook/', (req, res) => {
 							}else{
 								console.log(orderResult.code);
 								orderCode=orderResult.code;
-								entries=orderResult.entries;
-								totalItems=orderResult.totalItems;
 								qsr.getShortCodeService(orderResult.code, (error, newResult) => {
 									if(error){
 										console.log(error);
 									} else {
 										console.log(newResult.shortCode);
 										shortCode=newResult.shortCode;
-										setTimeout(() => myFunc(shortCode), 6000);
-										setTimeout(() => postXMLtoRPCService(storeId, orderCode, shortCode), 30000);
+										qsr.gettingOrbIdFromOrderService(storeId, orderCode, newResult.shortCode, (error, orbIdResult) => {
+											if(error){
+												console.log(error);
+											}else {
+												console.log(orbIdResult.displayCode);
+												setTimeout(() => myFunc(orbIdResult.displayCode), 7000);
+											}
+										});
 									}
 								});
 							}
