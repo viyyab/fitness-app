@@ -464,7 +464,7 @@ app.post('/webhook/', (req, res) => {
 												console.log(error);
 											}else {
 												console.log(orbIdResult.displayCode);
-												setTimeout(() => myFunc(orbIdResult.displayCode), 8000);
+												setTimeout(() => myFunc(orbIdResult.displayCode), 13000);
 											}
 										});
 									}
