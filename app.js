@@ -439,7 +439,7 @@ app.post('/webhook/', (req, res) => {
  					console.log('In action OrderConfirmed');
 					if(isDefined(actionName)){
  						console.log(cartId+'   '+cardId);
-						function myFunc(orderCode) {
+						function myFunc() {
 							text= `Your order has been submitted.I will text it to you for reference.Please provide the code to get your order started.Thank you for your order!`
 								 messageData = {
 										speech: text,
