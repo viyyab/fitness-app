@@ -440,7 +440,7 @@ app.post('/webhook/', (req, res) => {
 					if(isDefined(actionName)){
  						console.log(cartId+'   '+cardId);
 						function myFunc(orderCode) {
-							text= `Your order has been submitted. Your order code is ${orderCode}. Please provide this code when you get to the restaurant and they'll get your order started. I will also text it to you for reference. Thank you for your order!`
+							text= `Your order has been submitted.I will text it to you for reference.Please provide the code to get your order started.Thank you for your order!`
 								 messageData = {
 										speech: text,
 										displayText: text
@@ -464,7 +464,7 @@ app.post('/webhook/', (req, res) => {
 												console.log(error);
 											}else {
 												console.log(orbIdResult.displayCode);
-												setTimeout(() => myFunc(orbIdResult.displayCode), 7000);
+												setTimeout(() => myFunc(), 7000);
 											}
 										});
 									}
