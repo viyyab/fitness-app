@@ -197,9 +197,9 @@ app.post('/webhook/', (req, res) => {
 										  uLat=req.body.originalRequest.data.device.location.coordinates.latitude; // = 41.8834;
 										  uLng=req.body.originalRequest.data.device.location.coordinates.longitude; // = -87.6537;
 									}
-								var zip= 560037;
-								var uLat = 12.9666400;
-								var uLng = 77.7232870;
+								
+								
+								
 							qsr.nearestStoreService(uLat, uLng, (error, storeResult) =>{
 									if(error){
 										console.log(error);
