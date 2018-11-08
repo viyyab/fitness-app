@@ -3,7 +3,6 @@
 const apiai = require('apiai');
 const config = require('./config');
 const express = require('express');
-const jsonToxml = require('./jsonToXmlParser.js');
 const xml2js = require('xml2js');
 const bodyParser = require('body-parser');
 const sfcc= require('./sfcc-apis.js');
