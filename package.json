@@ -16,12 +16,14 @@
     "actions-on-google": "^2.4.1",
     "apiai": "^2.0.5",
     "axios": "^0.18.0",
+    "base-64": "^0.1.0",
     "body-parser": "^1.15.1",
     "express": "^4.13.4",
     "fast-xml-parser": "^3.12.5",
     "js2xmlparser": "^3.0.0",
     "jwt-decode": "^2.2.0",
     "request": "^2.87.0",
+    "utf8": "^3.0.0",
     "uuid": "^2.0.3",
     "xml2js": "^0.4.19"
   }

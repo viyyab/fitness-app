@@ -1,22 +1,22 @@
 const request= require('request');
-
+var base64 = require('base-64');
+var utf8 = require('utf8');
 
 var getAuthTokenService = (username, password, callback) =>{
 
   console.log('Auth token API hit');
+  var bytes = utf8.encode(username+":"+password);
+  var bearer = base64.encode(bytes);
   request({
-    url: 'https://34.195.45.172:9002/authorizationserver/oauth/token' ,
-    form: {
-    client_id:'webshop_client',
-    client_secret: 'secret',
-    grant_type: 'password',
-    username: username,
-    password: password
+    url: 'https://capgemini01-alliance-prtnr-eu06-dw.demandware.net/s/CapCafe/dw/shop/v18_3/customers/auth?client_id=e4bd2b6d-1567-475d-9eb2-b2c86a37a560' ,
+    body: {
+    "type": "credentials",
     },
     method: 'POST',
     rejectUnauthorized: false,
     headers: {
-        "content-type": "application/x-www-form-urlencoded"
+        "Authorization": bearer,
+        "Content-Type": "application/json"
       },
     json: true
   }, (error, response, body) => {
@@ -31,7 +31,7 @@ var getAuthTokenService = (username, password, callback) =>{
       console.log('getAuthTokenService API hit:', response.statusCode)
 
       callback(undefined, {
-        token: body.access_token,
+        token: response.headers,
         refresh_token: body.refresh_token,
         });
       }
@@ -411,7 +411,7 @@ var getRecommendedProductService = (productName, callback) => {
               console.log("recommended product present");
               callback(undefined, {
               name: body.products[0].recommendProduct
-              });              
+              });
             }
           }
          });
