@@ -78,7 +78,7 @@ var getProductDetailsService = (productName, callback) => {
 };
 
 
-var createCartService = (authToken, email,callback) => {
+var createCartService = (authToken, callback) => {
 
   console.log('Create cart API hit');
   request({
@@ -86,7 +86,7 @@ var createCartService = (authToken, email,callback) => {
     method: 'POST',
     headers: {
         "content-type": "application/json",
-        "authorization": `bearer ${authToken}`
+        "authorization": `Bearer ${authToken}`
       },
     rejectUnauthorized: false,
     json: true
@@ -98,23 +98,22 @@ var createCartService = (authToken, email,callback) => {
     else if(response.statusCode == 400){
       callback('Unable to create the cart');
     }
-    else if(response.statusCode == 201){
+    else if(response.statusCode == 200){
       console.log('createCartService API hit:', response.statusCode)
-
       callback(undefined, {
-        cartId: body.code
+        basketId: body.basket_id
         });
       }
     });
 
 };
 
-var addProductsToCart = (authToken, product_id, callback) => {
+var addProductsToCart = (authToken, product_id, basket_id, callback) => {
 
   console.log('Add products API entered');
   var qty = 1;
   request({
-    url: `https://capgemini01-alliance-prtnr-eu06-dw.demandware.net/s/CapCafe/dw/shop/v18_3/baskets/0f8af66a97e89546eb61185036/items`,
+    url: `https://capgemini01-alliance-prtnr-eu06-dw.demandware.net/s/CapCafe/dw/shop/v18_3/baskets/${basket_id}/items`,
     body: {
         "product_id" : product_id,
         "quantity": qty
@@ -123,7 +122,7 @@ var addProductsToCart = (authToken, product_id, callback) => {
     method: 'POST',
     headers: {
         "content-type": "application/json",
-        "authorization": `bearer ${authToken}`
+        "authorization": `Bearer ${authToken}`
       },
     rejectUnauthorized: false,
     json: true
@@ -144,13 +143,13 @@ var addProductsToCart = (authToken, product_id, callback) => {
 };
 
 
-var getAddressService = (authToken, callback) => {
+var getAddressService = (authToken, customer_id, callback) => {
   console.log('Get address API hit');
   request({
-    url: `https://capgemini01-alliance-prtnr-eu06-dw.demandware.net/s/CapCafe/dw/shop/v18_3/customers/abjZWwTq5Bx5KSFpGGT6E2mzIp/addresses`,
+    url: `https://capgemini01-alliance-prtnr-eu06-dw.demandware.net/s/CapCafe/dw/shop/v18_3/customers/${customer_id}/addresses`,
     method: 'GET',
     headers: {
-          "authorization": `bearer ${authToken}`
+          "authorization": `Bearer ${authToken}`
       },
     rejectUnauthorized: false,
     json: true
@@ -165,23 +164,22 @@ var getAddressService = (authToken, callback) => {
     else if(response.statusCode == 200){
       console.log('fetchCartService API hit:', response.statusCode)
       callback(undefined, {
-        totalItems: body.totalItems ,
-        totalPrice: body.totalPriceWithTax.value
+        customer_address_id: body.data[0].address_id
         });
       }
   });
 
 };
 
-var setShipmentService = (authToken, callback) => {
+var setShipmentService = (authToken, customer_address_id, basket_id, callback) => {
 
   console.log('Setting shipment API hit');
   request({
-    url: `https://capgemini01-alliance-prtnr-eu06-dw.demandware.net/s/CapCafe/dw/shop/v18_3/baskets/0f8af66a97e89546eb61185036/shipments/me/shipping_address?use_as_billing=true&customer_address_id=home`,
+    url: `https://capgemini01-alliance-prtnr-eu06-dw.demandware.net/s/CapCafe/dw/shop/v18_3/baskets/${basket_id}/shipments/me/shipping_address?use_as_billing=true&customer_address_id=${customer_address_id}`,
     method: 'PUT',
     headers: {
         "content-type": "application/json",
-        "authorization": `bearer ${authToken}`
+        "authorization": `Bearer ${authToken}`
       },
     body: {},
     rejectUnauthorized: false,
@@ -195,21 +193,21 @@ var setShipmentService = (authToken, callback) => {
       callback('Unable to set delivery mode for the cart');
     }
     else if(response.statusCode == 200){
-      console.log("settingDeliveryModeService API hit:", response.statusCode);
+      console.log("settingShipmentService API hit:", response.statusCode);
     }
   });
 
 };
 
-var setShipmentIdService = (authToken, callback) => {
+var setShipmentIdService = (authToken, basket_id, callback) => {
 
     console.log('Setting shipment id for a basket API hit');
     request({
-      url: `https://capgemini01-alliance-prtnr-eu06-dw.demandware.net/s/CapCafe/dw/shop/v18_3/baskets/0f8af66a97e89546eb61185036/shipments/me/shipping_method`,
+      url: `https://capgemini01-alliance-prtnr-eu06-dw.demandware.net/s/CapCafe/dw/shop/v18_3/baskets/${basket_id}/shipments/me/shipping_method`,
       method: 'PUT',
       headers: {
         "content-type": "application/json",
-        "authorization": `bearer ${authToken}`
+        "authorization": `Bearer ${authToken}`
       },
       body: {
           "id":"cafcafe"
@@ -225,24 +223,23 @@ var setShipmentIdService = (authToken, callback) => {
         callback('Unable to get saved card details for the user');
       }
       else if(response.statusCode == 200){
-        console.log("gettingSavedCardDetailsService API hit:", response.statusCode);
+        console.log("settingShipmentIdService API hit:", response.statusCode);
         callback(undefined, {
-          cardNumber: body.payments[0].cardNumber,
-          cardId: body.payments[0].id
+          cardNumber: body.payments[0].cardNumber
           });
         }
     });
 };
 
-var addPaymentService = (authToken, callback) => {
+var addPaymentService = (authToken, basket_id, callback) => {
 
       console.log('Adding payment API hit', cardId);
       request({
-        url: `https://capgemini01-alliance-prtnr-eu06-dw.demandware.net/s/CapCafe/dw/shop/v18_3/baskets/0f8af66a97e89546eb61185036/payment_instruments`,
+        url: `https://capgemini01-alliance-prtnr-eu06-dw.demandware.net/s/CapCafe/dw/shop/v18_3/baskets/${basket_id}/payment_instruments`,
         method: 'POST',
         headers: {
           "content-type": "application/json",
-          "authorization": `bearer ${authToken}`
+          "authorization": `Bearer ${authToken}`
          },
         body: {
           "amount" : 58.69,
@@ -280,7 +277,7 @@ var placeOrderService = (authToken, basket_id, callback) => {
           method: 'POST',
           headers: {
            "content-type": "application/json",
-           "authorization": `bearer ${authToken}`
+           "authorization": `Bearer ${authToken}`
            },
           body: {
             "basket_id": basket_id
@@ -295,25 +292,24 @@ var placeOrderService = (authToken, basket_id, callback) => {
           else if(response.statusCode == 401 || response.statusCode == 400){
             callback('Unable to place an order');
           }
-          else if(response.statusCode == 201){
+          else if(response.statusCode == 200){
             console.log("Place order API hit:", response.statusCode);
             callback(undefined, {
-              code: body.code,
-              totalItems: body.totalItems,
-              entries: body.entries
+              code: body.order_no,
+              payment_id: body.payment_instruments[0].payment_instrument_id
               });
           }
-         });
+     });
 };
 
 
 
 
-var updatePaymentService = (authToken, callback) => {
+var updatePaymentService = (authToken, order_no, payment_id, callback) => {
 
         console.log('Update payment API hit');
         request({
-          url: `https://capgemini01-alliance-prtnr-eu06-dw.demandware.net/s/CapCafe/dw/shop/v18_3/orders/00001202/payment_instruments/979b8560332beb76da855e055e`,
+          url: `https://capgemini01-alliance-prtnr-eu06-dw.demandware.net/s/CapCafe/dw/shop/v18_3/orders/${order_no}/payment_instruments/${payment_id}`,
           method: 'PATCH',
           headers: {
            "content-type": "application/json",
@@ -338,18 +334,7 @@ var updatePaymentService = (authToken, callback) => {
           }
           else if(response.statusCode == 200){
             console.log("Get recommended product API hit:", response.statusCode);
-            if(isEmpty(body.products[0])){
-              console.log("no recommended product");
-              callback(undefined, {
-              name: 'no product'
-              });
-             }else {
-              console.log("recommended product present");
-              callback(undefined, {
-              name: body.products[0].recommendProduct
-              });
             }
-          }
          });
 };
 
