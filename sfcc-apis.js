@@ -45,7 +45,7 @@ var getProductDetailsService = (productName, callback) => {
 
         console.log('Getting product details API hit');
         request({
-          url: `https://capgemini01-alliance-prtnr-eu06-dw.demandware.net/s/CapCafe/dw/shop/v18_3/products/(${productName})?expand=,prices&client_id=e4bd2b6d-1567-475d-9eb2-b2c86a37a560`,
+          url: `https://capgemini01-alliance-prtnr-eu06-dw.demandware.net/s/CapCafe/dw/shop/v18_3/product_search?q=${productName}&client_id=e4bd2b6d-1567-475d-9eb2-b2c86a37a560`,
           method: 'GET',
           headers: {
            "content-type": "application/json"
@@ -63,18 +63,11 @@ var getProductDetailsService = (productName, callback) => {
           }
           else if(response.statusCode == 200){
             console.log("Product by name API hit:", response.statusCode);
-            if(body.products[0]){
             callback(undefined, {
-              productCode: body.products[0].code
+              productId: body.hits[0].product_id
               });
-            }else {
-              callback(undefined, {
-              productCode: 'no product'
-              });
-            }
-          }
-
-         });
+           }
+       });
 };
 
 
@@ -136,8 +129,7 @@ var addProductsToCart = (authToken, product_id, basket_id, callback) => {
     }
     else if(response.statusCode == 200){
       console.log('Add products API hit:', response.statusCode);
-      callback('Add products API hit');
-     }
+      }
   });
 
 };
