@@ -115,11 +115,12 @@ app.post('/webhook/', (req, res) => {
 
 // 			 					}
 // 							res.send(messageData);
+					}
 						}
 		 				break;
 
 
-			case 'check_permission': {
+		case 'check_permission': {
 							 console.log('In check_permission');
 							 if(isDefined(actionName)){
 									text= 'I am sorry ! I cannot process your order without your permission';
