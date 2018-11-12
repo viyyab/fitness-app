@@ -98,10 +98,12 @@ app.post('/webhook/', (req, res) => {
 						console.log(decoded);
 						if(decoded.iss == 'https://accounts.google.com'){
 						email=decoded.email;
-						password=decoded.email.charAt[0].toUpperCase();
+						password=decoded.email;
 						console.log(email+'   '+password)
 						}
-						sfcc.getAuthTokenService(email, password, (error, result)=> {
+						var passwordTest=password.charAt(0).toUpperCase() + password.slice(1);
+						console.log(passwordTest);
+						sfcc.getAuthTokenService(email, passwordTest, (error, result)=> {
 							if(error){
 								console.log(error);
 							} else {
