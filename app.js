@@ -113,10 +113,9 @@ app.post('/webhook/', (req, res) => {
 										speech: text,
 										displayText: text
  										}
+								res.send(messageData);
 			 					}
- 								res.send(messageData);
-								}
-						   	});
+ 						   	});
  						}
 					}
 		 			break;
