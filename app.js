@@ -11,19 +11,19 @@ const {dialogflow, Permission} = require('actions-on-google');
 const aiapp = dialogflow();
 const app = express();
 var recommendedName;
-var access_token;
+var token;
 var refresh_token;
 var text = '';
 var cardId;
-var cartId;
-var storeName;
-var storeId;
+var basketId;
+var customer_id;
+var emailId;
 var address;
 var orderCode;
 var messageData = '';
 var email; //= 'mickeyd.mcd321@gmail.com';
 var password; //= 'mickeyd.mcd321@gmail.com';
-var shortCode;
+var customer_id;
 var totalItems;
 var entries;
 var xmlFile;
@@ -107,15 +107,25 @@ app.post('/webhook/', (req, res) => {
 							if(error){
 								console.log(error);
 							} else {
-								//console.log(result.token+' '+result.customer_id+" "+result.email);
-								text="Yes, there is currently a promotion - they are at 200 swiss francs until the end of the month and are available at your usual Cap Sports Style store. Same color as current one";
-								messageData = {
-										speech: text,
-										displayText: text
- 										}
-								res.send(messageData);
-			 					}
- 						   	});
+								customer_id=result.customer_id
+								token=result.token
+								emailId=result.email
+								sfcc.createCartService(result.token, (error, cartResult)=> {
+									if(error){
+										console.log(error);
+									} else {
+										basketId=cartResult.basketId;
+										//console.log(result.token+' '+result.customer_id+" "+result.email);
+										text="Yes, there is currently a promotion - they are at 200 swiss francs until the end of the month and are available at your usual Cap Sports Style store. Same color as current one";
+										messageData = {
+												speech: text,
+												displayText: text
+												}
+										res.send(messageData);		
+								 	      }
+									});
+							     	}
+						   	});
  						}
 					}
 		 			break;
