@@ -69,7 +69,7 @@ app.post('/webhook/', (req, res) => {
  	var message = req.body.result.resolvedQuery;
 	switch (actionName) {
 
-			case 'input.welcome': {
+			case 'check_sign_in': {
 		 				console.log('In user sign in');
 		 					if(isDefined(actionName)){
 								messageData = {
@@ -90,7 +90,7 @@ app.post('/webhook/', (req, res) => {
 
 
 
-			case 'check_sign_in': {
+			case 'shoes-in-stock': {
 
 					if(isDefined(actionName)){
 						var token=req.body.originalRequest.data.user.idToken;
