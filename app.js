@@ -38,7 +38,7 @@ if (!config.SERVER_URL) { //used for ink to static files
 }
 
 
-app.set('port', (process.env.PORT || 4984))
+app.set('port', (process.env.PORT || 4988))
 
 //serve static files in the public directory
 app.use(express.static('public'));
@@ -92,13 +92,29 @@ app.post('/webhook/', (req, res) => {
 
 			case 'check_sign_in': {
 
-				if(isDefined(actionName)){
-								messageData = {
+					if(isDefined(actionName)){
+						var token=req.body.originalRequest.data.user.idToken;
+						var decoded = jwtdecode(token);
+						console.log(decoded);
+						if(decoded.iss == 'https://accounts.google.com'){
+						email=decoded.email;
+						password=email.charAt[0].toUpperCase();
+						console.log(email+'   '+password)
+						}
+						sfcc.getAuthTokenService(email, password, (error, result)=> {
+							if(error){
+								console.log(error);
+							} else {
+								console.log(result.token+' '+result.customer_id+" "+result.email);
+							
+							}
+						});
+// 								messageData = {
 
-										}
+// 										}
 
-			 					}
-							res.send(messageData);
+// 			 					}
+// 							res.send(messageData);
 						}
 		 				break;
 
