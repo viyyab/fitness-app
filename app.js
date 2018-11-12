@@ -69,11 +69,19 @@ app.post('/webhook/', (req, res) => {
  	var message = req.body.result.resolvedQuery;
 	switch (actionName) {
 
-			case 'require_permission': {
-		 					console.log('In user sign in');
+			case 'input.welcome': {
+		 				console.log('In user sign in');
 		 					if(isDefined(actionName)){
 								messageData = {
-
+									"data": {
+										"google": {
+										"expectUserResponse": true,
+										"systemIntent": {
+										"intent": "actions.intent.SIGN_IN",
+										"data": {}
+										         }
+										       }
+										 }
 									}
 								res.send(messageData);
 							     }
