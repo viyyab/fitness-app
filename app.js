@@ -95,7 +95,7 @@ app.post('/webhook/', (req, res) => {
 					if(isDefined(actionName)){
 						var token=req.body.originalRequest.data.user.idToken;
 						var decoded = jwtdecode(token);
-						console.log(decoded);
+						//console.log(decoded);
 						if(decoded.iss == 'https://accounts.google.com'){
 						email=decoded.email;
 						password=decoded.email;
@@ -107,19 +107,19 @@ app.post('/webhook/', (req, res) => {
 							if(error){
 								console.log(error);
 							} else {
-								console.log(result.token+' '+result.customer_id+" "+result.email);
-							
-							}
-						});
-// 								messageData = {
-
-// 										}
-
-// 			 					}
-// 							res.send(messageData);
+								//console.log(result.token+' '+result.customer_id+" "+result.email);
+								text="Yes, there is currently a promotion - they are at 200 swiss francs until the end of the month and are available at your usual Cap Sports Style store. Same color as current one";
+								messageData = {
+										speech: text,
+										displayText: text
+ 										}
+			 					}
+ 								res.send(messageData);
+								}
+						   	});
+ 						}
 					}
-						}
-		 				break;
+		 			break;
 
 
 		case 'check_permission': {
