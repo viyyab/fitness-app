@@ -70,7 +70,7 @@ app.post('/webhook/', (req, res) => {
 	switch (actionName) {
 
 			case 'check_sign_in': {
-		 				console.log('In user sign in');
+		 				console.log('In check_sign_in');
 		 					if(isDefined(actionName)){
 								messageData = {
 									"data": {
@@ -91,14 +91,14 @@ app.post('/webhook/', (req, res) => {
 
 
 			case 'shoes-in-stock': {
-
+					console.log("In shoes-in-stock");
 					if(isDefined(actionName)){
 						var token=req.body.originalRequest.data.user.idToken;
 						var decoded = jwtdecode(token);
 						console.log(decoded);
 						if(decoded.iss == 'https://accounts.google.com'){
 						email=decoded.email;
-						password=email.charAt[0].toUpperCase();
+						password=decoded.email.charAt[0].toUpperCase();
 						console.log(email+'   '+password)
 						}
 						sfcc.getAuthTokenService(email, password, (error, result)=> {
