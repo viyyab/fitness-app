@@ -12,7 +12,6 @@ const aiapp = dialogflow();
 const app = express();
 var recommendedName;
 var token;
-var refresh_token;
 var text = '';
 var cardId;
 var basketId;
@@ -24,9 +23,6 @@ var messageData = '';
 var email; //= 'mickeyd.mcd321@gmail.com';
 var password; //= 'mickeyd.mcd321@gmail.com';
 var customer_id;
-var totalItems;
-var entries;
-var xmlFile;
 debugger;
 
 
@@ -131,16 +127,16 @@ app.post('/webhook/', (req, res) => {
 		 			break;
 
 
-		case 'check_permission': {
-							 console.log('In check_permission');
-							 if(isDefined(actionName)){
-									text= 'I am sorry ! I cannot process your order without your permission';
-								messageData = {
-										speech: text,
-										displayText: text
-										}
-								res.send(messageData);
-								}
+		 case 'check_permission': {
+					console.log('In check_permission');
+						 if(isDefined(actionName)){
+								text= 'I am sorry ! I cannot process your order without your permission';
+							messageData = {
+									speech: text,
+									displayText: text
+									}
+							res.send(messageData);
+							}
 				 		}
 				 		break;
 
