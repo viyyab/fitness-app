@@ -8,6 +8,7 @@ var getAuthTokenService = (username, password, callback) =>{
   var bytes = utf8.encode(username+":"+password);
   var newBearer = base64.encode(bytes);
   var bearer= "Basic " +newBearer;
+  console.log(bearer);
   request({
     url: 'https://capgemini01-alliance-prtnr-eu06-dw.demandware.net/s/CapCafe/dw/shop/v18_3/customers/auth?client_id=e4bd2b6d-1567-475d-9eb2-b2c86a37a560' ,
     body: {
