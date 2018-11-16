@@ -6,10 +6,8 @@ var getAuthTokenService = (username, password, callback) =>{
 
   console.log('Auth token API hit');
   var bytes = utf8.encode(username+":"+password);
-  var bearer1 = base64.encode(bytes);
-  var bearer= "Basic " +new Buffer(username + ':' + password).toString('Base64');
-  console.log(bearer);
-  console.log(bearer1);
+  var newBearer = base64.encode(bytes);
+  var bearer= "Basic " +newBearer;
   request({
     url: 'https://capgemini01-alliance-prtnr-eu06-dw.demandware.net/s/CapCafe/dw/shop/v18_3/customers/auth?client_id=e4bd2b6d-1567-475d-9eb2-b2c86a37a560' ,
     body: {
