@@ -17,12 +17,11 @@ var cardId;
 var basketId;
 var customer_id;
 var emailId;
-var address;
+var customer_address_id;
 var orderCode;
 var messageData = '';
 var email; //= 'mickeyd.mcd321@gmail.com';
 var password; //= 'mickeyd.mcd321@gmail.com';
-var customer_id;
 debugger;
 
 
@@ -141,16 +140,12 @@ app.post('/webhook/', (req, res) => {
 							if(error){
 								console.log(error);
 							} else {
-								customer_id=result.customer_id
-								token=result.token
-								emailId=result.email
-								sfcc.createCartService(result.token, (error, cartResult)=> {
+								sfcc.getAddressService(token, customer_id, (error, addressResult)=> {
 									if(error){
 										console.log(error);
 									} else {
-										basketId=cartResult.basketId;
-										//console.log(result.token+' '+result.customer_id+" "+result.email);
-										text="Yes, there is currently a promotion - they are at 200 swiss francs until the end of the month and are available at your usual Cap Sports Style store. Same color as current one";
+										customer_address_id=addressResult.customer_address_id;
+										text="I am sending you the options, please check on your app.";
 										messageData = {
 												speech: text,
 												displayText: text
