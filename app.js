@@ -127,18 +127,42 @@ app.post('/webhook/', (req, res) => {
 		 			break;
 
 
-		 case 'check_permission': {
-					console.log('In check_permission');
-						 if(isDefined(actionName)){
-								text= 'I am sorry ! I cannot process your order without your permission';
-							messageData = {
-									speech: text,
-									displayText: text
-									}
-							res.send(messageData);
-							}
-				 		}
-				 		break;
+		 case 'shoes-in-stock-order': {
+					console.log('In shoes-in-stock-order');
+			 		console.log(basketId+ "  "+ token);
+			 		if(isDefined(actionName)){
+			 		var productName = req.body.result.contexts[0].parameters.sportsProducts
+					if(productName == 'Gloves') {
+						var product_id='TG250';
+					} else if(productName == 'Jackets'){
+						var product_id='11736753';
+					}
+					sfcc.addProductsToCart(token, product_id, basketId, (error, result)=> {
+							if(error){
+								console.log(error);
+							} else {
+								customer_id=result.customer_id
+								token=result.token
+								emailId=result.email
+								sfcc.createCartService(result.token, (error, cartResult)=> {
+									if(error){
+										console.log(error);
+									} else {
+										basketId=cartResult.basketId;
+										//console.log(result.token+' '+result.customer_id+" "+result.email);
+										text="Yes, there is currently a promotion - they are at 200 swiss francs until the end of the month and are available at your usual Cap Sports Style store. Same color as current one";
+										messageData = {
+												speech: text,
+												displayText: text
+												}
+										res.send(messageData);		
+								 	      }
+									});
+							     	}
+						   	});
+						}
+				 	}
+				 	break;
 
 		 case 'productsOrderMac': {
 					if(isDefined(actionName)){
