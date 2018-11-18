@@ -15,6 +15,7 @@ var token;
 var text = '';
 var cardId;
 var basketId;
+var payment_id;
 var customer_id;
 var emailId;
 var customer_address_id;
@@ -159,56 +160,90 @@ app.post('/webhook/', (req, res) => {
 				 	}
 				 	break;
 
-		 case 'productsOrderMac': {
+		 case 'check_color': {
 					if(isDefined(actionName)){
-
-						function myNextFunc() {
-							text= 'Would you like to order anything else ?';
-							messageData = {
-									speech: text,
-									displayText: text
-									}
-							res.send(messageData);
-		   				}
+						sfcc.setShipmentService(token, customer_address_id, basketId, (error, result)=> {
+							if(error){
+								console.log(error);
+							} else {
+								text="I think this color is the best one to fit with your shoes and pant. You will look awesome with them.";
+								messageData = {
+										speech: text,
+										displayText: text
+										}
+								res.send(messageData);		
+							      }
+							});
 						}
 					}
 					break;
 
-		case 'ordermoreProductsFollowUp': {
-
+		case 'color-confirmed': {
  					if(isDefined(actionName)){
- 						text= `What else would you like to have ?`;
+ 						sfcc.setShipmentIdService(token, basketId, (error, result)=> {
+							if(error){
+								console.log(error);
+							} else {
+								cardId=result.cardNumber;
+								text="I assume I need express delivery so you have it for your race. Do you need something else?";
 								messageData = {
-									speech: text,
-									displayText: text
+										speech: text,
+										displayText: text
 										}
-								    res.send(messageData);
-								}
-							 }
- 					     break;
+								res.send(messageData);		
+							      }
+							});
+						}
+					}
+				     break;
 
 
- 		 case 'productsOrderFries': {
+ 		 case 'process-order': {
 			 if(isDefined(actionName)){
-				 text= `What else would you like to have ?`;
-						 messageData = {
-							 speech: text,
-							 displayText: text
-								 }
-								 res.send(messageData);
-						 		}
-							 }
- 					     break;
+				 sfcc.addPaymentService(token, basketId, (error, result)=> {
+							if(error){
+								console.log(error);
+							} else {
+								cardId=result.cardNumber;
+								text="Can I use your saved card or Google pay ?";
+								messageData = {
+										speech: text,
+										displayText: text
+										}
+								res.send(messageData);		
+							      }
+							});
+						}
+					 }
+			     break;
 
 
-		case 'productsOrderConfirmedCart': {
+		case 'orderConfirmed': {
 			if(isDefined(actionName)){
-				text= `What else would you like to have ?`;
-						messageData = {
-							speech: text,
-							displayText: text
-								}
-								res.send(messageData);
+				function myFunc(token, payment_id, order_no) {
+						sfcc.updatePaymentService(token, order_no, payment_id (error, result)=> {
+							if(error){
+								console.log(error);
+							} else {
+								console.log("Order Completed");
+							      }
+							});
+						};
+				sfcc.placeOrderService(token, basketId, (error, result)=> {
+							if(error){
+								console.log(error);
+							} else {
+								payment_id=result.payment_id;
+								orderCode=result.code;
+								text="Your order has been confirmed. They will be delivered to your home address before Saturday. Your store manager will wait for you on Friday to pick up your shoes.";
+								messageData = {
+										speech: text,
+										displayText: text
+										}
+								res.send(messageData);	
+								setTimeout(() => myFunc(token, result.payment_id, result.code), 3000);
+							      }
+							});
 						}
 					}
  					break;
