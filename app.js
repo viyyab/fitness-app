@@ -223,7 +223,7 @@ app.post('/webhook/', (req, res) => {
 		case 'orderConfirmed': {
 			if(isDefined(actionName)){
 				function myFunc(token, payment_id, order_no) {
-						sfcc.updatePaymentService(token, order_no, payment_id, (error, result)=> {
+						sfcc.updatePaymentService(token, order_no, payment_id, orderTotal, (error, result)=> {
 							if(error){
 								console.log(error);
 							} else {
