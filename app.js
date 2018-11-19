@@ -59,12 +59,12 @@ app.get('/', function (req, res) {
 })
 
 function pushNotification() {
-	sfcc.getDeviceTokenService(deviceAccessToken, (error, result)=> {
+	sfmc.getDeviceTokenService(deviceAccessToken, (error, result)=> {
 		if(error){
 			console.log(error);
 		} else {
 			console.log("Device token :"+result.device_token);
-			sfcc.sendPushNotificationService(deviceAccessToken, result.device_token, (error, finalResult)=> {
+			sfmc.sendPushNotificationService(deviceAccessToken, result.device_token, (error, finalResult)=> {
 				if(error){
 					console.log(error);
 					} else {
@@ -76,11 +76,12 @@ function pushNotification() {
 };
 
 
-sfcc.getAuthTokenService((error, result)=> {
+sfmc.getAuthTokenService((error, result)=> {
 	if(error){
 		console.log(error);
 	} else {
 		deviceAccessToken=result.accessToken;
+		console.log(result.accessToken);
 	}
 });
 
@@ -171,13 +172,14 @@ app.post('/webhook/', (req, res) => {
 								console.log(error);
 							} else {
 								console.log(result);
+								setTimeout(() => pushNotification(), 2000);
 								text="I am sending you the options, please check on your app.";
-									messageData = {
-											speech: text,
-											displayText: text
-											}
-									res.send(messageData);	
-							     	}
+								messageData = {
+										speech: text,
+										displayText: text
+										}
+								res.send(messageData);	
+								}
 						   	});
 					} else if(productName == 'Jackets'){
 						var product_id='883360541099';
