@@ -133,6 +133,7 @@ var addProductsToCart = (authToken, product_id, basket_id, callback) => {
     }
     else if(response.statusCode == 200){
      console.log('Add products API hit:', response.statusCode);
+     callback('Products added to cart');
       }
   });
 
@@ -190,6 +191,7 @@ var setShipmentService = (authToken, customer_address_id, basket_id, callback) =
     }
     else if(response.statusCode == 200){
       console.log("settingShipmentService API hit:", response.statusCode);
+      callback('Setting delivery mode for the cart');
     }
   });
 
@@ -261,6 +263,7 @@ var addPaymentService = (authToken, basket_id, customerName, total, callback) =>
         }
         else if(response.statusCode == 200){
           console.log("addCardPaymentService API hit:", response.statusCode);
+          callback('Payment added for the cart');
          }
       });
 };
@@ -330,6 +333,7 @@ var updatePaymentService = (authToken, order_no, payment_id, total, callback) =>
           }
           else if(response.statusCode == 200){
             console.log("Update Payment Service API hit:", response.statusCode);
+            callback('Order Completed');
             }
          });
 };
