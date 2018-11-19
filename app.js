@@ -18,6 +18,8 @@ var basketId;
 var payment_id;
 var customer_id;
 var emailId;
+var orderTotal;
+var customerName;
 var customer_address_id;
 var orderCode;
 var messageData = '';
@@ -106,6 +108,7 @@ app.post('/webhook/', (req, res) => {
 								customer_id=result.customer_id
 								token=result.token
 								emailId=result.email
+								customerName=result.first_name
 								sfcc.createCartService(result.token, (error, cartResult)=> {
 									if(error){
 										console.log(error);
@@ -184,7 +187,7 @@ app.post('/webhook/', (req, res) => {
 							if(error){
 								console.log(error);
 							} else {
-								cardId=result.cardNumber;
+								orderTotal=result.product_total;
 								text="I assume I need express delivery so you have it for your race. Do you need something else?";
 								messageData = {
 										speech: text,
@@ -200,11 +203,10 @@ app.post('/webhook/', (req, res) => {
 
  		 case 'process-order': {
 			 if(isDefined(actionName)){
-				 sfcc.addPaymentService(token, basketId, (error, result)=> {
+				 sfcc.addPaymentService(token, basketId, customerName, orderTotal, (error, result)=> {
 							if(error){
 								console.log(error);
 							} else {
-								cardId=result.cardNumber;
 								text="Can I use your saved card or Google pay ?";
 								messageData = {
 										speech: text,
