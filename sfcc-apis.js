@@ -109,10 +109,12 @@ var addProductsToCart = (authToken, product_id, basket_id, callback) => {
   var qty = 1.00;
   request({
     url: `https://capgemini01-alliance-prtnr-eu06-dw.demandware.net/s/CapCafe/dw/shop/v18_3/baskets/${basket_id}/items`,
-    body: {
-        "product_id" : product_id,
-        "quantity": qty
-      },
+    body: [
+          {
+            "product_id" : product_id,
+            "quantity": qty
+          }
+      ],
     timeout: 40000,
     method: 'POST',
     headers: {
