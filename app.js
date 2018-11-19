@@ -11,7 +11,7 @@ const {dialogflow, Permission} = require('actions-on-google');
 const aiapp = dialogflow();
 const app = express();
 var recommendedName;
-var token;
+var token='';
 var text = '';
 var cardId;
 var basketId;
@@ -91,8 +91,8 @@ app.post('/webhook/', (req, res) => {
 			case 'shoes-in-stock': {
 					console.log("In shoes-in-stock");
 					if(isDefined(actionName)){
-						var token=req.body.originalRequest.data.user.idToken;
-						var decoded = jwtdecode(token);
+						var idtoken=req.body.originalRequest.data.user.idToken;
+						var decoded = jwtdecode(idtoken);
 						//console.log(decoded);
 						if(decoded.iss == 'https://accounts.google.com'){
 						email=decoded.email;
