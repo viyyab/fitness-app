@@ -35,7 +35,8 @@ var getAuthTokenService = (username, password, callback) =>{
       callback(undefined, {
         token: value.substr(7,value.length),
         customer_id: body.customer_id,
-        email: body.email
+        email: body.email,
+        first_name: body.first_name
         });
       }
   });
@@ -129,7 +130,7 @@ var addProductsToCart = (authToken, product_id, basket_id, callback) => {
      callback('Unable to add products');
     }
     else if(response.statusCode == 200){
-      console.log('Add products API hit:', response.statusCode);
+     console.log('Add products API hit:', response.statusCode);
       }
   });
 
@@ -218,13 +219,13 @@ var setShipmentIdService = (authToken, basket_id, callback) => {
       else if(response.statusCode == 200){
         console.log("settingShipmentIdService API hit:", response.statusCode);
         callback(undefined, {
-          cardNumber: body.payments[0].cardNumber
+          product_total: body.product_total
           });
         }
     });
 };
 
-var addPaymentService = (authToken, basket_id, callback) => {
+var addPaymentService = (authToken, basket_id, customerName, total, callback) => {
 
       console.log('Adding payment API hit', cardId);
       request({
@@ -235,11 +236,11 @@ var addPaymentService = (authToken, basket_id, callback) => {
           "authorization": `Bearer ${authToken}`
          },
         body: {
-          "amount" : 58.69,
+          "amount" : total,
           "payment_card" : {
                      "number":"411111111111111",
                      "security_code":"121",
-                     "holder":"John Doe",
+                     "holder":customerName,
                      "card_type":"Visa",
                      "expiration_month":1,
                      "expiration_year":2021
@@ -326,7 +327,7 @@ var updatePaymentService = (authToken, order_no, payment_id, callback) => {
             callback('Unable to get recommended products');
           }
           else if(response.statusCode == 200){
-            console.log("Get recommended product API hit:", response.statusCode);
+            console.log("Update Payment Service API hit:", response.statusCode);
             }
          });
 };
