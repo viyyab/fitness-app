@@ -1,6 +1,6 @@
 const request= require('request');
 
-var getAuthTokenService = (username, password, callback) =>{
+var getAuthTokenService = (callback) =>{
 
   console.log('Auth token API hit');
   request({
