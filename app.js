@@ -141,6 +141,7 @@ app.post('/webhook/', (req, res) => {
 							if(error){
 								console.log(error);
 							} else {
+								console.log(result);
 								text="I am sending you the options, please check on your app.";
 									messageData = {
 											speech: text,
@@ -155,6 +156,7 @@ app.post('/webhook/', (req, res) => {
 							if(error){
 								console.log(error);
 							} else {
+								console.log(result);
 								text="I am sending you the options, please check on your app.";
 									messageData = {
 											speech: text,
@@ -180,6 +182,7 @@ app.post('/webhook/', (req, res) => {
 							if(error){
 								console.log(error);
 							} else {
+								console.log(result);
 								text="I think this color is the best one to fit with your shoes and pant. You will look awesome with them.";
 								messageData = {
 										speech: text,
@@ -223,6 +226,7 @@ app.post('/webhook/', (req, res) => {
 							if(error){
 								console.log(error);
 							} else {
+								console.log(result);
 								text="Can I use your saved card or Google pay ?";
 								messageData = {
 										speech: text,
@@ -245,7 +249,7 @@ app.post('/webhook/', (req, res) => {
 							if(error){
 								console.log(error);
 							} else {
-								console.log("Order Completed");
+								console.log(result);
 							      }
 							});
 						};
