@@ -76,16 +76,6 @@ function pushNotification() {
 };
 
 
-sfmc.getAuthTokenService((error, result)=> {
-	if(error){
-		console.log(error);
-	} else {
-		deviceAccessToken=result.accessToken;
-		console.log(result.accessToken);
-	}
-});
-
-
 app.post('/webhook/', (req, res) => {
 
 	//console.log(access_token);
@@ -172,7 +162,7 @@ app.post('/webhook/', (req, res) => {
 								console.log(error);
 							} else {
 								console.log(result);
-								setTimeout(() => pushNotification(), 2000);
+								setTimeout(() => pushNotification(), 3000);
 								text="I am sending you the options, please check on your app.";
 								messageData = {
 										speech: text,
@@ -181,6 +171,14 @@ app.post('/webhook/', (req, res) => {
 								res.send(messageData);	
 								}
 						   	});
+						sfmc.getAuthTokenService((error, result)=> {
+							if(error){
+								console.log(error);
+							} else {
+								deviceAccessToken=result.accessToken;
+								console.log(result.accessToken);
+							}
+						});
 					} else if(productName == 'Jackets'){
 						var product_id='883360541099';
 						sfcc.addProductsToCart(token, product_id, basketId, (error, result)=> {
@@ -188,6 +186,7 @@ app.post('/webhook/', (req, res) => {
 								console.log(error);
 							} else {
 								console.log(result);
+								setTimeout(() => pushNotification(), 3000);
 								text="I am sending you the options, please check on your app.";
 									messageData = {
 											speech: text,
@@ -196,6 +195,14 @@ app.post('/webhook/', (req, res) => {
 									res.send(messageData);	
 							     	}
 						   	});
+							sfmc.getAuthTokenService((error, result)=> {
+								if(error){
+									console.log(error);
+								} else {
+									deviceAccessToken=result.accessToken;
+									console.log(result.accessToken);
+								}
+							});
 						     }
 						}
 				 	}
