@@ -299,7 +299,7 @@ var placeOrderService = (authToken, basket_id, callback) => {
 
 
 
-var updatePaymentService = (authToken, order_no, payment_id, callback) => {
+var updatePaymentService = (authToken, order_no, payment_id, total, callback) => {
 
         console.log('Update payment API hit');
         request({
@@ -310,7 +310,7 @@ var updatePaymentService = (authToken, order_no, payment_id, callback) => {
            "authorization": `bearer ${authToken}`
           },
           body: {
-                "amount" : 58.69,
+                "amount" : total,
                 "payment_card" : {
                   "card_type":"Visa"
                  },
