@@ -6,6 +6,8 @@ const express = require('express');
 const xml2js = require('xml2js');
 const bodyParser = require('body-parser');
 const sfcc= require('./sfcc-apis.js');
+const sfmc= require('./sfmc.js');
+const nodemailer= require('nodemailer');
 const jwtdecode = require('jwt-decode');
 const {dialogflow, Permission} = require('actions-on-google');
 const aiapp = dialogflow();
@@ -23,6 +25,7 @@ var customerName;
 var customer_address_id;
 var orderCode;
 var messageData = '';
+var deviceAccessToken;
 var email; //= 'mickeyd.mcd321@gmail.com';
 var password; //= 'mickeyd.mcd321@gmail.com';
 debugger;
@@ -54,6 +57,32 @@ const sessionIds = new Map();
 app.get('/', function (req, res) {
 	res.send('Hello world, I am a chat bot')
 })
+
+function pushNotification() {
+	sfcc.getDeviceTokenService(deviceAccessToken, (error, result)=> {
+		if(error){
+			console.log(error);
+		} else {
+			console.log("Device token :"+result.device_token);
+			sfcc.sendPushNotificationService(deviceAccessToken, result.device_token (error, finalResult)=> {
+				if(error){
+					console.log(error);
+					} else {
+					 console.log(finalResult);
+				      	}
+				});	
+			}
+		});
+};
+
+
+sfcc.getAuthTokenService((error, result)=> {
+	if(error){
+		console.log(error);
+	} else {
+		deviceAccessToken=result.accessToken;
+	}
+});
 
 
 app.post('/webhook/', (req, res) => {
