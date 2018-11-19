@@ -162,7 +162,7 @@ app.post('/webhook/', (req, res) => {
 								console.log(error);
 							} else {
 								console.log(result);
-								setTimeout(() => pushNotification(), 3000);
+								//setTimeout(() => pushNotification(), 3000);
 								text="I am sending you the options, please check on your app.";
 								messageData = {
 										speech: text,
@@ -186,7 +186,7 @@ app.post('/webhook/', (req, res) => {
 								console.log(error);
 							} else {
 								console.log(result);
-								setTimeout(() => pushNotification(), 3000);
+								//setTimeout(() => pushNotification(), 3000);
 								text="I am sending you the options, please check on your app.";
 									messageData = {
 											speech: text,
