@@ -141,19 +141,12 @@ app.post('/webhook/', (req, res) => {
 							if(error){
 								console.log(error);
 							} else {
-								sfcc.getAddressService(token, customer_id, (error, addressResult)=> {
-									if(error){
-										console.log(error);
-									} else {
-										customer_address_id=addressResult.customer_address_id;
-										text="I am sending you the options, please check on your app.";
-										messageData = {
-												speech: text,
-												displayText: text
-												}
-										res.send(messageData);		
-								 	      }
-									});
+								text="I am sending you the options, please check on your app.";
+									messageData = {
+											speech: text,
+											displayText: text
+											}
+									res.send(messageData);	
 							     	}
 						   	});
 					} else if(productName == 'Jackets'){
@@ -162,22 +155,15 @@ app.post('/webhook/', (req, res) => {
 							if(error){
 								console.log(error);
 							} else {
-								sfcc.getAddressService(token, customer_id, (error, addressResult)=> {
-									if(error){
-										console.log(error);
-									} else {
-										customer_address_id=addressResult.customer_address_id;
-										text="I am sending you the options, please check on your app.";
-										messageData = {
-												speech: text,
-												displayText: text
-												}
-										res.send(messageData);		
-								 	      }
-									});
+								text="I am sending you the options, please check on your app.";
+									messageData = {
+											speech: text,
+											displayText: text
+											}
+									res.send(messageData);	
 							     	}
 						   	});
-							}
+						     }
 						}
 				 	}
 				 	break;
@@ -185,7 +171,12 @@ app.post('/webhook/', (req, res) => {
 		 case 'check_color': {
 			 		console.log("In check_color");
 					if(isDefined(actionName)){
-						sfcc.setShipmentService(token, customer_address_id, basketId, (error, result)=> {
+					sfcc.getAddressService(token, customer_id, (error, addressResult)=> {
+						if(error){
+							console.log(error);
+						} else {
+							customer_address_id=addressResult.customer_address_id;
+							sfcc.setShipmentService(token, customer_address_id, basketId, (error, result)=> {
 							if(error){
 								console.log(error);
 							} else {
@@ -197,6 +188,9 @@ app.post('/webhook/', (req, res) => {
 								res.send(messageData);		
 							      }
 							});
+										
+						      }
+						});
 						}
 					}
 					break;
