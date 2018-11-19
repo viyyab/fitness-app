@@ -64,7 +64,7 @@ function pushNotification() {
 			console.log(error);
 		} else {
 			console.log("Device token :"+result.device_token);
-			sfcc.sendPushNotificationService(deviceAccessToken, result.device_token (error, finalResult)=> {
+			sfcc.sendPushNotificationService(deviceAccessToken, result.device_token, (error, finalResult)=> {
 				if(error){
 					console.log(error);
 					} else {
