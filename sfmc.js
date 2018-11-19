@@ -26,10 +26,7 @@ var getAuthTokenService = (username, password, callback) =>{
     else if(response.statusCode == 200){
       console.log('getAuthTokenService API hit:', response.statusCode)
       callback(undefined, {
-        token: value.substr(7,value.length),
-        customer_id: body.customer_id,
-        email: body.email,
-        first_name: body.first_name
+         accessToken: body.accessToken
         });
       }
   });
@@ -77,9 +74,9 @@ var getDeviceTokenService = (token, callback) => {
             callback('Unable to get the details');
           }
           else if(response.statusCode == 200){
-            console.log("Product by name API hit:", response.statusCode);
+            console.log("Get device token API hit:", response.statusCode);
             callback(undefined, {
-              productId: body.hits[0].product_id
+              device_token: body.items[0].values[0].value
               });
            }
        });
@@ -110,11 +107,11 @@ var sendPushNotificationService = (token, callback) => {
     else if(response.statusCode == 400){
       callback('Unable to create the cart');
     }
-    else if(response.statusCode == 200){
-      console.log('createCartService API hit:', response.statusCode)
-      callback(undefined, {
-        basketId: body.basket_id
-        });
+    else if(response.statusCode == 202){
+      console.log('Send Push Notification API hit:', response.statusCode)
+//       callback(undefined, {
+//         basketId: body.basket_id
+//         });
       }
     });
 
