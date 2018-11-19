@@ -136,11 +136,8 @@ app.post('/webhook/', (req, res) => {
 			 		if(isDefined(actionName)){
 			 		var productName = req.body.result.contexts[0].parameters.sportsProducts
 					if(productName == 'Gloves') {
-						var product_id='TG250';
-					} else if(productName == 'Jackets'){
-						var product_id='11736753';
-					}
-					sfcc.addProductsToCart(token, product_id, basketId, (error, result)=> {
+						var product_id='0001TG250001';
+						sfcc.addProductsToCart(token, product_id, basketId, (error, result)=> {
 							if(error){
 								console.log(error);
 							} else {
@@ -159,6 +156,28 @@ app.post('/webhook/', (req, res) => {
 									});
 							     	}
 						   	});
+					} else if(productName == 'Jackets'){
+						var product_id='883360541099';
+						sfcc.addProductsToCart(token, product_id, basketId, (error, result)=> {
+							if(error){
+								console.log(error);
+							} else {
+								sfcc.getAddressService(token, customer_id, (error, addressResult)=> {
+									if(error){
+										console.log(error);
+									} else {
+										customer_address_id=addressResult.customer_address_id;
+										text="I am sending you the options, please check on your app.";
+										messageData = {
+												speech: text,
+												displayText: text
+												}
+										res.send(messageData);		
+								 	      }
+									});
+							     	}
+						   	});
+							}
 						}
 				 	}
 				 	break;
