@@ -83,14 +83,14 @@ var getDeviceTokenService = (token, callback) => {
 };
 
 
-var sendPushNotificationService = (token, callback) => {
+var sendPushNotificationService = (token, deviceToken, callback) => {
 
   console.log('sendPushNotificationService API hit');
   request({
     url: `http://www.exacttargetapis.com/push/v1/messageContact/MTY0OjExNDow/send`,
     body: 
     {
-     "DeviceTokens": ["e2NcvWHgF3M:APA91bGVXTn5QzFQ7VWETu6rPaTxmPvWRBw99KAKiL0RFqitjSGHdOlYFm43Vr_V5NiYRYhf216IHk29i2mCAqUME64A4cf4VVj8SYm1K--Li-AkDDdkwgqvqIt2dTjxXt-N6D3vNKMC"]
+     "DeviceTokens": [deviceToken]
     },
     method: 'POST',
     headers: {
@@ -109,6 +109,7 @@ var sendPushNotificationService = (token, callback) => {
     }
     else if(response.statusCode == 202){
       console.log('Send Push Notification API hit:', response.statusCode)
+      callback('Notification Sent');
 //       callback(undefined, {
 //         basketId: body.basket_id
 //         });
