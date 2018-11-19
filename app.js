@@ -164,6 +164,7 @@ app.post('/webhook/', (req, res) => {
 				 	break;
 
 		 case 'check_color': {
+			 		console.log("In check_color");
 					if(isDefined(actionName)){
 						sfcc.setShipmentService(token, customer_address_id, basketId, (error, result)=> {
 							if(error){
@@ -182,6 +183,7 @@ app.post('/webhook/', (req, res) => {
 					break;
 
 		case 'color-confirmed': {
+					console.log("In color-confirmed");
  					if(isDefined(actionName)){
  						sfcc.setShipmentIdService(token, basketId, (error, result)=> {
 							if(error){
@@ -202,6 +204,7 @@ app.post('/webhook/', (req, res) => {
 
 
  		 case 'process-order': {
+			 console.log("In process-order");
 			 if(isDefined(actionName)){
 				 sfcc.addPaymentService(token, basketId, customerName, orderTotal, (error, result)=> {
 							if(error){
@@ -221,8 +224,10 @@ app.post('/webhook/', (req, res) => {
 
 
 		case 'orderConfirmed': {
+			console.log("In orderConfirmed");
 			if(isDefined(actionName)){
 				function myFunc(token, payment_id, order_no) {
+						console.log("In updating payment method");
 						sfcc.updatePaymentService(token, order_no, payment_id, orderTotal, (error, result)=> {
 							if(error){
 								console.log(error);
