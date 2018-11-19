@@ -104,9 +104,9 @@ var createCartService = (authToken, callback) => {
 };
 
 var addProductsToCart = (authToken, product_id, basket_id, callback) => {
-
+  console.log(product_id);
   console.log('Add products API entered');
-  var qty = 1;
+  var qty = 1.00;
   request({
     url: `https://capgemini01-alliance-prtnr-eu06-dw.demandware.net/s/CapCafe/dw/shop/v18_3/baskets/${basket_id}/items`,
     body: {
@@ -116,8 +116,8 @@ var addProductsToCart = (authToken, product_id, basket_id, callback) => {
     timeout: 40000,
     method: 'POST',
     headers: {
-        "content-type": "application/json",
-        "authorization": `Bearer ${authToken}`
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${authToken}`
       },
     rejectUnauthorized: false,
     json: true
@@ -126,7 +126,7 @@ var addProductsToCart = (authToken, product_id, basket_id, callback) => {
     if(error){
       callback('There was an error connecting to the server');
     }
-    else if(response.statusCode == 401){
+    else if(response.statusCode == 400){
      callback('Unable to add products');
     }
     else if(response.statusCode == 200){
