@@ -24,7 +24,7 @@ var getAuthTokenService = (callback) =>{
       callback('Unable to get the token');
     }
     else if(response.statusCode == 200){
-      console.log('getAuthTokenService API hit:', response.statusCode)
+      console.log('getDeviceAuthTokenService API hit:', response.statusCode)
       callback(undefined, {
          accessToken: body.accessToken
         });
