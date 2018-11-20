@@ -282,7 +282,7 @@ app.post('/webhook/', (req, res) => {
 			console.log("In orderConfirmed");
 			if(isDefined(actionName)){
 				function myFunc(token, payment_id, order_no) {
-						console.log("In updating payment method");
+						console.log(`In updating payment method ${token} ${payment_id} ${order_no}`);
 						sfcc.updatePaymentService(token, order_no, payment_id, orderTotal, (error, result)=> {
 							if(error){
 								console.log(error);
@@ -297,6 +297,7 @@ app.post('/webhook/', (req, res) => {
 							} else {
 								payment_id=result.payment_id;
 								orderCode=result.code;
+								console.log(result.code+"  "+result.payment_id);
 								text="Your order has been confirmed. They will be delivered to your home address before Saturday. Your store manager will wait for you on Friday to pick up your shoes.";
 								messageData = {
 										speech: text,
