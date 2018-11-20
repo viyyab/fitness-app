@@ -312,8 +312,8 @@ var updatePaymentService = (authToken, order_no, payment_id, total, callback) =>
           url: `https://capgemini01-alliance-prtnr-eu06-dw.demandware.net/s/CapCafe/dw/shop/v18_3/orders/${order_no}/payment_instruments/${payment_id}`,
           method: 'PATCH',
           headers: {
-           "content-type": "application/json",
-           "authorization": `bearer ${authToken}`
+           "Content-Type": "application/json",
+           "Authorization": `Bearer ${authToken}`
           },
           body: {
                 "amount" : total,
