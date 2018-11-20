@@ -7,6 +7,7 @@ const xml2js = require('xml2js');
 const bodyParser = require('body-parser');
 const sfcc= require('./sfcc-apis.js');
 const sfmc= require('./sfmc.js');
+const mailer= require('./mailer.js');
 const nodemailer= require('nodemailer');
 const jwtdecode = require('jwt-decode');
 const {dialogflow, Permission} = require('actions-on-google');
@@ -75,6 +76,7 @@ function pushNotification() {
 		});
 };
 
+mailer.sendMailService();
 
 app.post('/webhook/', (req, res) => {
 
