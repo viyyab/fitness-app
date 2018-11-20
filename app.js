@@ -79,13 +79,13 @@ function pushNotification() {
 app.post('/webhook/', (req, res) => {
 
 	//console.log(access_token);
-	function sendMessage(text) {
-		messageData = {
-				speech: text,
-				displayText: text
-				}
-		res.send(messageData);	
-	};
+// 	function sendMessage(text) {
+// 		messageData = {
+// 				speech: text,
+// 				displayText: text
+// 				}
+// 		res.send(messageData);	
+// 	};
 	
 	console.log(JSON.stringify(req.body));
 	var data = req.body;
@@ -172,12 +172,11 @@ app.post('/webhook/', (req, res) => {
 								console.log(result);
 								//setTimeout(() => pushNotification(), 3000);
 								text="I am sending you the options, please check on your app.";
-								sendMessage(text);
-// 								messageData = {
-// 										speech: text,
-// 										displayText: text
-// 										}
-// 								res.send(messageData);	
+								messageData = {
+ 										speech: text,
+ 										displayText: text
+ 										}
+ 								res.send(messageData);	
  								}
 						   	});
 						sfmc.getAuthTokenService((error, result)=> {
@@ -204,14 +203,14 @@ app.post('/webhook/', (req, res) => {
 									res.send(messageData);	
 							     	}
 						   	});
-							sfmc.getAuthTokenService((error, result)=> {
-								if(error){
-									console.log(error);
-								} else {
-									deviceAccessToken=result.accessToken;
-									console.log(result.accessToken);
-								}
-							});
+						sfmc.getAuthTokenService((error, result)=> {
+							if(error){
+								console.log(error);
+							} else {
+								deviceAccessToken=result.accessToken;
+								console.log(result.accessToken);
+							}
+						});
 						     }
 						}
 				 	}
