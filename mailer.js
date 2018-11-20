@@ -5,6 +5,8 @@ const nodemailer= require('nodemailer');
 
 var sendMailService = ()=> {
 // create reusable transport method (opens pool of SMTP connections)
+    
+console.log("Inside mailer");
 var transporter = nodemailer.createTransport({
     host: "smtp.gmail.com",
     port: 465,
