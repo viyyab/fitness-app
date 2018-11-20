@@ -298,6 +298,7 @@ app.post('/webhook/', (req, res) => {
 								console.log(error);
 							} else {
 								console.log(result);
+								//mailer.sendMailService();
 							      }
 							});
 						};
