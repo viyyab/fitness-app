@@ -307,6 +307,7 @@ var placeOrderService = (authToken, basket_id, callback) => {
 var updatePaymentService = (authToken, order_no, payment_id, total, callback) => {
 
         console.log('Update payment API hit');
+        console.log(`In updating payment method ${authToken} ${payment_id} ${order_no} ${total}`);
         request({
           url: `https://capgemini01-alliance-prtnr-eu06-dw.demandware.net/s/CapCafe/dw/shop/v18_3/orders/${order_no}/payment_instruments/${payment_id}`,
           method: 'PATCH',
@@ -335,6 +336,9 @@ var updatePaymentService = (authToken, order_no, payment_id, total, callback) =>
             console.log("Update Payment Service API hit:", response.statusCode);
             callback('Order Completed');
             }
+          else {
+            console.log(response.statusCode);
+          }
          });
 };
 
