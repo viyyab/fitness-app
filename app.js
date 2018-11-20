@@ -79,6 +79,14 @@ function pushNotification() {
 app.post('/webhook/', (req, res) => {
 
 	//console.log(access_token);
+	function sendMessage(text) {
+		messageData = {
+				speech: text,
+				displayText: text
+				}
+		res.send(messageData);	
+	};
+	
 	console.log(JSON.stringify(req.body));
 	var data = req.body;
 	var sessionId = req.body.sessionId;
@@ -164,12 +172,13 @@ app.post('/webhook/', (req, res) => {
 								console.log(result);
 								//setTimeout(() => pushNotification(), 3000);
 								text="I am sending you the options, please check on your app.";
-								messageData = {
-										speech: text,
-										displayText: text
-										}
-								res.send(messageData);	
-								}
+								sendMessage(text);
+// 								messageData = {
+// 										speech: text,
+// 										displayText: text
+// 										}
+// 								res.send(messageData);	
+// 								}
 						   	});
 						sfmc.getAuthTokenService((error, result)=> {
 							if(error){
