@@ -10,10 +10,11 @@ console.log("Inside mailer");
 var transporter = nodemailer.createTransport({
     host: "smtp.gmail.com",
     port: 465,
+    service: 'gmail',
     secure: true,
     auth: {
-        username: "customersuppot23@gmail.com",
-        password: "Support@123"
+        user: "customersuppot23@gmail.com",
+        pass: "Support@123"
     }
 });
 
