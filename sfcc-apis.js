@@ -231,7 +231,7 @@ var setShipmentIdService = (authToken, basket_id, callback) => {
 
 var addPaymentService = (authToken, basket_id, customerName, total, callback) => {
 
-      console.log('Adding payment API hit', cardId);
+      console.log('Adding payment API hit');
       request({
         url: `https://capgemini01-alliance-prtnr-eu06-dw.demandware.net/s/CapCafe/dw/shop/v18_3/baskets/${basket_id}/payment_instruments`,
         method: 'POST',
