@@ -206,20 +206,6 @@ app.post('/webhook/', (req, res) => {
 								console.log(error);
 							} else {
 								console.log(result);
-								console.log("In notify-  "+emailId);
-								if(emailId == 'gwengraman12@gmail.com')
-								{
-									console.log("Gwen User");
-									setTimeout(() => pushNotification(deviceIdG), 3000);
-
-								} else if(emailId == 'josselain12@gmail.com') 
-								{
-									console.log("Josselain User");
-									setTimeout(() => pushNotification(deviceIdJ), 3000);
-								} else 
-								{
-									console.log("Different User");
-								}
 								//setTimeout(() => pushNotification(deviceIdJ), 3000);
 								text="I am sending you the options, please check on your app.";
 								messageData = {
@@ -229,6 +215,7 @@ app.post('/webhook/', (req, res) => {
  								res.send(messageData);	
  								}
 						   	});
+						notify(emailId);
 						sfmc.getAuthTokenService((error, result)=> {
 							if(error){
 								console.log(error);
@@ -244,20 +231,6 @@ app.post('/webhook/', (req, res) => {
 								console.log(error);
 							} else {
 								console.log(result);
-								console.log("In notify-  "+emailId);
-								if(emailId == 'gwengraman12@gmail.com')
-								{
-									console.log("Gwen User");
-									setTimeout(() => pushNotification(deviceIdG), 3000);
-
-								} else if(emailId == 'josselain12@gmail.com') 
-								{
-									console.log("Josselain User");
-									setTimeout(() => pushNotification(deviceIdJ), 3000);
-								} else 
-								{
-									console.log("Different User");
-								}
 								//setTimeout(() => pushNotification(), 3000);
 								text="I am sending you the options, please check on your app.";
 									messageData = {
@@ -267,6 +240,7 @@ app.post('/webhook/', (req, res) => {
 									res.send(messageData);	
 							     	}
 						   	});
+						notify(emailId);
 						sfmc.getAuthTokenService((error, result)=> {
 							if(error){
 								console.log(error);
