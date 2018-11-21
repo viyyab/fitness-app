@@ -193,7 +193,6 @@ app.post('/webhook/', (req, res) => {
 
 		 case 'shoes-in-stock-order': {
 					console.log('In shoes-in-stock-order');
-			 		mailer.sendMailService(emailId, customerName);
 			 		console.log(basketId+ "  "+ token);
 			 		if(isDefined(actionName)){
 			 		var productName = req.body.result.contexts[0].parameters.sportsProducts
@@ -248,6 +247,7 @@ app.post('/webhook/', (req, res) => {
 							}
 						});
 						     }
+						mailer.sendMailService(emailId, customerName);
 						}
 				 	}
 				 	break;
