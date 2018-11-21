@@ -2,14 +2,19 @@
 
 
 const nodemailer= require('nodemailer');
+var dateFormat = require('dateformat');
 
 var sendMailService = (emailAddress, name)=> {
 // create reusable transport method (opens pool of SMTP connections)
     
 console.log("Inside mailer");
+    
 var d = new Date();
 d.setDate(d.getDate() + (5 + 7 - d.getDay()) % 7);
 console.log(d);
+dateFormat(d, "dddd, mmmm dS, yyyy");
+console.log(d);
+    
  var transporter = nodemailer.createTransport({
      host: "smtp.gmail.com",
      port: 465,
@@ -72,7 +77,7 @@ var mailOptions = {
             </tr>
             <tr>
             <td style="width: 181px; text-align: right;">&nbsp;Delivery Date</td>
-            <td style="width: 346px; text-align: right;">&nbsp;[THIS FRIDAY - TO CALCULATE]</td>
+            <td style="width: 346px; text-align: right;">&nbsp;${d}</td>
             </tr>
             </tbody>
             </table>
