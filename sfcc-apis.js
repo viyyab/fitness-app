@@ -133,7 +133,9 @@ var addProductsToCart = (authToken, product_id, basket_id, callback) => {
     }
     else if(response.statusCode == 200){
      console.log('Add products API hit:', response.statusCode);
-     callback('Products added to cart');
+     callback(undefined, {
+        responseCode: response.statusCode
+        });
       }
   });
 
