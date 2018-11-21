@@ -205,7 +205,7 @@ app.post('/webhook/', (req, res) => {
 							if(error){
 								console.log(error);
 							} else {
-								console.log(result);
+								console.log(result.responseCode);
 								//setTimeout(() => pushNotification(deviceIdJ), 3000);
 								text="I am sending you the options, please check on your app.";
 								messageData = {
@@ -230,7 +230,7 @@ app.post('/webhook/', (req, res) => {
 							if(error){
 								console.log(error);
 							} else {
-								console.log(result);
+								console.log(result.responseCode);
 								//setTimeout(() => pushNotification(), 3000);
 								text="I am sending you the options, please check on your app.";
 									messageData = {
