@@ -7,6 +7,9 @@ var sendMailService = (emailAddress, name)=> {
 // create reusable transport method (opens pool of SMTP connections)
     
 console.log("Inside mailer");
+var d = new Date();
+d.setDate(d.getDate() + (5 + 7 - d.getDay()) % 7);
+console.log(d);
  var transporter = nodemailer.createTransport({
      host: "smtp.gmail.com",
      port: 465,
