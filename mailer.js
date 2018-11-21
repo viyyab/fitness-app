@@ -29,47 +29,47 @@ var mailOptions = {
             <p class="x_MsoNormal"><span lang="EN-US">Customer has ordered a product and will pick-up the merchandise in your store.</span></p>
             <p class="x_MsoNormal"><span lang="EN-US">Refer to following table for product and pick-up details:</span></p>
             <p>&nbsp;</p>
-            <table style="height: 254px; width: 474.5px; border-color: black; float: left;" border="2">
+            <table style="height: 254px; width: 525px; border-color: black; float: left;" border="2">
             <tbody>
             <tr>
             <td style="width: 181px; background-color: #44546a; text-align: right;"><strong><span style="color: #ffffff;">Order Details</span>&nbsp;</strong></td>
-            <td style="width: 287.5px; background-color: #44546a; text-align: right;"><span style="color: #ffffff;"><strong>Value</strong></span></td>
+            <td style="width: 346px; background-color: #44546a; text-align: right;"><span style="color: #ffffff;"><strong>Value</strong></span></td>
             </tr>
             <tr>
             <td style="width: 181px; text-align: right;">&nbsp;Item</td>
-            <td style="width: 287.5px; text-align: right;">&nbsp;</td>
+            <td style="width: 346px; text-align: right;">CAP-2345678&nbsp;</td>
             </tr>
             <tr>
             <td style="width: 181px; text-align: right;">&nbsp;Designation</td>
-            <td style="width: 287.5px; text-align: right;">&nbsp;</td>
+            <td style="width: 346px; text-align: right;">Tennis Woman - Capstyle Sport Pink &amp; Blue&nbsp;</td>
             </tr>
             <tr>
             <td style="width: 181px; text-align: right;">&nbsp;Size</td>
-            <td style="width: 287.5px; text-align: right;">&nbsp;39</td>
+            <td style="width: 346px; text-align: right;">&nbsp;39</td>
             </tr>
             <tr>
             <td style="width: 181px; text-align: right;">&nbsp;Promo</td>
-            <td style="width: 287.5px; text-align: right;">&nbsp;Yes</td>
+            <td style="width: 346px; text-align: right;">&nbsp;Yes</td>
             </tr>
             <tr>
             <td style="width: 181px; text-align: right;">&nbsp;Price</td>
-            <td style="width: 287.5px; text-align: right;">&nbsp;</td>
+            <td style="width: 346px; text-align: right;">200 CHF&nbsp;</td>
             </tr>
             <tr>
             <td style="width: 181px; text-align: right;">&nbsp;Custom Shoe Sole</td>
-            <td style="width: 287.5px; text-align: right;">&nbsp;Yes</td>
+            <td style="width: 346px; text-align: right;">&nbsp;Yes</td>
             </tr>
             <tr>
             <td style="width: 181px; text-align: right;">&nbsp;Delivery</td>
-            <td style="width: 287.5px; text-align: right;">&nbsp;Pick-up at Store</td>
+            <td style="width: 346px; text-align: right;">&nbsp;Pick-up at Store</td>
             </tr>
             <tr>
             <td style="width: 181px; text-align: right;">&nbsp;Delivery Location</td>
-            <td style="width: 287.5px; text-align: right;">&nbsp;Capstore Luasanne</td>
+            <td style="width: 346px; text-align: right;">&nbsp;Capstore Luasanne</td>
             </tr>
             <tr>
             <td style="width: 181px; text-align: right;">&nbsp;Delivery Date</td>
-            <td style="width: 287.5px; text-align: right;">&nbsp;[THIS FRIDAY - TO CALCULATE]</td>
+            <td style="width: 346px; text-align: right;">&nbsp;[THIS FRIDAY - TO CALCULATE]</td>
             </tr>
             </tbody>
             </table>
