@@ -180,7 +180,7 @@ app.post('/webhook/', (req, res) => {
 		 				console.log('In shoes-in-stock-ask');
 		 					if(isDefined(actionName)){
 								
-								mailer.sendMailService(emailId, customerName);
+								//mailer.sendMailService(emailId, customerName);
 							     }
 							}
 		 				break;
