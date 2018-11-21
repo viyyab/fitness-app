@@ -2,7 +2,7 @@ const request= require('request');
 
 var getAuthTokenService = (callback) =>{
 
-  console.log('Auth token API hit');
+  console.log('Device Auth token API hit');
   request({
     url: 'http://auth.exacttargetapis.com/v1/requestToken' ,
     body: {
