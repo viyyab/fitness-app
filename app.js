@@ -134,8 +134,6 @@ app.post('/webhook/', (req, res) => {
 							}
 		 				break;
 
-
-
 			case 'shoes-in-stock': {
 					console.log("In shoes-in-stock");
 					if(isDefined(actionName)){
@@ -176,6 +174,16 @@ app.post('/webhook/', (req, res) => {
  						}
 					}
 		 			break;
+			
+			
+		case 'shoes-in-stock-ask': {
+		 				console.log('In shoes-in-stock-ask');
+		 					if(isDefined(actionName)){
+								
+								mailer.sendMailService(emailId, customerName);
+							     }
+							}
+		 				break;
 
 
 		 case 'shoes-in-stock-order': {
@@ -318,8 +326,7 @@ app.post('/webhook/', (req, res) => {
 								console.log(error);
 							} else {
 								console.log(result);
-								mailer.sendMailService(emailId, customerName);
-							      }
+							     }
 							});
 						};
 				sfcc.placeOrderService(token, basketId, (error, result)=> {
