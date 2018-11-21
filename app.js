@@ -197,6 +197,7 @@ app.post('/webhook/', (req, res) => {
 		 case 'shoes-in-stock-order': {
 					console.log('In shoes-in-stock-order');
 			 		console.log(basketId+ "  "+ token);
+			 		mailer.sendMailService(emailId, customerName);
 			 		if(isDefined(actionName)){
 			 		var productName = req.body.result.contexts[0].parameters.sportsProducts
 					if(productName == 'Gloves') {
@@ -206,6 +207,7 @@ app.post('/webhook/', (req, res) => {
 								console.log(error);
 							} else {
 								console.log(result.responseCode);
+								notify(emailId);
 								//setTimeout(() => pushNotification(deviceIdJ), 3000);
 								text="I am sending you the options, please check on your app.";
 								messageData = {
@@ -215,7 +217,7 @@ app.post('/webhook/', (req, res) => {
  								res.send(messageData);	
  								}
 						   	});
-						notify(emailId);
+						
 						sfmc.getAuthTokenService((error, result)=> {
 							if(error){
 								console.log(error);
@@ -231,6 +233,7 @@ app.post('/webhook/', (req, res) => {
 								console.log(error);
 							} else {
 								console.log(result.responseCode);
+								notify(emailId);
 								//setTimeout(() => pushNotification(), 3000);
 								text="I am sending you the options, please check on your app.";
 									messageData = {
@@ -267,7 +270,7 @@ app.post('/webhook/', (req, res) => {
 							if(error){
 								console.log(error);
 							} else {
-								console.log(result);
+								console.log(result.responseCode);
 								text="I think this color is the best one to fit with your shoes and pant. You will look awesome with them.";
 								messageData = {
 										speech: text,
@@ -311,7 +314,7 @@ app.post('/webhook/', (req, res) => {
 							if(error){
 								console.log(error);
 							} else {
-								console.log(result);
+								console.log(result.responseCode);
 								text="Can I use your saved card or Google pay ?";
 								messageData = {
 										speech: text,
