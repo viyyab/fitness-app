@@ -247,7 +247,7 @@ app.post('/webhook/', (req, res) => {
 							}
 						});
 						     }
-						mailer.sendMailService(emailId, customerName);
+						//mailer.sendMailService(emailId, customerName);
 						}
 				 	}
 				 	break;
