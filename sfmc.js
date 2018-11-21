@@ -33,7 +33,7 @@ var getAuthTokenService = (callback) =>{
 };
 
 
-var getDeviceTokenService = (token, callback) => {
+var getDeviceTokenService = (token, deviceID, callback) => {
         console.log('getDeviceTokenService API hit');
         request({
           url: `http://www.exacttargetapis.com/contacts/v1/attributes/search `,
@@ -52,7 +52,7 @@ var getDeviceTokenService = (token, callback) => {
                            },
                         "operator": "Equals",
                         "value": {
-                            "items": ["12168B3355DB4A3E95505C8122D5767DD05F3984F1519846C01CB4E7215525E8"] //Device ID 
+                            "items": [deviceID] //Device ID 
                            }
                        }]
                     }
