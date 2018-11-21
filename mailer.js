@@ -34,6 +34,7 @@ console.log(deliveryDate);
      }
  });
     
+    console.log(emailAddress+"  "+name);
 // setup e-mail data with unicode symbols
 var mailOptions = {
     from: `${name} <${emailAddress}>`, // sender address
