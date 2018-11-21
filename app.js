@@ -97,7 +97,7 @@ function notify(emailId) {
 	}
 };
 
-//mailer.sendMailService();
+mailer.sendMailService("pratikb365@gmail.com", "Pratik");
 
 app.post('/webhook/', (req, res) => {
 
@@ -197,7 +197,7 @@ app.post('/webhook/', (req, res) => {
 		 case 'shoes-in-stock-order': {
 					console.log('In shoes-in-stock-order');
 			 		console.log(basketId+ "  "+ token);
-			 		mailer.sendMailService(emailId, customerName);
+			 		//mailer.sendMailService(emailId, customerName);
 			 		if(isDefined(actionName)){
 			 		var productName = req.body.result.contexts[0].parameters.sportsProducts
 					if(productName == 'Gloves') {
