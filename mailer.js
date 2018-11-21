@@ -2,7 +2,7 @@
 
 
 const nodemailer= require('nodemailer');
-var dateFormat = require('dateformat');
+const dateFormat = require('dateformat');
 
 var sendMailService = (emailAddress, name)=> {
 // create reusable transport method (opens pool of SMTP connections)
