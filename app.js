@@ -76,7 +76,7 @@ function pushNotification() {
 		});
 };
 
-mailer.sendMailService();
+//mailer.sendMailService();
 
 app.post('/webhook/', (req, res) => {
 
@@ -298,7 +298,7 @@ app.post('/webhook/', (req, res) => {
 								console.log(error);
 							} else {
 								console.log(result);
-								//mailer.sendMailService();
+								mailer.sendMailService(emailId, customerName);
 							      }
 							});
 						};
