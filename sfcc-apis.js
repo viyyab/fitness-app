@@ -193,7 +193,9 @@ var setShipmentService = (authToken, customer_address_id, basket_id, callback) =
     }
     else if(response.statusCode == 200){
       console.log("settingShipmentService API hit:", response.statusCode);
-      callback('Setting delivery mode for the cart');
+       callback(undefined, {
+              responseCode: response.statusCode
+          });
     }
   });
 
@@ -265,7 +267,9 @@ var addPaymentService = (authToken, basket_id, customerName, total, callback) =>
         }
         else if(response.statusCode == 200){
           console.log("addCardPaymentService API hit:", response.statusCode);
-          callback('Payment added for the cart');
+          callback(undefined, {
+              responseCode: response.statusCode
+          });
          }
       });
 };
