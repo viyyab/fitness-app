@@ -27,6 +27,8 @@ var customer_address_id;
 var orderCode;
 var messageData = '';
 var deviceAccessToken;
+var deviceIdJ="46AD21F0538A2B983259713A19C5F93398CA7DD46CB5F68239DF338984975785";
+var deviceIdG="7EC2B5D47364F56492CB03E053913F18466712527EB5E1965B4E82AD903BACD8";
 var email; //= 'mickeyd.mcd321@gmail.com';
 var password; //= 'mickeyd.mcd321@gmail.com';
 debugger;
@@ -59,8 +61,8 @@ app.get('/', function (req, res) {
 	res.send('Hello world, I am a chat bot')
 })
 
-function pushNotification() {
-	sfmc.getDeviceTokenService(deviceAccessToken, (error, result)=> {
+function pushNotification(deviceID) {
+	sfmc.getDeviceTokenService(deviceAccessToken, deviceID, (error, result)=> {
 		if(error){
 			console.log(error);
 		} else {
@@ -76,6 +78,22 @@ function pushNotification() {
 		});
 };
 
+
+function notify(emailId) {
+
+	if(emailId == 'gwengraman12@gmail.com')
+	{
+		setTimeout(() => pushNotification(deviceIdG), 3000);
+		
+	} else if(emailId == 'josselain12@gmail.com') 
+	{
+		setTimeout(() => pushNotification(deviceIdJ), 3000);
+	} else 
+	{
+		console.log("Different User");
+	}
+};
+
 //mailer.sendMailService();
 
 app.post('/webhook/', (req, res) => {
@@ -89,7 +107,7 @@ app.post('/webhook/', (req, res) => {
 // 		res.send(messageData);	
 // 	};
 	
-	console.log(JSON.stringify(req.body));
+	//console.log(JSON.stringify(req.body));
 	var data = req.body;
 	var sessionId = req.body.sessionId;
 	var actionName = req.body.result.action;
@@ -172,7 +190,8 @@ app.post('/webhook/', (req, res) => {
 								console.log(error);
 							} else {
 								console.log(result);
-								//setTimeout(() => pushNotification(), 3000);
+								notify(emailId);
+								//setTimeout(() => pushNotification(deviceIdJ), 3000);
 								text="I am sending you the options, please check on your app.";
 								messageData = {
  										speech: text,
@@ -196,6 +215,7 @@ app.post('/webhook/', (req, res) => {
 								console.log(error);
 							} else {
 								console.log(result);
+								notify(emailId);
 								//setTimeout(() => pushNotification(), 3000);
 								text="I am sending you the options, please check on your app.";
 									messageData = {
