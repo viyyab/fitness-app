@@ -176,23 +176,24 @@ app.post('/webhook/', (req, res) => {
 		 			break;
 			
 			
-		case 'serviceCloud': {
-					console.log('In serviceCloud');
-						if(isDefined(actionName)){
-							text: "Sure, I'll inform the store manager. Your shoes will be ready on time. Probably don't use them for your next trail as the distance is too long for brand new shoes. By the way do you want to check how you used your last pair ?";
-							messageData = {
-									speech: text,
-									displayText: text
-									}
-							res.send(messageData);	
-							mailer.sendMailService(emailId, customerName);
-						     }
-						}
-					break;
+// 		case 'serviceCloud': {
+// 					console.log('In serviceCloud');
+// 						if(isDefined(actionName)){
+// 							text: "Sure, I'll inform the store manager. Your shoes will be ready on time. Probably don't use them for your next trail as the distance is too long for brand new shoes. By the way do you want to check how you used your last pair ?";
+// 							messageData = {
+// 									speech: text,
+// 									displayText: text
+// 									}
+// 							res.send(messageData);	
+// 							mailer.sendMailService(emailId, customerName);
+// 						     }
+// 						}
+// 					break;
 
 
 		 case 'shoes-in-stock-order': {
 					console.log('In shoes-in-stock-order');
+			 		mailer.sendMailService(emailId, customerName);
 			 		console.log(basketId+ "  "+ token);
 			 		if(isDefined(actionName)){
 			 		var productName = req.body.result.contexts[0].parameters.sportsProducts
