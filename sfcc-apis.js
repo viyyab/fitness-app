@@ -113,6 +113,10 @@ var addProductsToCart = (authToken, product_id, basket_id, callback) => {
           {
             "product_id" : product_id,
             "quantity": qty
+          },
+          {  
+            "product_id":"shoes_003-1",
+            "quantity":qty
           }
       ],
     timeout: 40000,
