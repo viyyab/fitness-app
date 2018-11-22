@@ -29,6 +29,7 @@ var messageData = '';
 var deviceAccessToken;
 var deviceIdJ="46AD21F0538A2B983259713A19C5F93398CA7DD46CB5F68239DF338984975785";
 var deviceIdG="7EC2B5D47364F56492CB03E053913F18466712527EB5E1965B4E82AD903BACD8";
+var deviceIdP="79523913A0749F3ABDB658FE9254111BCF96067DAD37E232F0CF72E27832A833";
 var email; //= 'mickeyd.mcd321@gmail.com';
 var password; //= 'mickeyd.mcd321@gmail.com';
 debugger;
@@ -85,7 +86,7 @@ function notify(emailId) {
 	if(emailId == 'gwengraman12@gmail.com')
 	{
 		console.log("Gwen User");
-		setTimeout(() => pushNotification(deviceIdG), 3000);
+		setTimeout(() => pushNotification(deviceIdP), 3000);
 		
 	} else if(emailId == 'josselain12@gmail.com') 
 	{
