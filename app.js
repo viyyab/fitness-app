@@ -86,12 +86,18 @@ function notify(emailId) {
 	if(emailId == 'gwengraman12@gmail.com')
 	{
 		console.log("Gwen User");
-		setTimeout(() => pushNotification(deviceIdP), 3000);
+		setTimeout(() => pushNotification(deviceIdG), 3000);
 		
 	} else if(emailId == 'josselain12@gmail.com') 
 	{
 		console.log("Josselain User");
 		setTimeout(() => pushNotification(deviceIdJ), 3000);
+		
+	} else if(emailId == 'pratikb365@gmail.com') 
+	{
+		console.log("Pratik User");
+		setTimeout(() => pushNotification(deviceIdP), 3000);
+		
 	} else 
 	{
 		console.log("Different User");
