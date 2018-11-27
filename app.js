@@ -26,6 +26,7 @@ var customerName;
 var customer_address_id;
 var orderCode;
 var messageData = '';
+var messageId;
 var deviceAccessToken;
 var deviceIdJ="0B7D939DB169CF65545F29D36EBD1128E23D654B913D42057D5757A4FB755E29";
 var deviceIdG="FDEE03619CD12091CFE6994EBFF32FB73506283F41D3F330D2AAD8896899F5A7";
@@ -62,13 +63,13 @@ app.get('/', function (req, res) {
 	res.send('Hello world, I am a chat bot')
 })
 
-function pushNotification(deviceID) {
+function pushNotification(deviceID, messageId) {
 	sfmc.getDeviceTokenService(deviceAccessToken, deviceID, (error, result)=> {
 		if(error){
 			console.log(error);
 		} else {
 			console.log("Device token :"+result.device_token);
-			sfmc.sendPushNotificationService(deviceAccessToken, result.device_token, (error, finalResult)=> {
+			sfmc.sendPushNotificationService(deviceAccessToken, result.device_token, messageId, (error, finalResult)=> {
 				if(error){
 					console.log(error);
 					} else {
@@ -80,23 +81,23 @@ function pushNotification(deviceID) {
 };
 
 
-function notify(emailId) {
+function notify(emailId, messageId) {
 	
 	console.log("In notify-  "+emailId);
 	if(emailId == 'gwengraman12@gmail.com')
 	{
 		console.log("Gwen User");
-		setTimeout(() => pushNotification(deviceIdG), 3000);
+		setTimeout(() => pushNotification(deviceIdG, messageId), 3000);
 		
 	} else if(emailId == 'josselain12@gmail.com') 
 	{
 		console.log("Josselain User");
-		setTimeout(() => pushNotification(deviceIdJ), 3000);
+		setTimeout(() => pushNotification(deviceIdJ, messageId), 3000);
 		
 	} else if(emailId == 'pratikb365@gmail.com') 
 	{
 		console.log("Pratik User");
-		setTimeout(() => pushNotification(deviceIdP), 3000);
+		setTimeout(() => pushNotification(deviceIdP, messageId), 3000);
 		
 	} else 
 	{
@@ -209,12 +210,13 @@ app.post('/webhook/', (req, res) => {
 			 		var productName = req.body.result.contexts[0].parameters.sportsProducts
 					if(productName == 'Gloves') {
 						var product_id='0001TG250001';
+						messageId='MTY0OjExNDow';
 						sfcc.addProductsToCart(token, product_id, basketId, (error, result)=> {
 							if(error){
 								console.log(error);
 							} else {
 								console.log(result.responseCode);
-								notify(emailId);
+								notify(emailId, messageId);
 								//setTimeout(() => pushNotification(deviceIdJ), 3000);
 								text="I am sending you the options, please check on your app.";
 								messageData = {
@@ -235,12 +237,13 @@ app.post('/webhook/', (req, res) => {
 						});
 					} else if(productName == 'Jackets'){
 						var product_id='883360541099';
+						messageId='MTgwOjExNDow';
 						sfcc.addProductsToCart(token, product_id, basketId, (error, result)=> {
 							if(error){
 								console.log(error);
 							} else {
 								console.log(result.responseCode);
-								notify(emailId);
+								notify(emailId, messageId);
 								//setTimeout(() => pushNotification(), 3000);
 								text="I am sending you the options, please check on your app.";
 									messageData = {
@@ -250,7 +253,7 @@ app.post('/webhook/', (req, res) => {
 									res.send(messageData);	
 							     	}
 						   	});
-						notify(emailId);
+						
 						sfmc.getAuthTokenService((error, result)=> {
 							if(error){
 								console.log(error);
