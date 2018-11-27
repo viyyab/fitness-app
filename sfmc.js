@@ -83,11 +83,11 @@ var getDeviceTokenService = (token, deviceID, callback) => {
 };
 
 
-var sendPushNotificationService = (token, deviceToken, callback) => {
+var sendPushNotificationService = (token, deviceToken, messageId, callback) => {
 
   console.log('sendPushNotificationService API hit');
   request({
-    url: `http://www.exacttargetapis.com/push/v1/messageContact/MTY0OjExNDow/send`,
+    url: `http://www.exacttargetapis.com/push/v1/messageContact/${messageId}/send`,
     body: 
     {
      "DeviceTokens": [deviceToken]
