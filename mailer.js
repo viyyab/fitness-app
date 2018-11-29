@@ -100,13 +100,6 @@ var mailOptions = {
             </table>
             <p>&nbsp;</p>
             <p>&nbsp;</p>
-            <p>&nbsp;</p>
-            <p>&nbsp;</p>
-            <p>&nbsp;</p>
-            <p>&nbsp;</p>
-            <p>&nbsp;</p>
-            <p>&nbsp;</p>
-            <p>&nbsp;</p>
             <p>The product should be in your stock, please alert logistics in case not.</p>` // html body
 }
 
