@@ -53,7 +53,7 @@ var mailOptions = {
             <td style="width: 346px; background-color: #44546a; text-align: right;"><span style="color: #ffffff;"><strong>Value</strong></span></td>
             </tr>
             <tr>
-            <td style="width: 181px; text-align: right;">&nbsp;Customer Name</td>
+            <td style="width: 181px; text-align: right;">&nbsp;Customer Last Name</td>
             <td style="width: 346px; text-align: right;">${name}&nbsp;</td>
             </tr>
             <tr>
