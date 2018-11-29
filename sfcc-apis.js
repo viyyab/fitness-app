@@ -36,7 +36,8 @@ var getAuthTokenService = (username, password, callback) =>{
         token: value.substr(7,value.length),
         customer_id: body.customer_id,
         email: body.email,
-        first_name: body.first_name
+        first_name: body.first_name,
+        last_name: body.last_name
         });
       }
   });
