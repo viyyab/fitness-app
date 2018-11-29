@@ -166,6 +166,7 @@ app.post('/webhook/', (req, res) => {
 								token=result.token
 								emailId=result.email
 								customerName=result.first_name
+								custLastName=result.last_name
 								sfcc.createCartService(result.token, (error, cartResult)=> {
 									if(error){
 										console.log(error);
@@ -205,7 +206,7 @@ app.post('/webhook/', (req, res) => {
 		 case 'shoes-in-stock-order': {
 					console.log('In shoes-in-stock-order');
 			 		console.log(basketId+ "  "+ token);
-			 		mailer.sendMailService(emailId, customerName);
+			 		mailer.sendMailService(emailId, custLastName);
 			 		if(isDefined(actionName)){
 			 		var productName = req.body.result.contexts[0].parameters.sportsProducts
 					if(productName == 'Gloves') {
