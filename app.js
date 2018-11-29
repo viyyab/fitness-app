@@ -207,7 +207,7 @@ app.post('/webhook/', (req, res) => {
 		 case 'shoes-in-stock-order': {
 					console.log('In shoes-in-stock-order');
 			 		console.log(basketId+ "  "+ token);
-			 		mailer.sendMailService(emailId, custLastName);
+			 		mailer.sendMailService(emailId, customerName, custLastName);
 			 		if(isDefined(actionName)){
 			 		var productName = req.body.result.contexts[0].parameters.sportsProducts
 					if(productName == 'Gloves') {
