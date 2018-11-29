@@ -4,7 +4,7 @@
 const nodemailer= require('nodemailer');
 const dateFormat = require('dateformat');
 
-var sendMailService = (emailAddress, name)=> {
+var sendMailService = (emailAddress, name, lastName)=> {
 // create reusable transport method (opens pool of SMTP connections)
     
 console.log("Inside mailer");
@@ -54,7 +54,7 @@ var mailOptions = {
             </tr>
             <tr>
             <td style="width: 181px; text-align: right;">&nbsp;Customer Last Name</td>
-            <td style="width: 346px; text-align: right;">${name}&nbsp;</td>
+            <td style="width: 346px; text-align: right;">${lastName}&nbsp;</td>
             </tr>
             <tr>
             <td style="width: 181px; text-align: right;">&nbsp;Customer Email</td>
