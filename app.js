@@ -23,6 +23,7 @@ var customer_id;
 var emailId;
 var orderTotal;
 var customerName;
+var custLastName;
 var customer_address_id;
 var orderCode;
 var messageData = '';
