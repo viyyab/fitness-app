@@ -1,1 +1,1 @@
-# mcdies-app
+# fitness-app
