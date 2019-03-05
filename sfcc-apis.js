@@ -315,6 +315,39 @@ var placeOrderService = (authToken, basket_id, callback) => {
      });
 };
 
+var createLead = (first_name, last_name, email, company, callback) => {
+
+  console.log('Create Lead API hit');
+  request({
+    url: `https://capgemini01-alliance-prtnr-eu06-dw.demandware.net/s/CapCafe/dw/shop/v18_3/orders`,
+    method: 'POST',    
+    body: {
+      "leadfirstname": first_name,
+      "leadlastname": last_name,
+      "leademail": email,
+      "leadcompany": company,
+      "intent": "createLead"
+    },
+    rejectUnauthorized: false,
+    json: true
+    }, (error, response, body) => {
+
+    if(error){
+      callback('There was an error connecting to the server');
+    }
+    else if(response.statusCode == 401 || response.statusCode == 400){
+      callback('Unable to create a lead');
+    }
+    else if(response.statusCode == 200){
+      console.log("Create Lead API hit:", response.statusCode);
+      callback(undefined, {
+        "statusCode": response.statusCode,
+        "id": body.Id
+        });
+    }
+});
+};
+
 
 
 
@@ -374,5 +407,6 @@ module.exports = {
     setShipmentIdService,
     addPaymentService,
     placeOrderService,
+    createLead,
     updatePaymentService
 };
