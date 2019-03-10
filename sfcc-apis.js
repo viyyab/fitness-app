@@ -319,7 +319,7 @@ var createLead = (first_name, last_name, email, company, callback) => {
 
   console.log('Create Lead API hit');
   request({
-    url: `https://capgemini01-alliance-prtnr-eu06-dw.demandware.net/s/CapCafe/dw/shop/v18_3/orders`,
+    url: `https://merck-capgemini.secure.force.com/dialog/services/apexrest/Dialogflow`,
     method: 'POST',    
     body: {
       "leadfirstname": first_name,

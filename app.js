@@ -34,6 +34,7 @@ var deviceIdG="8AD82A24FE971D3FF2E94D3BF85747E2A4DC778425045E159F88DBD71E7B27C3"
 var deviceIdP="79523913A0749F3ABDB658FE9254111BCF96067DAD37E232F0CF72E27832A833";
 var email; //= 'mickeyd.mcd321@gmail.com';
 var password; //= 'mickeyd.mcd321@gmail.com';
+var leadid;
 debugger;
 
 
@@ -188,20 +189,33 @@ app.post('/webhook/', (req, res) => {
 					}
 		 			break;
 			
-			
-// 		case 'serviceCloud': {
-// 					console.log('In serviceCloud');
-// 						if(isDefined(actionName)){
-// 							text: "Sure, I'll inform the store manager. Your shoes will be ready on time. Probably don't use them for your next trail as the distance is too long for brand new shoes. By the way do you want to check how you used your last pair ?";
-// 							messageData = {
-// 									speech: text,
-// 									displayText: text
-// 									}
-// 							res.send(messageData);	
-// 							mailer.sendMailService(emailId, customerName);
-// 						     }
-// 						}
-// 					break;
+					case 'CreateSFLead': {
+					console.log("In CreateSFLead");
+					if(isDefined(actionName)){							
+						var firstName = req.body.result.contexts[0].parameters.firstname;
+						var lastName = req.body.result.contexts[0].parameters.lastname;
+						var email = req.body.result.contexts[0].parameters.email;
+						var company = req.body.result.contexts[0].parameters.company;						
+						sfcc.createLead(firstName, lastName, email, company, (error, leadResult)=> {
+							if(error){
+								console.log(error);
+							} else {
+								leadid=leadResult.id;
+								//console.log(result.token+' '+result.customer_id+" "+result.email);
+								text="Lead " + firstName + " created in Salesforce";
+								messageData = {
+										speech: text,
+										displayText: text
+										}
+								res.send(messageData);		
+									}
+							});
+										
+								
+						}
+					}
+						break;
+
 
 
 		 case 'shoes-in-stock-order': {
@@ -209,7 +223,7 @@ app.post('/webhook/', (req, res) => {
 			 		console.log(basketId+ "  "+ token);
 			 		mailer.sendMailService(emailId, customerName, custLastName);
 			 		if(isDefined(actionName)){
-			 		var productName = req.body.result.contexts[0].parameters.sportsProducts
+			 		var productName = req.body.result.contexts[0].parameters.sportsProducts;
 					if(productName == 'Gloves') {
 						var product_id='0001TG250001';
 						messageId='MTY0OjExNDow';
