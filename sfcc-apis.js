@@ -318,6 +318,10 @@ var placeOrderService = (authToken, basket_id, callback) => {
 var createLead = (first_name, last_name, email, company, callback) => {
 
   console.log('Create Lead API hit');
+  console.log('firstname : ' + first_name);
+  console.log('last_name : ' + last_name);
+  console.log('email : ' + email);
+  console.log('company : ' + company);
   request({
     url: `https://merck-capgemini.secure.force.com/dialog/services/apexrest/Dialogflow`,
     method: 'POST',    
