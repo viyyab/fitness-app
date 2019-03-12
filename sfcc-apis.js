@@ -343,8 +343,10 @@ var createLead = (first_name, last_name, email, company, callback) => {
       callback('Unable to create a lead');
     }
     else if(response.statusCode == 200){
+      console.log('Body : ' + body);
+      console.log(body);
       console.log("Create Lead API hit:", response.statusCode);
-      callback(undefined, {
+      callback(undefined, {              
         "statusCode": response.statusCode,
         "id": body.Id
         });

@@ -207,6 +207,7 @@ app.post('/webhook/', (req, res) => {
 							if(error){
 								console.log(error);
 							} else {
+								console.log(leadResult.id);
 								leadid=leadResult.id;
 								//console.log(result.token+' '+result.customer_id+" "+result.email);
 								text="Lead " + firstName + " created in Salesforce";
