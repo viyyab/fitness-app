@@ -195,7 +195,7 @@ app.post('/webhook/', (req, res) => {
 						//console.log(' req : ' + JSON.Stringify(req));
 						console.log(req.body.result.parameters);
 						console.log(' req.body.result : ' + req.body.result);
-						console.log(req.body.result.parameters.FirstName);
+						//console.log(req.body.result.parameters.FirstName);
 						console.log(req.body.result.parameters[0].FirstName);
 						//console.log(' req.body.result.contexts[0].parameters : ' + req.body.result.contexts[0].parameters);
 						var firstName = req.body.result.parameters.FirstName;
