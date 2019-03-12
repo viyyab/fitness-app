@@ -191,7 +191,12 @@ app.post('/webhook/', (req, res) => {
 			
 					case 'CreateSFLead': {
 					console.log("In CreateSFLead");
-					if(isDefined(actionName)){							
+					if(isDefined(actionName)){
+						console.log(' req : ' + req);
+						console.log(' req.body : ' + req.body);
+						console.log(' req.body.result : ' + req.body.result);
+						console.log(' req.body.result.contexts[0] : ' + req.body.result.contexts[0]);
+						console.log(' req.body.result.contexts[0].parameters : ' + req.body.result.contexts[0].parameters);
 						var firstName = req.body.result.contexts[0].parameters.firstname;
 						var lastName = req.body.result.contexts[0].parameters.lastname;
 						var email = req.body.result.contexts[0].parameters.email;
