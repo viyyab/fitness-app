@@ -192,7 +192,7 @@ app.post('/webhook/', (req, res) => {
 					case 'CreateSFLead': {
 					console.log("In CreateSFLead");
 					if(isDefined(actionName)){
-						console.log(' req : ' + req);
+						console.log(' req : ' +JSON.stringify(req));
 						console.log(' req.body : ' + req.body);
 						console.log(' req.body.result : ' + req.body.result);
 						console.log(' req.body.result.contexts[0] : ' + req.body.result.contexts[0]);
