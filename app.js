@@ -208,8 +208,10 @@ app.post('/webhook/', (req, res) => {
 								console.log(error);
 							} else {
 								console.log(leadResult);
+								var parsedResult = JSON.parse(leadResult);
 								console.log(leadResult.id);
-								leadid=leadResult.id;
+								leadid=parsedResult.id;
+								Console.log('parsed id : ' + leadid);
 								//console.log(result.token+' '+result.customer_id+" "+result.email);
 								text="Lead " + firstName + " created in Salesforce";
 								messageData = {
