@@ -35,6 +35,7 @@ var deviceIdP="79523913A0749F3ABDB658FE9254111BCF96067DAD37E232F0CF72E27832A833"
 var email; //= 'mickeyd.mcd321@gmail.com';
 var password; //= 'mickeyd.mcd321@gmail.com';
 var leadid;
+var eventid;
 debugger;
 
 
@@ -219,7 +220,40 @@ app.post('/webhook/', (req, res) => {
 										
 								
 						}
-					}
+					}					
+					break;
+
+					case 'CreateEvent': {
+						console.log("In CreateEvent");
+						if(isDefined(actionName)){
+							//console.log(' req : ' + JSON.Stringify(req));
+							console.log(req.body.result.parameters);
+							console.log(' req.body.result : ' + req.body.result);
+							//console.log(req.body.result.parameters.FirstName);
+							console.log(req.body.result.parameters.StartDate);
+							//console.log(' req.body.result.contexts[0].parameters : ' + req.body.result.contexts[0].parameters);
+							var startdate = req.body.result.parameters.StartDate;
+							var starttime = req.body.result.parameters.StartTime;
+							var endtime = req.body.result.parameters.EndTime;												
+							sfcc.createEvent(startdate, starttime, endtime, leadid, (error, eventResult)=> {
+								if(error){
+									console.log(error);
+								} else {							
+									eventid=eventResult.id;
+									var lead = eventResult.leadname
+									//console.log(result.token+' '+result.customer_id+" "+result.email);
+									text="Meeting for " + lead + " created in Salesforce";
+									messageData = {
+											speech: text,
+											displayText: text
+											}
+									res.send(messageData);		
+										}
+								});
+											
+									
+							}
+						}					
 						break;
 
 
