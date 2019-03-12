@@ -347,7 +347,7 @@ var createLead = (first_name, last_name, email, company, callback) => {
       console.log(body);
       console.log("Create Lead API hit:", response.statusCode);
       callback(undefined, {              
-        statusCode : response.statusCode,
+        status : body.status,
         id: body.id
         });
     }
