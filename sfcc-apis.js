@@ -451,5 +451,6 @@ module.exports = {
     addPaymentService,
     placeOrderService,
     createLead,
+    createEvent,
     updatePaymentService
 };
