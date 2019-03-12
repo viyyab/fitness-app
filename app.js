@@ -197,10 +197,10 @@ app.post('/webhook/', (req, res) => {
 						console.log(' req.body.result : ' + req.body.result);
 						console.log(' req.body.result.contexts[0] : ' + req.body.result.contexts[0]);
 						console.log(' req.body.result.contexts[0].parameters : ' + req.body.result.contexts[0].parameters);
-						var firstName = req.body.result.contexts[0].parameters.firstname;
-						var lastName = req.body.result.contexts[0].parameters.lastname;
-						var email = req.body.result.contexts[0].parameters.email;
-						var company = req.body.result.contexts[0].parameters.company;						
+						var firstName = req.body.result.parameters.firstname;
+						var lastName = req.body.result.parameters.lastname;
+						var email = req.body.result.parameters.email;
+						var company = req.body.result.parameters.company;						
 						sfcc.createLead(firstName, lastName, email, company, (error, leadResult)=> {
 							if(error){
 								console.log(error);
