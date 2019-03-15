@@ -355,13 +355,14 @@ var createLead = (first_name, last_name, email, company, callback) => {
 });
 };
 
-var createEvent = (startdate, starttime, endtime, leadid, callback) => {
+var createEvent = (startdate, starttime, endtime, leadid, eventsubject, callback) => {
 
   console.log('Create Lead API hit');
   console.log('startdate : ' + startdate);
   console.log('starttime : ' + starttime);
   console.log('endtime : ' + endtime);
   console.log('leadid : ' + leadid);
+  console.log('eventsubject: ' + eventsubject);
   
   request({
     url: `https://merck-capgemini.secure.force.com/dialog/services/apexrest/Dialogflow`,
@@ -371,6 +372,7 @@ var createEvent = (startdate, starttime, endtime, leadid, callback) => {
       "starttime": starttime,
       "endtime": endtime,      
       "leadid": leadid, 
+      "eventsubject" : eventsubject,
       "intent": "createEvent"
     },
     rejectUnauthorized: false,
@@ -389,6 +391,40 @@ var createEvent = (startdate, starttime, endtime, leadid, callback) => {
         "statusCode": response.statusCode,
         "id": body.Id,
         "leadname": body.leadname
+        });
+    }
+});
+};
+
+var updateEvent = (eventid, description, callback) => {
+
+  console.log('Update Event API hit');
+  console.log('eventid : ' + eventid);
+  console.log('description : ' + description);  
+  
+  request({
+    url: `https://merck-capgemini.secure.force.com/dialog/services/apexrest/Dialogflow`,
+    method: 'POST',    
+    body: {
+      "eventid": eventid,
+      "description": description,
+      "intent": "updateEvent"
+    },
+    rejectUnauthorized: false,
+    json: true
+    }, (error, response, body) => {
+
+    if(error){
+      callback('There was an error connecting to the server');
+    }
+    else if(response.statusCode == 401 || response.statusCode == 400){
+      callback('Unable to create a event');
+    }
+    else if(response.statusCode == 200){
+      console.log("Update Event API hit:", response.statusCode);
+      callback(undefined, {
+        "statusCode": response.statusCode,
+        "id": body.Id        
         });
     }
 });
@@ -455,5 +491,6 @@ module.exports = {
     placeOrderService,
     createLead,
     createEvent,
+    updateEvent,
     updatePaymentService
 };

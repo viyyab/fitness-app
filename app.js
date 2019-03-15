@@ -238,8 +238,9 @@ app.post('/webhook/', (req, res) => {
 							//console.log(' req.body.result.contexts[0].parameters : ' + req.body.result.contexts[0].parameters);
 							var startdate = req.body.result.parameters.StartDate;
 							var starttime = req.body.result.parameters.StartTime;
-							var endtime = req.body.result.parameters.EndTime;												
-							sfcc.createEvent(startdate, starttime, endtime, leadid, (error, eventResult)=> {
+							var endtime = req.body.result.parameters.EndTime;	
+							var eventsubject = req.body.result.parameters.EventSubject;											
+							sfcc.createEvent(startdate, starttime, endtime, leadid, eventsubject, (error, eventResult)=> {
 								if(error){
 									console.log(error);
 								} else {							
@@ -260,6 +261,28 @@ app.post('/webhook/', (req, res) => {
 						}					
 						break;
 
+						case 'UpdateEventNote': {
+							console.log("In UpdateEventNote");
+							if(isDefined(actionName)){																
+								var description = req.body.result.parameters.Description;																			
+								sfcc.createEvent(eventid, description, (error, eventResult)=> {
+									if(error){
+										console.log(error);
+									} else {							
+										eventid=eventResult.id;										
+										text="Meeting updated in Salesforce";
+										messageData = {
+												speech: text,
+												displayText: text
+												}
+										res.send(messageData);		
+											}
+									});
+												
+										
+								}
+							}					
+							break;
 
 
 		 case 'shoes-in-stock-order': {
