@@ -265,7 +265,7 @@ app.post('/webhook/', (req, res) => {
 							console.log("In UpdateEventNote");
 							if(isDefined(actionName)){																
 								var description = req.body.result.parameters.Description;																			
-								sfcc.createEvent(eventid, description, (error, eventResult)=> {
+								sfcc.updateEvent(eventid, description, (error, eventResult)=> {
 									if(error){
 										console.log(error);
 									} else {							
