@@ -288,7 +288,9 @@ app.post('/webhook/', (req, res) => {
 
 							case 'ConvertLead': {
 								console.log("In ConvertLead");
-								if(isDefined(actionName)){																									
+								if(isDefined(actionName)){
+									var check = req.body.result.parameters.Surety;
+									if(check){																									
 									sfcc.convertLead(leadid, (error, convertResult)=> {
 										if(error){
 											console.log(error);
@@ -304,8 +306,15 @@ app.post('/webhook/', (req, res) => {
 													}
 											res.send(messageData);		
 												}
-										});
-													
+										});									
+									} else {
+										text="OK. Be sure to be back when you are ready. I wish you good luck!!";
+											messageData = {
+													speech: text,
+													displayText: text
+													}
+											res.send(messageData);
+									}
 											
 									}
 								}					
