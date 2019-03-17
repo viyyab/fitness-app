@@ -247,7 +247,7 @@ app.post('/webhook/', (req, res) => {
 									var parsedResult = JSON.parse(eventResult);
 									console.log(parsedResult.id);							
 									eventid=parsedResult.id;
-									var lead = eventResult.leadname
+									var lead = parsedResult.leadname
 									//console.log(result.token+' '+result.customer_id+" "+result.email);
 									text="Meeting for " + lead + " created in Salesforce";
 									messageData = {
