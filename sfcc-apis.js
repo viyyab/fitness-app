@@ -387,11 +387,7 @@ var createEvent = (startdate, starttime, endtime, leadid, eventsubject, callback
     }
     else if(response.statusCode == 200){
       console.log("Create Event API hit:", response.statusCode);
-      callback(undefined, {
-        "statusCode": response.statusCode,
-        "id": body.Id,
-        "leadname": body.leadname
-        });
+      callback(undefined, body);
     }
 });
 };
@@ -422,10 +418,7 @@ var updateEvent = (eventid, description, callback) => {
     }
     else if(response.statusCode == 200){
       console.log("Update Event API hit:", response.statusCode);
-      callback(undefined, {
-        "statusCode": response.statusCode,
-        "id": body.Id        
-        });
+      callback(undefined, body);
     }
 });
 };
@@ -454,10 +447,7 @@ var convertLead = (leadid, callback) => {
     }
     else if(response.statusCode == 200){
       console.log("Update Convert Lead hit:", response.statusCode);
-      callback(undefined, {
-        "statusCode": response.statusCode,
-        "id": body.Id        
-        });
+      callback(undefined, body);
     }
 });
 };
