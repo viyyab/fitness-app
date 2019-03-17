@@ -430,6 +430,38 @@ var updateEvent = (eventid, description, callback) => {
 });
 };
 
+var convertLead = (leadid, callback) => {
+
+  console.log('Update Convert Lead hit');
+  console.log('leadid : ' + eventid);    
+  
+  request({
+    url: `https://merck-capgemini.secure.force.com/dialog/services/apexrest/Dialogflow`,
+    method: 'POST',    
+    body: {
+      "leadid": leadid,      
+      "intent": "convertLead"
+    },
+    rejectUnauthorized: false,
+    json: true
+    }, (error, response, body) => {
+
+    if(error){
+      callback('There was an error connecting to the server');
+    }
+    else if(response.statusCode == 401 || response.statusCode == 400){
+      callback('Unable to create a event');
+    }
+    else if(response.statusCode == 200){
+      console.log("Update Convert Lead hit:", response.statusCode);
+      callback(undefined, {
+        "statusCode": response.statusCode,
+        "id": body.Id        
+        });
+    }
+});
+};
+
 
 
 
@@ -492,5 +524,6 @@ module.exports = {
     createLead,
     createEvent,
     updateEvent,
+    convertLead,
     updatePaymentService
 };

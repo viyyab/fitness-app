@@ -36,6 +36,7 @@ var email; //= 'mickeyd.mcd321@gmail.com';
 var password; //= 'mickeyd.mcd321@gmail.com';
 var leadid;
 var eventid;
+var opportunityid;
 debugger;
 
 
@@ -206,8 +207,7 @@ app.post('/webhook/', (req, res) => {
 						sfcc.createLead(firstName, lastName, email, company, (error, leadResult)=> {
 							if(error){
 								console.log(error);
-							} else {
-								console.log(leadResult);
+							} else {								
 								var parsedResult = JSON.parse(leadResult);
 								console.log(leadResult.id);
 								leadid=parsedResult.id;
@@ -243,8 +243,10 @@ app.post('/webhook/', (req, res) => {
 							sfcc.createEvent(startdate, starttime, endtime, leadid, eventsubject, (error, eventResult)=> {
 								if(error){
 									console.log(error);
-								} else {							
-									eventid=eventResult.id;
+								} else {
+									var parsedResult = JSON.parse(eventResult);
+									console.log(parsedResult.id);							
+									eventid=parsedResult.id;
 									var lead = eventResult.leadname
 									//console.log(result.token+' '+result.customer_id+" "+result.email);
 									text="Meeting for " + lead + " created in Salesforce";
@@ -269,7 +271,7 @@ app.post('/webhook/', (req, res) => {
 									if(error){
 										console.log(error);
 									} else {							
-										eventid=eventResult.id;										
+										
 										text="Meeting updated in Salesforce";
 										messageData = {
 												speech: text,
@@ -283,6 +285,31 @@ app.post('/webhook/', (req, res) => {
 								}
 							}					
 							break;
+
+							case 'ConvertLead': {
+								console.log("In ConvertLead");
+								if(isDefined(actionName)){																									
+									sfcc.convertLead(leadid, (error, convertResult)=> {
+										if(error){
+											console.log(error);
+										} else {	
+											var parsedResult = JSON.parse(convertResult);
+											console.log(parsedResult.id);							
+											opportunityid=parsedResult.id;
+											//var lead = eventResult.leadname																											
+											text="Lead converted to an Opportunity in Salesforce. Would you like to add some products to this Lead ?";
+											messageData = {
+													speech: text,
+													displayText: text
+													}
+											res.send(messageData);		
+												}
+										});
+													
+											
+									}
+								}					
+								break;
 
 
 		 case 'shoes-in-stock-order': {
