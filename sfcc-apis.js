@@ -426,7 +426,7 @@ var updateEvent = (eventid, description, callback) => {
 var convertLead = (leadid, callback) => {
 
   console.log('Update Convert Lead hit');
-  console.log('leadid : ' + eventid);    
+  console.log('leadid : ' + leadid);    
   
   request({
     url: `https://merck-capgemini.secure.force.com/dialog/services/apexrest/Dialogflow`,
