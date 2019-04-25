@@ -290,7 +290,7 @@ app.post('/webhook/', (req, res) => {
 								console.log("In ConvertLead");
 								if(isDefined(actionName)){
 									var check = req.body.result.parameters.Surety;
-									if(check){																									
+									if(check == 'Yes'){																									
 									sfcc.convertLead(leadid, (error, convertResult)=> {
 										if(error){
 											console.log(error);
